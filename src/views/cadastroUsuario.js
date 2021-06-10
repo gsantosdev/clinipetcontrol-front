@@ -20,11 +20,9 @@ class CadastroUsuario extends React.Component {
 
     render() {
         return (
-
             <div className="row">
                 <div className="col-lg-12">
                     <div className="bs-component">
-                        <div className="container">
                             <Card title=" Cadastro de Usuário">
                                 <FormGroup label="Nome: *" htmlFor="inputNome">
                                     <input className="form-control" type="text"
@@ -64,7 +62,6 @@ class CadastroUsuario extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
 
         )
     }
