@@ -16,17 +16,24 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
+
         const usuarioLogado = localStorageService.obterItem('_usuario_logado')
 
-        console.log(usuarioLogado)
+        if (usuarioLogado == null) {
+            console.log(usuarioLogado)
+            this.props.history.push('/login')
+        }
+        else {
+            this.usuarioService
+                .obterSaldoPorUsuario(usuarioLogado.id)
+                .then(response => {
+                    this.setState({ saldo: response.data })
+                }).catch(error => {
+                    console.error(error.response)
+                })
+        }
 
-        this.usuarioService
-        .obterSaldoPorUsuario(usuarioLogado.id)
-            .then(response => {
-                this.setState({ saldo: response.data })
-            }).catch(error => {
-                console.error(error.response)
-            })
+
     }
 
     render() {

@@ -10,7 +10,7 @@ import UsuarioService from '../app/service/usuarioService';
 
 import localStorageService from '../app/service/localstorageService';
 
-import {mensagemErro} from '../components/toastr'
+import { mensagemErro } from '../components/toastr'
 
 class Login extends React.Component {
 
@@ -32,10 +32,13 @@ class Login extends React.Component {
             localStorageService.adicionarItem('_usuario_logado', response.data)
             this.props.history.push('/home')
         }).catch(erro => {
-            mensagemErro(erro.response.data)
+            if (!erro.response) {
+                // network error
+                mensagemErro("Erro na conexão com o servidor")
+            } else {
+                mensagemErro(erro.response.data)
+            } 
         })
-
-        console.log("executado a requisição")
     }
 
     prepareCadastrar = () => {
