@@ -16,15 +16,12 @@ function NavBar(){
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            <ul className="navbar-nav">
-                <NavBarItem href="#/home" label="Home" />
-                <NavBarItem href="#/cadastro-usuarios" label="Usuários" />
-                <NavBarItem href="#/" label="Lançamentos" />
+          
+          </div>
+          <ul className="navbar-nav">
                 <NavBarItem href="#/login" label="Login" />
-
             </ul>
     
-          </div>
         </div>
       </div>
     )
