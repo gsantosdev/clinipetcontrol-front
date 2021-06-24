@@ -15,8 +15,18 @@ class CadastroCliente extends React.Component {
         nome: '',
         cpf: '',
         maskCpf: '',
+        dataNascimento: '',
+        telefone: '',
+        email: '',
+        logradouro: '',
+        numero: '',
+        bairro: '',
+        cep: '',
+        cidade: '',
+        uf: ''
     }
     render() {
+
         const UFs = [
             { label: 'AC' },
             { label: 'AL' },
@@ -49,7 +59,7 @@ class CadastroCliente extends React.Component {
 
 
         return (
-            <div className="row">
+            <div className="row mb-3">
                 <div className="row">
                     <div className="col-md-3">
                         <FormGroup id="inputNome" label="Nome: *">
