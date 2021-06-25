@@ -337,6 +337,10 @@ body {
 }
 
 /* CONTEÚDO */
+.error
+{
+    border-bottom: 1px solid #eb516d;
+}
 
 div.content {
     margin-left: 200px;

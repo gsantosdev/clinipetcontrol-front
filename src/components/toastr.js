@@ -2,6 +2,7 @@ import toastr from 'toastr';
 
 
 toastr.options = {
+    "maxOpened":1,
     "closeButton": true,
     "debug": false,
     "newestOnTop": false,
@@ -16,7 +17,8 @@ toastr.options = {
     "showEasing": "swing",
     "hideEasing": "linear",
     "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
+    "hideMethod": "fadeOut",
+    "preventOpenDuplicates": true
 }
 
 export function mostrarMensagem(titulo, mensagem, tipo) {
@@ -34,4 +36,6 @@ export function mensagemSucesso(mensagem) {
 export function mensagemAlerta(mensagem) {
     mostrarMensagem('Alerta', mensagem, 'warning')
 }
+
+
 

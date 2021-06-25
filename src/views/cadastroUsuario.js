@@ -41,8 +41,6 @@ class CadastroUsuario extends React.Component {
         } else if (this.state.senha !== this.state.senhaRepeticao) {
             msgs.push('As senhas devem coincidir.')
         }
-
-
         return msgs;
     }
 
