@@ -15,6 +15,10 @@ class ClienteService extends ApiService {
         return this.get(`?busca=${busca}`)
     }
 
+    deletar(id){
+        return this.delete(`/${id}`)
+    }
+
     obterUFs() {
         return [
             { label: 'Selecione...' },

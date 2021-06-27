@@ -4,6 +4,9 @@ import React from 'react';
 import ClienteService from '../../app/service/clienteService';
 import FormGroup from '../../components/form-group';
 import ClienteTable from './clienteTable';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import  * as messages from '../../components/toastr'
 
 
 
@@ -13,7 +16,9 @@ class ProntuarioCliente extends React.Component {
 
   state = {
     busca: '',
-    cliente: []
+    clientes: [],
+    showConfirmDialog: false,
+    clienteADeletar: {}
   }
 
   constructor() {
@@ -21,18 +26,48 @@ class ProntuarioCliente extends React.Component {
     this.service = new ClienteService();
   }
 
+  abrirConfirmacao = (cliente) => {
+    this.setState({ showConfirmDialog: true, clienteADeletar: cliente })
+  }
+
+  cancelarDelecao = (cliente) => {
+    this.setState({ showConfirmDialog: false, clienteADeletar: cliente })
+  }
+
+
   buscar = () => {
     this.service.obterPorNomeCpfTelefone(this.state.busca)
       .then(resposta => {
-        this.setState({ cliente: resposta.data })
+        this.setState({ clientes: resposta.data })
       }).catch(error => {
         console.log(error)
+      })
+  }
+
+  deletar = () => {
+    this.service.deletar(this.state.clienteADeletar.id)
+      .then(response => {
+        const clientes = this.state.clientes;
+        const index = clientes.indexOf(this.state.clienteADeletar)
+        clientes.splice(index, 1);
+        this.setState({ clientes: clientes, showConfirmDialog: false });
+        messages.mensagemSucesso("Cliente deletado com sucesso!")
+      }).catch(erro => {
+        messages.mensagemErro("Ocorreu um erro ao tentar deletar o Cliente")
       })
   }
 
 
 
   render() {
+
+    const footerDialog = (
+      <div>
+        <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
+        <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
+      </div>
+    );
+
 
     return (
       <>
@@ -53,7 +88,7 @@ class ProntuarioCliente extends React.Component {
               <div className="row">
                 <div className="col-md-12">
                   <div className="bs-component">
-                    <ClienteTable clientes={this.state.cliente} />
+                    <ClienteTable clientes={this.state.clientes} deleteAction={this.abrirConfirmacao} />
                   </div>
                 </div>
               </div>
@@ -61,9 +96,15 @@ class ProntuarioCliente extends React.Component {
 
           </div>
 
-
-
-
+        </div>
+        <div>
+          <Dialog header=""
+            visible={this.state.showConfirmDialog}
+            style={{ width: '50vw' }}
+            footer={footerDialog}
+            modal={true}
+            onHide={() => this.setState({ showConfirmDialog: false })}
+          > Confirma a exclusão deste Cliente?</Dialog>
         </div>
 
 
