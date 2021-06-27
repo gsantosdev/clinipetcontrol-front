@@ -10,7 +10,7 @@ function SideBar() {
     <div className="sidebar">
       <div className="sidebar-header">
         <figure>
-          <img width="100%" height="auto" src="/logo.png"></img>
+          <img width="100%" height="50%" src="/logo.png"></img>
         </figure>
       </div>
 

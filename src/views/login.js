@@ -33,11 +33,10 @@ class Login extends React.Component {
             this.props.history.push('/home')
         }).catch(erro => {
             if (!erro.response) {
-                // network error
                 mensagemErro("Erro na conexão com o servidor")
             } else {
                 mensagemErro(erro.response.data)
-            } 
+            }
         })
     }
 

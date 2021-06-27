@@ -21,18 +21,28 @@ import 'bootswatch/dist/flatly/bootstrap.css'
 import '../custom.css'
 import 'toastr/build/toastr.css'
 
+import { UserBar } from '../components/userbar';
+
 
 
 class App extends React.Component {
+
+  state = {
+    usuario: 'Gustavo Santos'
+  }
 
 
   render() {
     return (
       <>
-      <SideBar/>
-      <div className="content">
-      <Rotas/>
-      </div>
+        <SideBar />
+        <div className="content-navbar">
+          <UserBar username={this.state.usuario} />
+
+        </div>
+        <div className="content">
+          <Rotas />
+        </div>
       </>
     )
 

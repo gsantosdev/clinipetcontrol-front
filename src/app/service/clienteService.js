@@ -11,6 +11,10 @@ class ClienteService extends ApiService {
         return this.post('/', usuario)
     }
 
+    obterPorNomeCpfTelefone(busca){
+        return this.get(`?busca=${busca}`)
+    }
+
     obterUFs() {
         return [
             { label: 'Selecione...' },

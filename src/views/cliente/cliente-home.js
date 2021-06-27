@@ -12,7 +12,7 @@ import ProntuarioCliente from './prontuario-cliente'
 class ClienteHome extends React.Component {
     render() {
         return (
-            <div className="jumbotron">
+            <div className="container-fluid">
 
                 <Tabs defaultActiveKey="cadastro" id="uncontrolled-tab">
                     <Tab eventKey="cadastro" title="Cadastro">

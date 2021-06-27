@@ -146,7 +146,6 @@ class CadastroCliente extends React.Component {
 
         const UFs = this.service.obterUFs()
 
-
         return (
             <div className="row mb-3">
                 <div className="row">
@@ -180,8 +179,9 @@ class CadastroCliente extends React.Component {
                             <input type="date" t className="form-control"
                                 onChange={async e => {
                                     await this.setState({
-                                        dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")})
-                                        console.log(this.state.dataNascimento)
+                                        dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
+                                    })
+                                    console.log(this.state.dataNascimento)
                                 }}
 
                              /* TODO pattern=""*/ required />
