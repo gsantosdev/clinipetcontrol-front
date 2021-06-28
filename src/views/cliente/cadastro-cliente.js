@@ -9,7 +9,7 @@ import ClienteService from '../../app/service/clienteService'
 import { cpf } from 'cpf-cnpj-validator';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import moment from 'moment'
-
+import { onlyNumbers } from '@brazilian-utils/brazilian-utils'
 
 
 
@@ -30,6 +30,14 @@ class CadastroCliente extends React.Component {
         cep: '',
         cidade: '',
         uf: ''
+    }
+
+    limpaCampos() {
+        Object.keys(this.state).forEach(key => {
+            this.setState({ [key]: '' })
+        })
+        document.getElementById("dataNascimento").value = '';
+
     }
 
     constructor() {
@@ -116,9 +124,11 @@ class CadastroCliente extends React.Component {
             return false;
         }
 
+        console.log(onlyNumbers(this.state.cpf))
+
         const cliente = {
             nome: this.state.nome + " " + this.state.sobrenome,
-            cpf: this.state.cpf,
+            cpf: onlyNumbers(this.state.cpf),
             dataNascimento: this.state.dataNascimento,
             telefone: this.state.telefone,
             email: this.state.email,
@@ -133,6 +143,7 @@ class CadastroCliente extends React.Component {
         this.service.salvar(cliente)
             .then(response => {
                 mensagemSucesso(response)
+                this.limpaCampos()
                 //this.props.history.push('/login')
             }).catch(error => {
                 mensagemErro(error.response.data)
@@ -152,12 +163,14 @@ class CadastroCliente extends React.Component {
                     <div className="col-md-3">
                         <FormGroup id="inputNome" label="Nome: *">
                             <input type="text" className="form-control"
+                                value={this.state.nome}
                                 onChange={e => this.setState({ nome: e.target.value })} />
                         </FormGroup>
                     </div>
                     <div className="col-md-3">
                         <FormGroup id="inputSobrenome" label="Sobrenome: ">
                             <input type="text" className="form-control"
+                                value={this.state.sobrenome}
                                 onChange={e => this.setState({ sobrenome: e.target.value })} />
                         </FormGroup>
                     </div>
@@ -176,7 +189,7 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-md-3">
                         <FormGroup id="inputDataNascimento" label="Data de nascimento: *">
-                            <input type="date" t className="form-control"
+                            <input id="dataNascimento" type="date" className="form-control"
                                 onChange={async e => {
                                     await this.setState({
                                         dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
@@ -194,24 +207,28 @@ class CadastroCliente extends React.Component {
                         <FormGroup id="inputTelefone" label="Telefone: *">
                             <input type="tel" className="form-control" id="tel" placeholder="(00) 0000-0000"
                                 name="tel" maxLength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}"
+                                value={this.state.telefone}
                                 onChange={e => this.setState({ telefone: e.target.value })} required />
                         </FormGroup>
                     </div>
                     <div className="col-md-3">
                         <FormGroup id="inputEmail" label="Email: *">
                             <input type="email" className="form-control"
+                                value={this.state.email}
                                 onChange={e => this.setState({ email: e.target.value })}  /* TODO pattern=""*/ required />
                         </FormGroup>
                     </div>
                     <div className="col-md-4">
                         <FormGroup id="inputLogradouro" label="Logradouro: *">
                             <input type="text" className="form-control"
+                                value={this.state.logradouro}
                                 onChange={e => this.setState({ logradouro: e.target.value })}  /* TODO pattern=""*/ required />
                         </FormGroup>
                     </div>
                     <div className="col-md-2">
                         <FormGroup id="inputNumero" label="Número: *">
                             <input type="number" className="form-control"
+                                value={this.state.numero}
                                 onChange={e => this.setState({ numero: e.target.value })}/* TODO pattern=""*/ required />
                         </FormGroup>
                     </div>
@@ -221,18 +238,21 @@ class CadastroCliente extends React.Component {
                     <div className="col-md-3">
                         <FormGroup id="inputBairo" label="Bairro: *">
                             <input type="text" className="form-control"
+                                value={this.state.bairro}
                                 onChange={e => this.setState({ bairro: e.target.value })}  /* TODO pattern=""*/ required />
                         </FormGroup>
                     </div>
                     <div className="col-md-4">
                         <FormGroup id="inputCidade" label="Cidade: *">
                             <input type="text" className="form-control"
+                                value={this.state.cidade}
                                 onChange={e => this.setState({ cidade: e.target.value })} /* TODO pattern=""*/ required />
                         </FormGroup>
                     </div>
                     <div className="col-md-3">
                         <FormGroup id="inputCep" label="CEP: *">
                             <input type="text" className="form-control"
+                                value={this.state.cep}
                                 onChange={e => this.setState({ cep: e.target.value })} /* TODO pattern=""*/ required />
                         </FormGroup>
                     </div>
@@ -240,6 +260,7 @@ class CadastroCliente extends React.Component {
                     <div className="col-md-2">
                         <FormGroup id="inputUf" label="UF: *">
                             <SelectMenu className="form-control" lista={UFs}
+                                value={this.state.uf}
                                 onChange={e => this.setState({ uf: e.target.value })} />
                         </FormGroup>
                     </div>
