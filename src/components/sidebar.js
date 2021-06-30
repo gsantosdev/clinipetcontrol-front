@@ -18,9 +18,9 @@ function SideBar() {
       <SideBarItem icon={faUser} href="#/cadastro-usuarios" label="Usuarios" />
       <SideBarItem icon={faUsers} href="#/cliente" label="Clientes" />
 
-      <SideBarItem icon={faDog} href="#/" label="Animais" />
+      <SideBarItem icon={faDog} href="#/animal" label="Animais" />
       <SideBarItem icon={faHandHoldingMedical} href="#/" label="Serviços" />
-      
+
 
       <SideBarItem icon={faCalendar} href="#/" label="Agenda" />
       <SideBarItem icon={faNotesMedical} href="#/" label="Relatórios" />

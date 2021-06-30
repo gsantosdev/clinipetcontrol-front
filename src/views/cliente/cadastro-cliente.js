@@ -32,6 +32,13 @@ class CadastroCliente extends React.Component {
         uf: ''
     }
 
+    handleChange = (event) => {
+        const value = event.target.value;
+        const name = event.target.name;
+
+        this.setState({ [name]: value })
+    }
+
     limpaCampos() {
         Object.keys(this.state).forEach(key => {
             this.setState({ [key]: '' })
@@ -164,14 +171,16 @@ class CadastroCliente extends React.Component {
                         <FormGroup id="inputNome" label="Nome: *">
                             <input type="text" className="form-control"
                                 value={this.state.nome}
-                                onChange={e => this.setState({ nome: e.target.value })} />
+                                name="nome"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
                     <div className="col-md-3">
                         <FormGroup id="inputSobrenome" label="Sobrenome: ">
                             <input type="text" className="form-control"
                                 value={this.state.sobrenome}
-                                onChange={e => this.setState({ sobrenome: e.target.value })} />
+                                name="sobrenome"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
 
@@ -208,28 +217,32 @@ class CadastroCliente extends React.Component {
                             <input type="tel" className="form-control" id="tel" placeholder="(00) 0000-0000"
                                 name="tel" maxLength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}"
                                 value={this.state.telefone}
-                                onChange={e => this.setState({ telefone: e.target.value })} required />
+                                name="telefone"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
                     <div className="col-md-3">
                         <FormGroup id="inputEmail" label="Email: *">
                             <input type="email" className="form-control"
                                 value={this.state.email}
-                                onChange={e => this.setState({ email: e.target.value })}  /* TODO pattern=""*/ required />
+                                name="email"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
                     <div className="col-md-4">
                         <FormGroup id="inputLogradouro" label="Logradouro: *">
                             <input type="text" className="form-control"
                                 value={this.state.logradouro}
-                                onChange={e => this.setState({ logradouro: e.target.value })}  /* TODO pattern=""*/ required />
+                                name="logradouro"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
                     <div className="col-md-2">
                         <FormGroup id="inputNumero" label="Número: *">
                             <input type="number" className="form-control"
                                 value={this.state.numero}
-                                onChange={e => this.setState({ numero: e.target.value })}/* TODO pattern=""*/ required />
+                                name="numero"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
 
@@ -239,21 +252,24 @@ class CadastroCliente extends React.Component {
                         <FormGroup id="inputBairo" label="Bairro: *">
                             <input type="text" className="form-control"
                                 value={this.state.bairro}
-                                onChange={e => this.setState({ bairro: e.target.value })}  /* TODO pattern=""*/ required />
+                                name="bairro"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
                     <div className="col-md-4">
                         <FormGroup id="inputCidade" label="Cidade: *">
                             <input type="text" className="form-control"
                                 value={this.state.cidade}
-                                onChange={e => this.setState({ cidade: e.target.value })} /* TODO pattern=""*/ required />
+                                name="cidade"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
                     <div className="col-md-3">
                         <FormGroup id="inputCep" label="CEP: *">
                             <input type="text" className="form-control"
                                 value={this.state.cep}
-                                onChange={e => this.setState({ cep: e.target.value })} /* TODO pattern=""*/ required />
+                                name="cep"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
 
@@ -261,7 +277,8 @@ class CadastroCliente extends React.Component {
                         <FormGroup id="inputUf" label="UF: *">
                             <SelectMenu className="form-control" lista={UFs}
                                 value={this.state.uf}
-                                onChange={e => this.setState({ uf: e.target.value })} />
+                                name="uf"
+                                onChange={this.handleChange} />
                         </FormGroup>
                     </div>
 
@@ -275,7 +292,6 @@ class CadastroCliente extends React.Component {
                         <div className="p-1">
                             <button onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
                         </div>
-
                     </div>
                 </div>
 

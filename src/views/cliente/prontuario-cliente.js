@@ -6,7 +6,10 @@ import FormGroup from '../../components/form-group';
 import ClienteTable from './clienteTable';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import  * as messages from '../../components/toastr'
+import Card from '../../components/card'
+
+import * as messages from '../../components/toastr'
+import CadastroCliente from './cadastro-cliente';
 
 
 
@@ -103,8 +106,10 @@ class ProntuarioCliente extends React.Component {
             style={{ width: '50vw' }}
             footer={footerDialog}
             modal={true}
-            onHide={() => this.setState({ showConfirmDialog: false })}
-          > Confirma a exclusão deste Cliente?</Dialog>
+            onHide={() => this.setState({ showConfirmDialog: false })}>
+            <Card title="Alterar Cadastro">
+              <CadastroCliente></CadastroCliente>
+            </Card></Dialog>
         </div>
 
 
