@@ -17,8 +17,8 @@ class CadastroCliente extends React.Component {
 
 
     state = {
+        id: null,
         nome: '',
-        sobrenome: '',
         cpf: '',
         maskCpf: '',
         dataNascimento: '',
@@ -47,9 +47,15 @@ class CadastroCliente extends React.Component {
 
     }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.service = new ClienteService();
+
+    }
+
+    componentDidMount() {
+        console.log(this.props.state)
+        this.setState(this.props.state)
     }
 
     validar() {
@@ -59,11 +65,6 @@ class CadastroCliente extends React.Component {
 
         if (!this.state.nome) {
             msgs.push('O campo Nome é obrigatório.')
-        }
-
-
-        else if (!this.state.sobrenome) {
-            msgs.push('O campo Sobrenome é obrigatório.')
         }
 
         else if (!this.state.cpf) {
@@ -134,7 +135,7 @@ class CadastroCliente extends React.Component {
         console.log(onlyNumbers(this.state.cpf))
 
         const cliente = {
-            nome: this.state.nome + " " + this.state.sobrenome,
+            nome: this.state.nome,
             cpf: onlyNumbers(this.state.cpf),
             dataNascimento: this.state.dataNascimento,
             telefone: this.state.telefone,
@@ -155,9 +156,42 @@ class CadastroCliente extends React.Component {
             }).catch(error => {
                 mensagemErro(error.response.data)
             })
+    }
+
+    editar = () => {
+
+        const msgs = this.validar()
+
+        if (msgs && msgs.length > 0) {
+            msgs.forEach((msg, index) => {
+                mensagemErro(msg)
+            });
+            return false;
+        }
 
 
+        const cliente = {
+            id: this.state.id,
+            nome: this.state.nome,
+            cpf: onlyNumbers(this.state.cpf),
+            dataNascimento: this.state.dataNascimento,
+            telefone: this.state.telefone,
+            email: this.state.email,
+            logradouro: this.state.logradouro,
+            numero: this.state.numero,
+            bairro: this.state.bairro,
+            cep: this.state.cep,
+            cidade: this.state.cidade,
+            uf: this.state.uf
+        }
 
+        this.service.editar(this.state.id, cliente)
+            .then(response => {
+                mensagemSucesso(response)
+                //this.props.history.push('/login')
+            }).catch(error => {
+                mensagemErro(error.response.data)
+            })
     }
 
     render() {
@@ -167,19 +201,11 @@ class CadastroCliente extends React.Component {
         return (
             <div className="row mb-3">
                 <div className="row">
-                    <div className="col-md-3">
-                        <FormGroup id="inputNome" label="Nome: *">
+                    <div className="col-md-6">
+                        <FormGroup id="inputNome" label="Nome completo: *">
                             <input type="text" className="form-control"
                                 value={this.state.nome}
                                 name="nome"
-                                onChange={this.handleChange} />
-                        </FormGroup>
-                    </div>
-                    <div className="col-md-3">
-                        <FormGroup id="inputSobrenome" label="Sobrenome: ">
-                            <input type="text" className="form-control"
-                                value={this.state.sobrenome}
-                                name="sobrenome"
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
@@ -199,6 +225,7 @@ class CadastroCliente extends React.Component {
                     <div className="col-md-3">
                         <FormGroup id="inputDataNascimento" label="Data de nascimento: *">
                             <input id="dataNascimento" type="date" className="form-control"
+                                value={moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD")}
                                 onChange={async e => {
                                     await this.setState({
                                         dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
@@ -287,10 +314,10 @@ class CadastroCliente extends React.Component {
                 <div className="row">
                     <div className="d-flex justify-content-end">
                         <div className="p-1">
-                            <button onClick={this.cadastrar} type="button" className="btn btn-success">Salvar</button>
+                            <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
                         </div>
                         <div className="p-1">
-                            <button onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
+                            <button hidden={this.props.editar} onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
                         </div>
                     </div>
                 </div>

@@ -7,15 +7,19 @@ class ClienteService extends ApiService {
         super('/api/clientes')
     }
 
-    salvar(usuario) {
-        return this.post('/', usuario)
+    salvar(cliente) {
+        return this.post('/', cliente)
     }
 
-    obterPorNomeCpfTelefone(busca){
+    obterPorNomeCpfTelefone(busca) {
         return this.get(`?busca=${busca}`)
     }
 
-    deletar(id){
+    editar(id, cliente) {
+        return this.put(`/${id}`, cliente)
+    }
+
+    deletar(id) {
         return this.delete(`/${id}`)
     }
 
@@ -52,13 +56,6 @@ class ClienteService extends ApiService {
         ]
     }
 
-    /*
-        obterSaldoPorUsuario(id){
-            return this.get(`/${id}/saldo`)
-    
-        }
-    
-     */
 }
 
 export default ClienteService

@@ -20,8 +20,15 @@ class ProntuarioCliente extends React.Component {
   state = {
     busca: '',
     clientes: [],
-    showConfirmDialog: false,
-    clienteADeletar: {}
+    showConfirmDialogDeletar: false,
+    showConfirmDialogEditar: false,
+    clienteADeletar: {},
+    clienteAEditar: {},
+    message: ''
+  }
+
+  retorno = (dados) => {
+    this.setState({ message: dados })
   }
 
   constructor() {
@@ -29,12 +36,19 @@ class ProntuarioCliente extends React.Component {
     this.service = new ClienteService();
   }
 
-  abrirConfirmacao = (cliente) => {
-    this.setState({ showConfirmDialog: true, clienteADeletar: cliente })
+  abrirConfirmacaoEditar = (cliente) => {
+    this.setState({ showConfirmDialogEditar: true, clienteAEditar: cliente })
+  }
+
+  abrirConfirmacaoDeletar = (cliente) => {
+    this.setState({ showConfirmDialogDeletar: true, clienteADeletar: cliente })
   }
 
   cancelarDelecao = (cliente) => {
-    this.setState({ showConfirmDialog: false, clienteADeletar: cliente })
+    this.setState({ showConfirmDialogDeletar: false, clienteADeletar: cliente })
+  }
+  cancelarEdicao = (cliente) => {
+    this.setState({ showConfirmDialogEditar: false, clienteAEditar: cliente })
   }
 
 
@@ -47,13 +61,17 @@ class ProntuarioCliente extends React.Component {
       })
   }
 
+  voltar = () => {
+    this.setState({ showConfirmDialogEditar: false })
+  }
+
   deletar = () => {
     this.service.deletar(this.state.clienteADeletar.id)
       .then(response => {
         const clientes = this.state.clientes;
         const index = clientes.indexOf(this.state.clienteADeletar)
         clientes.splice(index, 1);
-        this.setState({ clientes: clientes, showConfirmDialog: false });
+        this.setState({ clientes: clientes, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("Cliente deletado com sucesso!")
       }).catch(erro => {
         messages.mensagemErro("Ocorreu um erro ao tentar deletar o Cliente")
@@ -64,10 +82,16 @@ class ProntuarioCliente extends React.Component {
 
   render() {
 
-    const footerDialog = (
+    const footerDialogDeletar = (
       <div>
         <Button label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
         <Button label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
+      </div>
+    );
+
+    const footerDialogEditar = (
+      <div>
+        <Button style={{background: "red", border: 0}} label="Fechar" onClick={e => this.setState({ showConfirmDialogEditar: false })} />
       </div>
     );
 
@@ -91,7 +115,7 @@ class ProntuarioCliente extends React.Component {
               <div className="row">
                 <div className="col-md-12">
                   <div className="bs-component">
-                    <ClienteTable clientes={this.state.clientes} deleteAction={this.abrirConfirmacao} />
+                    <ClienteTable clientes={this.state.clientes} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
                   </div>
                 </div>
               </div>
@@ -101,15 +125,27 @@ class ProntuarioCliente extends React.Component {
 
         </div>
         <div>
-          <Dialog header=""
-            visible={this.state.showConfirmDialog}
+          <Dialog
+            visible={this.state.showConfirmDialogDeletar}
             style={{ width: '50vw' }}
-            footer={footerDialog}
+            footer={footerDialogDeletar}
             modal={true}
-            onHide={() => this.setState({ showConfirmDialog: false })}>
-            <Card title="Alterar Cadastro">
-              <CadastroCliente></CadastroCliente>
-            </Card></Dialog>
+            onHide={() => this.setState({ showConfirmDialogDeletar: false })}>
+            Deseja excluir o cliente?
+          </Dialog>
+
+          <Dialog
+            
+            onChange={e => this.setState({ showConfirmDialogEditar: false })}
+            visible={this.state.showConfirmDialogEditar}
+            style={{ width: '60vw' }}
+            footer={footerDialogEditar}
+            modal={true}
+            onHide={() => this.setState({ showConfirmDialogEditar: false })}>
+            <Card title="Atualize os dados do cliente">
+              <CadastroCliente editar={true} state={this.state.clienteAEditar} />
+            </Card>
+          </Dialog>
         </div>
 
 
