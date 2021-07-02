@@ -10,11 +10,10 @@ import { cpf } from 'cpf-cnpj-validator';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import moment from 'moment'
 import { onlyNumbers } from '@brazilian-utils/brazilian-utils'
-
+import { limpaCampos } from '../../utils/utils'
 
 
 class CadastroCliente extends React.Component {
-
 
     state = {
         id: null,
@@ -43,8 +42,6 @@ class CadastroCliente extends React.Component {
         Object.keys(this.state).forEach(key => {
             this.setState({ [key]: '' })
         })
-        document.getElementById("dataNascimento").value = '';
-
     }
 
     constructor(props) {
@@ -266,8 +263,9 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-md-2">
                         <FormGroup id="inputNumero" label="Número: *">
-                            <input type="number" className="form-control"
+                            <input type="number" min="0" className="form-control"
                                 value={this.state.numero}
+                                onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
                                 name="numero"
                                 onChange={this.handleChange} />
                         </FormGroup>
