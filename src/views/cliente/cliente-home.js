@@ -22,7 +22,7 @@ class ClienteHome extends React.Component {
                     </Tab>
                     <Tab eventKey="prontuario" title="Prontuário">
                         <Card title="Prontuário">
-                            <ProntuarioCliente/>
+                            <ProntuarioCliente />
                         </Card>
                     </Tab>
                     <Tab eventKey="contact" title="Agendamentos">

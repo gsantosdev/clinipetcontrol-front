@@ -16,7 +16,7 @@ class AnimalHome extends React.Component {
         <Tabs defaultActiveKey="cadastro" id="uncontrolled-tab">
           <Tab eventKey="cadastro" title="Cadastro">
             <Card title="Cadastro de Animais">
-              <CadastroAnimal/>
+              <CadastroAnimal />
             </Card>
           </Tab>
           <Tab eventKey="prontuario" title="Prontuário">

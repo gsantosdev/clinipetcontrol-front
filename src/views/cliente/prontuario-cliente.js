@@ -91,7 +91,7 @@ class ProntuarioCliente extends React.Component {
 
     const footerDialogEditar = (
       <div>
-        <Button style={{background: "red", border: 0}} label="Fechar" onClick={e => this.setState({ showConfirmDialogEditar: false })} />
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={e => this.setState({ showConfirmDialogEditar: false })} />
       </div>
     );
 
@@ -135,7 +135,7 @@ class ProntuarioCliente extends React.Component {
           </Dialog>
 
           <Dialog
-            
+
             onChange={e => this.setState({ showConfirmDialogEditar: false })}
             visible={this.state.showConfirmDialogEditar}
             style={{ width: '60vw' }}

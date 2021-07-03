@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 
 import { Dialog } from 'primereact/dialog'
-import {Button} from 'primereact/button'
+import { Button } from 'primereact/button'
 import Card from '../../components/card'
 import FormGroup from '../../components/form-group'
 import SelectMenu from '../../components/selectMenu'
@@ -21,12 +21,12 @@ class ConsultaLancamentos extends React.Component {
         console.log('editando o lancamento ', id)
     }
 
-    abrirConfirmacao = (lancamento) =>{
-        this.setState({showConfirmDialog:true, lancamentoDeletar: lancamento})
+    abrirConfirmacao = (lancamento) => {
+        this.setState({ showConfirmDialog: true, lancamentoDeletar: lancamento })
     }
 
-    cancelarDelecao = (lancamento) =>{
-        this.setState({showConfirmDialog:false, lancamentoDeletar: lancamento})
+    cancelarDelecao = (lancamento) => {
+        this.setState({ showConfirmDialog: false, lancamentoDeletar: lancamento })
     }
 
     deletar = () => {
@@ -35,14 +35,14 @@ class ConsultaLancamentos extends React.Component {
                 const lancamentos = this.state.lancamentos;
                 const index = lancamentos.indexOf(this.state.lancamentoDeletar)
                 lancamentos.splice(index, 1);
-                this.setState({lancamentos:lancamentos, showConfirmDialog: false});
+                this.setState({ lancamentos: lancamentos, showConfirmDialog: false });
                 messages.mensagemSucesso("Lançamento deletado com sucesso!")
             }).catch(erro => {
                 messages.mensagemErro("Ocorreu um erro ao tentar deletar o Lançamento")
             })
     }
 
-    
+
 
     state = {
         ano: '',
@@ -116,7 +116,7 @@ class ConsultaLancamentos extends React.Component {
                                     lista={meses} />
 
                             </FormGroup>
-                            <FormGroup htmlFor="inputDescricao"  label="Descrição: ">
+                            <FormGroup htmlFor="inputDescricao" label="Descrição: ">
                                 <input type="text" className="form-control"
                                     value={this.state.descricao} onChange={e => this.setState({ descricao: e.target.value })} id="inputDescricao"
                                     aria-describedby="descricaoHelp" placeholder="Digite a Descricão" />
@@ -150,12 +150,12 @@ class ConsultaLancamentos extends React.Component {
                 </div>
                 <div>
                     <Dialog header=""
-                            visible={this.state.showConfirmDialog}
-                            style={{width:'50vw'}}
-                            footer={footer}
-                            modal={true}
-                            onHide= {() => this.setState({showConfirmDialog:false})}
-                            > Confirma a exclusão deste Lançamento?</Dialog>
+                        visible={this.state.showConfirmDialog}
+                        style={{ width: '50vw' }}
+                        footer={footer}
+                        modal={true}
+                        onHide={() => this.setState({ showConfirmDialog: false })}
+                    > Confirma a exclusão deste Lançamento?</Dialog>
                 </div>
             </Card>
         )
