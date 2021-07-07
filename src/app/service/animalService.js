@@ -19,6 +19,10 @@ class AnimalService extends ApiService {
     return this.delete(`/${id}`)
   }
 
+  obterPorNome(nome){
+    return this.get(`/nome/${nome}`)
+  }
+
   obterSexos() {
     return [
       { label: 'Selecione...' },
