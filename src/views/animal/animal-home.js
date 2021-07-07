@@ -8,6 +8,7 @@ import CadastroAnimal from './cadastro-animal'
 
 
 
+
 class AnimalHome extends React.Component {
   render() {
     return (

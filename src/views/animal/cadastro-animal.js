@@ -1,12 +1,14 @@
 import React from 'react'
 
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import FormGroup from '../../components/form-group'
 import { withRouter } from 'react-router-dom'
-import CpfCnpj from '../../components/inputs/cpfInput'
 import SelectMenu from '../../components/selectMenu'
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import AnimalService from '../../app/service/animalService'
+import ClienteTable from '../cliente/clienteTable';
+import ClienteService from '../../app/service/clienteService';
 
 
 
@@ -25,8 +27,11 @@ class CadastroAnimal extends React.Component {
     alergias: '',
     patologias: '',
     medicamentos: '',
-    idCliente: null
+    idCliente: null,
+    clientes: [],
+    busca: ''
   }
+
 
   handleChange = (event) => {
     const value = event.target.value;
@@ -37,7 +42,15 @@ class CadastroAnimal extends React.Component {
 
   limpaCampos() {
     Object.keys(this.state).forEach(key => {
-      this.setState({ [key]: '' })
+      if (key == "clientes") {
+        this.setState({ [key]: [] })
+
+      }
+      else {
+        this.setState({ [key]: '' })
+      }
+
+
     })
 
   }
@@ -45,6 +58,7 @@ class CadastroAnimal extends React.Component {
   constructor(props) {
     super(props);
     this.service = new AnimalService();
+    this.clienteService = new ClienteService();
   }
 
   componentDidMount() {
@@ -59,21 +73,44 @@ class CadastroAnimal extends React.Component {
     return msgs
   }
 
+  selectAction = async (cliente) => {
+    await this.setState({ idCliente: cliente.id })
+    console.log(this.state.idCliente)
+
+  }
+
+  buscarCliente = () => {
+    this.clienteService.obterPorNomeCpfTelefone(this.state.busca)
+      .then(resposta => {
+        this.setState({ clientes: resposta.data })
+      }).catch(error => {
+        console.log(error)
+      })
+  }
+
   cadastrar = () => {
-    const msgs = this.validar()
+    const msgs = this.validar();
 
     if (msgs && msgs.length > 0) {
       msgs.forEach((msg, index) => {
-        mensagemErro(msg)
+        mensagemErro(msg);
       });
       return false;
     }
 
 
-    const animal = {
+    const { nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente } = this.state;
+    const animal = { nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente };
 
-    }
 
+    this.service.salvar(animal)
+      .then(response => {
+        mensagemSucesso(response)
+        this.limpaCampos()
+        //this.props.history.push('/login')
+      }).catch(error => {
+        mensagemErro(error.response.data)
+      })
 
   }
 
@@ -112,7 +149,7 @@ class CadastroAnimal extends React.Component {
             <FormGroup id="inputRaca" label="Raça: *">
               <input type="text" className="form-control"
                 value={this.state.raca}
-                name="nome"
+                name="raca"
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
@@ -127,7 +164,7 @@ class CadastroAnimal extends React.Component {
           <div className="col-md-1">
             <FormGroup id="inputPorte" label="Porte: *">
               <SelectMenu className="form-control" lista={this.service.obterPortes()}
-                value={this.state.sexo}
+                value={this.state.porte}
                 name="porte"
                 onChange={this.handleChange} />
             </FormGroup>
@@ -144,28 +181,40 @@ class CadastroAnimal extends React.Component {
         <div className="row">
           <div className="col-md-4">
             <FormGroup id="inputAlergia" label="Alergias: *">
-              <textarea class="form-control" name="alergias" rows="4"></textarea>
+              <textarea class="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-4">
             <FormGroup id="inputPatologias" label="Patologias: *">
-              <textarea class="form-control" name="patologias" rows="4"></textarea>
+              <textarea class="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-4">
             <FormGroup id="inputMedicamentos" label="Medicamentos: *">
-              <textarea class="form-control" name="medicamentos" rows="4"></textarea>
+              <textarea class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
         </div>
         <div className="row">
-          <div className="col-md-3">
-            <FormGroup id="inputSexo" label="Selecione o cliente: *">
-              <SelectMenu className="form-control" lista={[{ label: "Selecione..." }]} />
+          <div className="col-md-4">
+            <FormGroup id="inputCliente" label="Pesquise o cliente: *">
+              <div className="input-group mb-4">
+                <div className="form-outline">
+                  <input id="search-input" placeholder="Nome/Telefone/CPF" name="busca" onChange={this.handleChange} type="search" className="form-control" />
+                </div>
+                <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarCliente}>
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              </div>
             </FormGroup>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-5">
+            <ClienteTable telaAnimal={true} selectAction={this.selectAction} clientes={this.state.clientes} />
           </div>
         </div>
         <div className="row">

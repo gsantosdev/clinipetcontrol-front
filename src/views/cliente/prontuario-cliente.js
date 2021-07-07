@@ -27,10 +27,6 @@ class ProntuarioCliente extends React.Component {
     message: ''
   }
 
-  retorno = (dados) => {
-    this.setState({ message: dados })
-  }
-
   constructor() {
     super();
     this.service = new ClienteService();
