@@ -29,7 +29,9 @@ class CadastroAnimal extends React.Component {
     medicamentos: '',
     idCliente: null,
     clientes: [],
-    busca: ''
+    busca: '',
+    clienteProprietario: '',
+    selecionado: false
   }
 
 
@@ -42,7 +44,7 @@ class CadastroAnimal extends React.Component {
 
   limpaCampos() {
     Object.keys(this.state).forEach(key => {
-      if (key == "clientes") {
+      if (key === "clientes") {
         this.setState({ [key]: [] })
 
       }
@@ -61,9 +63,17 @@ class CadastroAnimal extends React.Component {
     this.clienteService = new ClienteService();
   }
 
-  componentDidMount() {
-    console.log(this.props.state)
-    this.setState(this.props.state)
+  async componentDidMount() {
+    if (this.props.editar) {
+      console.log(this.props.state.cliente.id)
+      this.buscarProprietario(this.props.state.cliente.id);
+      this.setState({ selecionado: true })
+      await this.setState({ idCliente: this.props.state.cliente.id })
+    }
+    console.log(this.props.state);
+    await this.setState(this.props.state);
+    console.log(this.state);
+
   }
 
   validar() {
@@ -83,6 +93,15 @@ class CadastroAnimal extends React.Component {
     this.clienteService.obterPorNomeCpfTelefone(this.state.busca)
       .then(resposta => {
         this.setState({ clientes: resposta.data })
+      }).catch(error => {
+        console.log(error)
+      })
+  }
+
+  buscarProprietario = () => {
+    this.clienteService.obterPorId(this.props.state.cliente.id)
+      .then(resposta => {
+        this.setState({ clientes: [resposta.data] })
       }).catch(error => {
         console.log(error)
       })
@@ -112,6 +131,32 @@ class CadastroAnimal extends React.Component {
         mensagemErro(error.response.data)
       })
 
+  }
+  editar = () => {
+
+    const msgs = this.validar()
+
+    if (msgs && msgs.length > 0) {
+      msgs.forEach((msg, index) => {
+        mensagemErro(msg)
+      });
+      return false;
+    }
+
+
+
+    const { id, nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente } = this.state;
+    const animal = { id, nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente };
+    console.log(animal.idCliente)
+
+
+    this.service.editar(this.state.id, animal)
+      .then(response => {
+        mensagemSucesso(response)
+        //this.props.history.push('/login')
+      }).catch(error => {
+        mensagemErro(error.response.data)
+      })
   }
 
   render() {
@@ -181,19 +226,19 @@ class CadastroAnimal extends React.Component {
         <div className="row">
           <div className="col-md-4">
             <FormGroup id="inputAlergia" label="Alergias: *">
-              <textarea class="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
+              <textarea value={this.state.alergias} class="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-4">
             <FormGroup id="inputPatologias" label="Patologias: *">
-              <textarea class="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
+              <textarea value={this.state.patologias} class="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-4">
             <FormGroup id="inputMedicamentos" label="Medicamentos: *">
-              <textarea class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
+              <textarea value={this.state.medicamentos} class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
@@ -214,7 +259,7 @@ class CadastroAnimal extends React.Component {
         </div>
         <div className="row">
           <div className="col-md-5">
-            <ClienteTable telaAnimal={true} selectAction={this.selectAction} clientes={this.state.clientes} />
+            <ClienteTable telaAnimal={true} selecionado={this.state.selecionado} selectAction={this.selectAction} clientes={this.state.clientes} />
           </div>
         </div>
         <div className="row">

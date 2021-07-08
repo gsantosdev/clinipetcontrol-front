@@ -15,7 +15,7 @@ export default props => {
                     {!props.telaAnimal ? <div>
                         <button type="button" onClick={e => props.editarAction(cliente)} className="btn btn-primary">Editar</button>
                         <button type="button" onClick={e => props.deleteAction(cliente)} className="btn btn-danger">Deletar</button></div>
-                        : <input name="cliente" type="radio" onClick={e => props.selectAction(cliente)}></input>}
+                        : <input name="cliente" type="radio" defaultChecked={props.selecionado} onClick={e => props.selectAction(cliente)}></input>}
 
                 </td>
             </tr>

@@ -134,7 +134,7 @@ class ProntuarioAnimal extends React.Component {
 
             onChange={e => this.setState({ showConfirmDialogEditar: false })}
             visible={this.state.showConfirmDialogEditar}
-            style={{ width: '80vw' }}
+            style={{ width: '90vw' }}
             footer={footerDialogEditar}
             modal={true}
             onHide={() => this.setState({ showConfirmDialogEditar: false })}>
