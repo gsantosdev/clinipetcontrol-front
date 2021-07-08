@@ -32,6 +32,9 @@ class AnimalHome extends React.Component {
 
             </Card>
           </Tab>
+          <Tab eventKey="especies" title="Espécies">
+            
+          </Tab>
         </Tabs>
 
 

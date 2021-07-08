@@ -11,16 +11,19 @@ class ClienteService extends ApiService {
         return this.post('/', cliente)
     }
 
-    obterPorNomeCpfTelefone(busca) {
-        return this.get(`?busca=${busca}`)
-    }
-
     editar(id, cliente) {
         return this.put(`/${id}`, cliente)
     }
 
     deletar(id) {
         return this.delete(`/${id}`)
+    }
+
+    obterPorNomeCpfTelefone(busca) {
+        return this.get(`?busca=${busca}`)
+    }
+    obterPorId(id){
+        return this.get(`/${id}`)
     }
 
     obterUFs() {

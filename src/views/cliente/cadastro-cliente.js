@@ -10,7 +10,6 @@ import { cpf } from 'cpf-cnpj-validator';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import moment from 'moment'
 import { onlyNumbers } from '@brazilian-utils/brazilian-utils'
-import { limpaCampos } from '../../utils/utils'
 
 
 class CadastroCliente extends React.Component {
@@ -224,7 +223,7 @@ class CadastroCliente extends React.Component {
                             <input id="dataNascimento" type="date" className="form-control"
                                 value={moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD")}
                                 onChange={async e => {
-                                    await this.setState({
+                                     await this.setState({
                                         dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
                                     })
                                     console.log(this.state.dataNascimento)
