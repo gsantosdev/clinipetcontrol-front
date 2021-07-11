@@ -16,10 +16,10 @@ function Rotas() {
             <Switch>
                 <Route path="/home" component={Home} />
                 <Route path="/login" component={Login} />
-                <Route path="/cadastro-usuarios" component={CadastroUsuario} />
                 <Route path="/consulta-lancamentos" component={ConsultaLancamentos} />
                 <Route path="/cliente" component={ClienteHome} />
                 <Route path="/animal" component={AnimalHome} />
+                <Route path="/cadastro-usuarios" component={CadastroUsuario} />
 
             </Switch>
         </HashRouter>

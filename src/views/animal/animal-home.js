@@ -4,6 +4,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import CadastroAnimal from './cadastro-animal'
+import EspeciesHome from './especies/especies-home'
 import ProntuarioAnimal from './prontuario-animal'
 
 
@@ -33,7 +34,7 @@ class AnimalHome extends React.Component {
             </Card>
           </Tab>
           <Tab eventKey="especies" title="Espécies">
-            
+            <EspeciesHome/>
           </Tab>
         </Tabs>
 
