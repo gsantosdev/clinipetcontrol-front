@@ -1,4 +1,4 @@
-import { faCalendar, faDog, faHandHoldingMedical, faHome, faNotesMedical, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
+import {faAddressCard, faCalendar, faDog, faHandHoldingMedical, faHome, faNotesMedical, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import SideBarItem from './sidebarItem'
 
@@ -19,6 +19,7 @@ function SideBar() {
 
       <SideBarItem icon={faDog} href="#/animal" label="Animais" />
       <SideBarItem icon={faHandHoldingMedical} href="#/" label="Serviços" />
+      <SideBarItem icon={faAddressCard} href="#/funcionario" label="Funcionários" />
 
       <SideBarItem icon={faCalendar} href="#/" label="Agenda" />
       <SideBarItem icon={faNotesMedical} href="#/" label="Relatórios" />

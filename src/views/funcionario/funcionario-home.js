@@ -3,28 +3,23 @@ import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
-import CadastroAnimal from './cadastro-animal'
-import EspeciesHome from './especie/especies-home'
-import ProntuarioAnimal from './prontuario-animal'
+import CadastroFuncionario from './cadastro-funcionario'
 
 
 
-
-
-class AnimalHome extends React.Component {
+class FuncionarioHome extends React.Component {
   render() {
     return (
       <div className="container-fluid">
 
         <Tabs defaultActiveKey="cadastro" id="uncontrolled-tab">
           <Tab eventKey="cadastro" title="Cadastro">
-            <Card title="Cadastro de Animais">
-              <CadastroAnimal />
+            <Card title="Cadastro de Funcionarios">
+              <CadastroFuncionario />
             </Card>
           </Tab>
           <Tab eventKey="prontuario" title="Prontuário">
             <Card title="Prontuário">
-              <ProntuarioAnimal />
 
             </Card>
           </Tab>
@@ -32,9 +27,6 @@ class AnimalHome extends React.Component {
             <Card title="Agendamentos">
 
             </Card>
-          </Tab>
-          <Tab eventKey="especies" title="Espécies">
-            <EspeciesHome/>
           </Tab>
         </Tabs>
 
@@ -46,4 +38,4 @@ class AnimalHome extends React.Component {
 }
 
 
-export default withRouter(AnimalHome)
+export default withRouter(FuncionarioHome)

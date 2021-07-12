@@ -314,7 +314,7 @@ class CadastroCliente extends React.Component {
                             <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
                         </div>
                         <div className="p-1">
-                            <button hidden={this.props.editar} onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
+                            <button hidden={!this.props.editar} onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
                         </div>
                     </div>
                 </div>
