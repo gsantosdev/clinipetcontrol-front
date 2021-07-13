@@ -223,7 +223,7 @@ class CadastroCliente extends React.Component {
                             <input id="dataNascimento" type="date" className="form-control"
                                 value={moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD")}
                                 onChange={async e => {
-                                     await this.setState({
+                                    await this.setState({
                                         dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
                                     })
                                     console.log(this.state.dataNascimento)
@@ -312,9 +312,6 @@ class CadastroCliente extends React.Component {
                     <div className="d-flex justify-content-end">
                         <div className="p-1">
                             <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
-                        </div>
-                        <div className="p-1">
-                            <button hidden={!this.props.editar} onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
                         </div>
                     </div>
                 </div>

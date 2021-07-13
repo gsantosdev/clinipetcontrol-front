@@ -87,7 +87,7 @@ class ProntuarioAnimal extends React.Component {
 
     const footerDialogEditar = (
       <div>
-        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={e => this.setState({ showConfirmDialogEditar: false })} />
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={e => this.setState({ busca: '', animais: [], showConfirmDialogEditar: false })} />
       </div>
     );
 
@@ -100,7 +100,7 @@ class ProntuarioAnimal extends React.Component {
               <FormGroup label="Pesquisar Animal">
                 <div className="input-group">
                   <div className="form-outline">
-                    <input id="search-input" placeholder="Nome/Telefone/CPF" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
+                    <input id="search-input" value={this.state.busca} placeholder="Nome do animal" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
                   <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
                     <FontAwesomeIcon icon={faSearch} />
@@ -131,13 +131,12 @@ class ProntuarioAnimal extends React.Component {
           </Dialog>
 
           <Dialog
-
             onChange={e => this.setState({ showConfirmDialogEditar: false })}
             visible={this.state.showConfirmDialogEditar}
             style={{ width: '90vw' }}
             footer={footerDialogEditar}
             modal={true}
-            onHide={() => this.setState({ showConfirmDialogEditar: false })}>
+            onHide={() => this.setState({ busca: '', animais: [], showConfirmDialogEditar: false })}>
             <Card title="Atualize os dados do animal">
               <CadastroAnimal editar={true} state={this.state.animalAEditar} />
             </Card>

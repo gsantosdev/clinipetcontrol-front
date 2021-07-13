@@ -8,8 +8,6 @@ import { mensagemErro, mensagemSucesso } from '../components/toastr';
 
 class CadastroUsuario extends React.Component {
 
-
-
     state = {
         nome: '',
         email: '',
@@ -49,7 +47,7 @@ class CadastroUsuario extends React.Component {
         const msgs = this.validar();
 
         if (msgs && msgs.length > 0) {
-            msgs.forEach( (msg, index) => {
+            msgs.forEach((msg, index) => {
                 mensagemErro(msg)
             });
             return false;

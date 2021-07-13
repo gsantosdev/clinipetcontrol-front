@@ -225,19 +225,19 @@ class CadastroAnimal extends React.Component {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <FormGroup id="inputAlergia" label="Alergias: *">
+            <FormGroup id="inputAlergia" label="Alergias: ">
               <textarea value={this.state.alergias} class="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-4">
-            <FormGroup id="inputPatologias" label="Patologias: *">
+            <FormGroup id="inputPatologias" label="Patologias: ">
               <textarea value={this.state.patologias} class="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-4">
-            <FormGroup id="inputMedicamentos" label="Medicamentos: *">
+            <FormGroup id="inputMedicamentos" label="Medicamentos: ">
               <textarea value={this.state.medicamentos} class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
@@ -266,9 +266,6 @@ class CadastroAnimal extends React.Component {
           <div className="d-flex justify-content-end">
             <div className="p-1">
               <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
-            </div>
-            <div className="p-1">
-              <button hidden={!this.props.editar} onClick={this.cancelar} type="button" className="btn btn-danger">Cancelar</button>
             </div>
           </div>
         </div>

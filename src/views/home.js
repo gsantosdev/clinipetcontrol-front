@@ -7,7 +7,7 @@ import localStorageService from "../app/service/localstorageService";
 class Home extends React.Component {
 
     state = {
-        saldo: 0
+        numeroClientes: 0
     }
 
     constructor() {
@@ -24,13 +24,13 @@ class Home extends React.Component {
             this.props.history.push('/login')
         }
         else {
-            this.usuarioService
-                .obterSaldoPorUsuario(usuarioLogado.id)
-                .then(response => {
-                    this.setState({ saldo: response.data })
-                }).catch(error => {
-                    console.error(error.response)
-                })
+            // this.usuarioService
+            //     .obterSaldoPorUsuario(usuarioLogado.id)
+            //     .then(response => {
+            //         this.setState({ saldo: response.data })
+            //     }).catch(error => {
+            //         console.error(error.response)
+            //     })
         }
 
 
@@ -41,15 +41,12 @@ class Home extends React.Component {
             <div className="jumbotron">
                 <h1 className="display-3">Bem vindo!</h1>
                 {/* */}
-                <p className="lead">Número de clientes cadastrados:  {this.state.saldo}</p>
+                <p className="lead">Número de clientes cadastrados:  {this.state.numeroClientes}</p>
                 <hr className="my-4" />
                 <p className="lead">
                     <a className="btn btn-primary btn-lg"
-                        href="#/cadastro-usuarios" role="button">
+                        href="#/cliente" role="button">
                         <i className="fa fa-users"></i>  Cadastrar Cliente</a>
-                    <a className="btn btn-danger btn-lg"
-                        href="https://bootswatch.com/flatly/#" role="button">
-                        <i className="fa fa-users"></i> Visualizar Agendamentos</a>
                 </p>
             </div>
         )
