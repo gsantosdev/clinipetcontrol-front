@@ -13,8 +13,8 @@ export default props => {
 
                 <td>
 
-                    <button type="button" onClick={e => props.editarAction(cliente)} className="btn btn-primary">Editar</button>
-                    <button type="button" onClick={e => props.deleteAction(cliente)} className="btn btn-danger">Deletar</button>
+                    <button type="button" onClick={e => props.editarAction(funcionario)} className="btn btn-primary">Editar</button>
+                    <button type="button" onClick={e => props.deleteAction(funcionario)} className="btn btn-danger">Deletar</button>
 
 
                 </td>
@@ -29,9 +29,9 @@ export default props => {
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Sexo</th>
                         <th scope="col">Telefone</th>
-                        <th scope="col">Ações</th>
+                        <th scope="col">Sexo</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>

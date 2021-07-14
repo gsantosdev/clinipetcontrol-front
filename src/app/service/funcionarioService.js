@@ -23,6 +23,11 @@ class FuncionarioService extends ApiService {
     return this.get(`/${id}`)
   }
 
+  obterPorNomeTelefone(busca) {
+
+    return this.get(`?busca=${busca}`)
+  }
+
   listar() {
     return this.get(`/listar`)
   }
