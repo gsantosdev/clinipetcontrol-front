@@ -165,23 +165,25 @@ class CadastroAnimal extends React.Component {
     return (
       <div className="row mb-3">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-6 col-sm-12 col-lg-4 col-xl-5">
             <FormGroup id="inputNome" label="Nome do animal: *">
               <input type="text" className="form-control"
                 value={this.state.nome}
                 name="nome"
-                onChange={this.handleChange} />
+                onChange={this.handleChange} 
+                />
             </FormGroup>
           </div>
-          <div className="col-md-1">
+          <div className="col-md-6 col-sm-12 col-lg-3 col-xl-2">
             <FormGroup id="inputSexo" label="Sexo: *">
               <SelectMenu className="form-control" lista={this.service.obterSexos()}
                 value={this.state.sexo}
                 name="sexo"
-                onChange={this.handleChange} />
+                onChange={this.handleChange}
+                style={{minWidth:'5rem'}} />
             </FormGroup>
           </div>
-          <div className="col-md-1">
+          <div className="col-md-6 col-sm-12 col-lg-2 col-xl-2">
             <FormGroup id="inputIdade" label="Idade: *">
               <input type="number" min="0" onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()} className="form-control"
                 value={this.state.idade}
@@ -190,7 +192,7 @@ class CadastroAnimal extends React.Component {
             </FormGroup>
           </div>
 
-          <div className="col-md-2">
+          <div className="col-md-6 col-sm-12 col-lg-3">
             <FormGroup id="inputRaca" label="Raça: *">
               <input type="text" className="form-control"
                 value={this.state.raca}
@@ -198,7 +200,7 @@ class CadastroAnimal extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-6 col-sm-12 col-lg-4">
             <FormGroup id="inputEspecie" label="Espécie: *">
               <input type="text" className="form-control"
                 value={this.state.especie}
@@ -206,7 +208,7 @@ class CadastroAnimal extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-1">
+          <div className="col-md-6 col-sm-12 col-lg-3">
             <FormGroup id="inputPorte" label="Porte: *">
               <SelectMenu className="form-control" lista={this.service.obterPortes()}
                 value={this.state.porte}
@@ -214,7 +216,7 @@ class CadastroAnimal extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-12 col-sm-12 col-lg-5">
             <FormGroup id="inputCor" label="Cor: *">
               <input type="text" className="form-control"
                 value={this.state.cor}
@@ -224,27 +226,27 @@ class CadastroAnimal extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-12 col-lg-4">
             <FormGroup id="inputAlergia" label="Alergias: ">
               <textarea value={this.state.alergias} class="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
-          <div className="col-md-4">
+          <div className="col-md-12 col-lg-4">
             <FormGroup id="inputPatologias" label="Patologias: ">
               <textarea value={this.state.patologias} class="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
-          <div className="col-md-4">
+          <div className="col-md-12 col-lg-4">
             <FormGroup id="inputMedicamentos" label="Medicamentos: ">
-              <textarea value={this.state.medicamentos} class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
+              <textarea  value={this.state.medicamentos} class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
         </div>
         <div className="row">
-          <div className="col-md-4">
+          <div className=" col-md-12 col-lg-4">
             <FormGroup id="inputCliente" label="Pesquise o cliente: *">
               <div className="input-group mb-4">
                 <div className="form-outline">
@@ -258,7 +260,7 @@ class CadastroAnimal extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-5">
+          <div className=" col-12">
             <ClienteTable telaAnimal={true} selecionado={this.state.selecionado} selectAction={this.selectAction} clientes={this.state.clientes} />
           </div>
         </div>

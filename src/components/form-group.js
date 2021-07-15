@@ -2,7 +2,7 @@ import React from 'react'
 
 function FormGroup(props) {
     return (
-        <div className="form-group">
+        <div className="form-group" style={{  margin: '0.2rem', minWidth: 'fit-content' }}>
             <label htmlFor={props.htmlFor}>{props.label}</label>
             {props.children}
 

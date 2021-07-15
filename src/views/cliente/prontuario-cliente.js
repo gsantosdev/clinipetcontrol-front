@@ -108,12 +108,8 @@ class ProntuarioCliente extends React.Component {
                 </div>
               </FormGroup>
 
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="bs-component">
-                    <ClienteTable clientes={this.state.clientes} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
-                  </div>
-                </div>
+              <div>
+                <ClienteTable clientes={this.state.clientes} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
               </div>
             </div>
 

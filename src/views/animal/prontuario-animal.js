@@ -95,7 +95,7 @@ class ProntuarioAnimal extends React.Component {
     return (
       <>
         <div className="p-3">
-          <div className="d-flex flex-row p-3">
+          <div className="d-flex flex-row mb-3">
             <div className="col-md-12">
               <FormGroup label="Pesquisar Animal">
                 <div className="input-group">
@@ -108,14 +108,11 @@ class ProntuarioAnimal extends React.Component {
                 </div>
               </FormGroup>
 
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="bs-component">
-                    <AnimalTable animais={this.state.animais} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar}></AnimalTable>
-                  </div>
-                </div>
+              <div>
+                <AnimalTable animais={this.state.animais} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
               </div>
             </div>
+
 
           </div>
 
