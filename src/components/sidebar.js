@@ -21,7 +21,7 @@ function SideBar() {
       <SideBarItem icon={faHandHoldingMedical} href="#/servico" label="Serviços" />
       <SideBarItem icon={faAddressCard} href="#/funcionario" label="Funcionários" />
 
-      <SideBarItem icon={faCalendar} href="#/" label="Agenda" />
+      <SideBarItem icon={faCalendar} href="#/agendamento" label="Agenda" />
       <SideBarItem icon={faNotesMedical} href="#/" label="Relatórios" />
       <SideBarItem icon={faUser} href="#/cadastro-usuarios" label="Usuarios" />
 

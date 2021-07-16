@@ -7,10 +7,11 @@ import CadastroUsuario from '../views/cadastroUsuario'
 import ConsultaLancamentos from '../views/lancamentos/consulta-lancamentos'
 import ClienteHome from '../views/cliente/cliente-home'
 import FuncionarioHome from '../views/funcionario/funcionario-home'
+import AgendamentoHome from '../views/agendamento/agenda-home'
 
 import { Route, Switch, HashRouter, Redirect } from 'react-router-dom'
 import AnimalHome from '../views/animal/animal-home'
-import ServicoHome from '../views/Servico/servico-home'
+import ServicoHome from '../views/servico/servico-home'
 
 function Rotas() {
     return (
@@ -24,6 +25,7 @@ function Rotas() {
                 <Route path="/cadastro-usuarios" component={CadastroUsuario} />
                 <Route path="/funcionario" component={FuncionarioHome} />
                 <Route path="/servico" component={ServicoHome} />
+                <Route path="/agendamento" component={AgendamentoHome}/>
                 <Redirect exact from="/" to="home" />
             </Switch>
         </HashRouter>
