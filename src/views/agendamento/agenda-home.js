@@ -1,29 +1,34 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import Card from '../../components/card';
+import { Tabs, Tab } from 'react-bootstrap';
+import MarcarAgendamento from './marcar';
 
 class AgendamentoHome extends React.Component {
 
 
   render() {
     return (
-      <Card title="Agendamento">
+      <div className="container-fluid">
 
-        <div className="row d-flex justify-content-center">
-          <h4 className="row pb-4">Selecione uma opção</h4>
-          <div className="col-sm-12 col-md-4 col-lg-3 col-xl-3">
-            <button className="btn btn-success" type="button" > Marcar Agendamento</button>
-          </div>
-          <div className="col-sm-12 col-md-4 col-lg-3 col-xl-3">
-            <button className="btn btn-warning" type="button" >Remarcar Reagendamento  </button>
-          </div>
-          <div className="col-sm-12 col-md-4 col-lg-3 col-xl-3">
-            <button className="btn btn-danger" type="button" > Desmarcar Reagendamento</button>
-          </div>
+      <Tabs defaultActiveKey="marcar" id="uncontrolled-tab">
+        <Tab eventKey="marcar" title="Marcar">
+          <Card title="Marcar Agendamento">
+            <MarcarAgendamento/>
+          </Card>
+        </Tab>
+        <Tab eventKey="remarcar" title="Remarcar">
+          <Card title="Remarcar Agendamento">
+           
+          </Card>
+        </Tab>
+        <Tab eventKey="desmarcar" title="Desmarcar">
+          <Card title="Desmarcar Agendamento">
 
-
-        </div>
-      </Card>
+          </Card>
+        </Tab>
+      </Tabs>
+      </div>
     );
   }
 }
