@@ -1,27 +1,23 @@
 import ApiService from "../apiservice";
 
 
-class AnimalService extends ApiService {
+class AgendamentoService extends ApiService {
 
   constructor() {
-    super('/api/animais')
+    super('/api/agendamentos')
   }
 
-  salvar(animal) {
-    return this.post('/', animal)
+  salvar(agendamento) {
+    return this.post('/', agendamento)
   }
 
-  editar(id, animal) {
-    return this.put(`/${id}`, animal)
+  editar(id, agendamento) {
+    return this.put(`/${id}`, agendamento)
   }
 
   deletar(id) {
     return this.delete(`/${id}`)
   }
-
-  obterPorNome(busca) {
-    return this.get(`?busca=${busca}`)
-}
 
   obterSexos() {
     return [
@@ -44,4 +40,4 @@ class AnimalService extends ApiService {
 
 }
 
-export default AnimalService
+export default AgendamentoService

@@ -11,11 +11,13 @@ export default props => {
                 <td>{funcionario.telefone}</td>
                 <td>{funcionario.sexo}</td>
 
+
                 <td>
-
-                    <button type="button" onClick={e => props.editarAction(funcionario)} className="btn btn-primary">Editar</button>
-                    <button type="button" onClick={e => props.deleteAction(funcionario)} className="btn btn-danger">Deletar</button>
-
+                    {props.telaAgendamento ?
+                        <input name="funcionario" type="radio" defaultChecked={props.selecionado} onClick={e => props.selectAction(funcionario)}></input> : <div>
+                            <button type="button" onClick={e => props.editarAction(funcionario)} className="btn btn-primary">Editar</button>
+                            <button type="button" onClick={e => props.deleteAction(funcionario)} className="btn btn-danger">Deletar</button></div>
+                    }
 
                 </td>
             </tr >

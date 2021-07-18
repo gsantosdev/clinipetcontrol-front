@@ -24,7 +24,6 @@ class FuncionarioService extends ApiService {
   }
 
   obterPorNomeTelefone(busca) {
-
     return this.get(`?busca=${busca}`)
   }
 

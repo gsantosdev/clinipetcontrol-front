@@ -11,8 +11,10 @@ export default props => {
 
 
                 <td>
-                    <button type="button" onClick={e => props.editarAction(servico)} className="btn btn-primary">Editar</button>
-                    <button type="button" onClick={e => props.deleteAction(servico)} className="btn btn-danger">Deletar</button>
+                    {!props.telaAgendamento ? <div>
+                        <button type="button" onClick={e => props.editarAction(servico)} className="btn btn-primary">Editar</button>
+                        <button type="button" onClick={e => props.deleteAction(servico)} className="btn btn-danger">Deletar</button></div>
+                        : <input name="servico" type="radio" onClick={e => props.selectAction(servico)}></input>}
 
                 </td>
             </tr>

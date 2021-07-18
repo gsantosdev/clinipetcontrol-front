@@ -130,7 +130,6 @@ class ServicoHome extends React.Component {
       }).catch(error => {
         console.log(error)
       })
-
   }
 
   async componentDidMount() {

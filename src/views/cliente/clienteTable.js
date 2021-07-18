@@ -4,21 +4,22 @@ export default props => {
 
     const rows = props.clientes.map((cliente, index) => {
         return (
-                <tr key={index}>
-                    <td>{cliente.nome}</td>
-                    <td>{cliente.cpf}</td>
-                    <td>{cliente.email}</td>
-                    <td>{cliente.telefone}</td>
+            <tr key={index}>
+                <td>{cliente.nome}</td>
+                <td>{cliente.cpf}</td>
+                <td>{cliente.email}</td>
+                <td>{cliente.telefone}</td>
 
-                    <td>
-                        {!props.telaAnimal ? <div>
+                <td>
+                    {props.telaAnimal ?
+                        <input name="cliente" type="radio" defaultChecked={props.selecionado} onClick={e => props.selectAction(cliente)}></input> : <div>
                             <button type="button" onClick={e => props.editarAction(cliente)} className="btn btn-primary">Editar</button>
                             <button type="button" onClick={e => props.deleteAction(cliente)} className="btn btn-danger">Deletar</button></div>
-                            : <input name="cliente" type="radio" defaultChecked={props.selecionado} onClick={e => props.selectAction(cliente)}></input>}
+                    }
 
-                    </td>
-                </tr>
-           
+                </td>
+            </tr>
+
         )
     })
     return (

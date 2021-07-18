@@ -25,7 +25,6 @@ class AnimalHome extends React.Component {
           <Tab eventKey="prontuario" title="Prontuário">
             <Card title="Prontuário">
               <ProntuarioAnimal />
-
             </Card>
           </Tab>
           <Tab eventKey="contact" title="Agendamentos">
