@@ -19,24 +19,9 @@ class AgendamentoService extends ApiService {
     return this.delete(`/${id}`)
   }
 
-  obterSexos() {
-    return [
-      { label: 'Selecione...' },
-      { label: 'Macho' },
-      { label: 'Fêmea' }
-    ]
+  listar() {
+    return this.get("/listar")
   }
-
-  obterPortes() {
-    return [
-      { label: 'Selecione...' },
-      { label: 'Grande' },
-      { label: 'Médio' },
-      { label: 'Pequeno' }
-    ]
-  }
-
-
 
 }
 
