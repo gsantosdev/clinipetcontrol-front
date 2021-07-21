@@ -12,7 +12,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import AnimalService from '../../app/service/animalService';
 import FuncionarioService from '../../app/service/funcionarioService';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
-
+import SelectMenu from '../../components/selectMenu';
 
 class MarcarAgendamento extends React.Component {
 
@@ -61,7 +61,7 @@ class MarcarAgendamento extends React.Component {
     console.log(this.state);
   }
 
-  limpaCampos(){
+  limpaCampos() {
 
   }
 
@@ -119,10 +119,6 @@ class MarcarAgendamento extends React.Component {
       })
   }
 
-
-
-
-
   selectActionServico = async (servico) => {
     await this.setState({ idServico: servico.id })
     console.log(this.state.idServico)
@@ -158,8 +154,8 @@ class MarcarAgendamento extends React.Component {
               </FormGroup>
             </div>
             <div className="col-12">
-              <FormGroup id="inputDuracao" label="Duração Aproximada (Horas/Minutos) *">
-                <input type="time" className="form-control"
+              <FormGroup id="inputDuracao" label="Duração Aproximada*">
+                <SelectMenu lista={this.service.obterDuracoes()} className="form-control"
                   value={this.state.duracaoAprox}
                   name="duracaoAprox"
                   onChange={this.handleChange}

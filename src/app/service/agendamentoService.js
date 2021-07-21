@@ -23,6 +23,16 @@ class AgendamentoService extends ApiService {
     return this.get("/listar")
   }
 
+  obterDuracoes() {
+    return [
+      { label: 'Selecione...' },
+      { label: '15 minutos', value: 15 },
+      { label: '30 minutos', value: 30 },
+      { label: '30 minutos', value: 45 },
+      { label: '1 hora', value: 60 }
+    ]
+  }
+
 }
 
 export default AgendamentoService

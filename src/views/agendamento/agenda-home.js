@@ -31,6 +31,7 @@ class AgendamentoHome extends React.Component {
           <Tab eventKey="agenda" title="Visualizar Agenda">
             <Card title="Agenda">
               <AgendaCalendar />
+
             </Card>
           </Tab>
         </Tabs>

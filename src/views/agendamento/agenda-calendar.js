@@ -1,16 +1,17 @@
+import moment from 'moment';
+import 'moment/locale/pt-br';
 import React from 'react';
-import { Inject, Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment'
-import 'moment/locale/pt-br'
-import { withRouter } from 'react-router-dom';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { withRouter } from 'react-router-dom';
 import AgendamentoService from '../../app/service/agendamentoService';
 
 
 class AgendaCalendar extends React.Component {
 
   state = {
-    agendamentos: []
+    agendamentos: [],
+    events: []
   }
 
   constructor() {
@@ -19,46 +20,66 @@ class AgendaCalendar extends React.Component {
   }
 
 
-
-
-  listarAgendamentos = () => {
-    this.service.listar()
+  listarAgendamentos = async () => {
+    await this.service.listar()
       .then(resposta => {
         this.setState({ agendamentos: resposta.data })
+        console.log(this.state.agendamentos)
+        Object.keys(resposta.data).forEach(index => {
+          this.state.events.push({
+            id: resposta.data[index].id,
+            title: resposta.data[index].title,
+            start: moment(resposta.data[index].start, "YYYY-MM-DDTHH:mm:ss")._d,
+            end: moment(resposta.data[index].end, "YYYY-MM-DDTHH:mm:ss")._d
+          })
+        })
       }).catch(error => {
         console.log(error)
       })
-
+    this.forceUpdate();
   }
 
-  async componentDidMount() {
-    await this.listarAgendamentos();
+  componentDidMount() {
+
+    this.listarAgendamentos();
+
   }
 
   render() {
+
     const localizer = momentLocalizer(moment);
     return (
+      <>
 
-      <div style={{ height: '500pt' }} className="row mb-3">
-        <Calendar
-          localizer={localizer}
-          defaultView="month"
-          startAcessor="start"
-          endAcessoor="end"
-          defaultDate={moment().toDate()}
-          events={this.state.agendamentos}
-          messages={{
-            next: "Próximo",
-            previous: "Anterior",
-            today: "Hoje",
-            month: "Mês",
-            week: "Semana",
-            day: "Dia"
-          }}
-        >
+        <div style={{ height: '500pt' }} className="row mb-3">
 
-        </Calendar>
-      </div>
+          <Calendar
+            localizer={localizer}
+            views={['month', 'day', 'week']}
+            startAcessor="start"
+            step={15}
+            endAcessoor="end"
+            defaultView="day"
+            defaultDate={moment().toDate()}
+            events={this.state.events}
+            messages={{
+              next: "Próximo",
+              previous: "Anterior",
+              today: "Hoje",
+              month: "Mês",
+              week: "Semana",
+              day: "Dia",
+              date: "Data",
+              event: "Agendamento",
+              time: "Duração"
+            }}
+            dayLayoutAlgorithm="no-overlap"
+
+          >
+
+          </Calendar>
+        </div>
+      </>
     )
   }
 
