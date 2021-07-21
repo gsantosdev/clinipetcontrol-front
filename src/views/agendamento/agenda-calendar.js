@@ -46,7 +46,6 @@ class AgendaCalendar extends React.Component {
   }
 
   render() {
-
     const localizer = momentLocalizer(moment);
     return (
       <>
