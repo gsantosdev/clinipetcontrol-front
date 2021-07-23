@@ -56,7 +56,7 @@ class AgendaCalendar extends React.Component {
             localizer={localizer}
             views={['month', 'day', 'week']}
             startAcessor="start"
-            step={15}
+            step={10}
             endAcessoor="end"
             defaultView="day"
             defaultDate={moment().toDate()}
@@ -70,7 +70,11 @@ class AgendaCalendar extends React.Component {
               day: "Dia",
               date: "Data",
               event: "Agendamento",
-              time: "Duração"
+              time: "Duração",
+              showMore: function showMore(total) {
+                return '+' + total + ' agendamentos';
+              }
+
             }}
             dayLayoutAlgorithm="no-overlap"
 

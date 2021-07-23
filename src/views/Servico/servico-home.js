@@ -190,7 +190,7 @@ class ServicoHome extends React.Component {
           </div>
         </Card>
         {!this.props.editar ? <Card title="Todos serviços">
-          <div className="col-md-5">
+          <div className="col-md-12">
             <ServicoTable editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} servicos={this.state.servicos} />
           </div>
         </Card> : null}

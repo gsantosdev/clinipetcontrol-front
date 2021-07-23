@@ -18,7 +18,7 @@ class AgendamentoHome extends React.Component {
               <MarcarAgendamento />
             </Card>
           </Tab>
-          <Tab eventKey="remarcar" title="Remarcar">
+          {/*<Tab eventKey="remarcar" title="Remarcar">
             <Card title="Remarcar Agendamento">
 
             </Card>
@@ -28,7 +28,8 @@ class AgendamentoHome extends React.Component {
 
             </Card>
           </Tab>
-          <Tab eventKey="agenda" title="Visualizar Agenda">
+    */}
+          <Tab eventKey="agenda" title="Visualizar Agendamentos">
             <Card title="Agenda">
               <AgendaCalendar />
 
