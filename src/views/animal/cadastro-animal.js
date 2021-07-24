@@ -9,6 +9,7 @@ import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import AnimalService from '../../app/service/animalService'
 import ClienteTable from '../cliente/clienteTable';
 import ClienteService from '../../app/service/clienteService';
+import EspecieService from '../../app/service/especieService';
 
 
 
@@ -30,6 +31,7 @@ class CadastroAnimal extends React.Component {
     idCliente: null,
     clientes: [],
     busca: '',
+    especies:[],
     clienteProprietario: '',
     selecionado: false
   }
@@ -46,21 +48,18 @@ class CadastroAnimal extends React.Component {
     Object.keys(this.state).forEach(key => {
       if (key === "clientes") {
         this.setState({ [key]: [] })
-
       }
       else {
         this.setState({ [key]: '' })
       }
-
-
     })
-
   }
 
   constructor(props) {
     super(props);
     this.service = new AnimalService();
     this.clienteService = new ClienteService();
+    this.especieService = new EspecieService();
   }
 
   async componentDidMount() {
@@ -170,8 +169,8 @@ class CadastroAnimal extends React.Component {
               <input type="text" className="form-control"
                 value={this.state.nome}
                 name="nome"
-                onChange={this.handleChange} 
-                />
+                onChange={this.handleChange}
+              />
             </FormGroup>
           </div>
           <div className="col-md-6 col-sm-12 col-lg-3 col-xl-2">
@@ -180,7 +179,7 @@ class CadastroAnimal extends React.Component {
                 value={this.state.sexo}
                 name="sexo"
                 onChange={this.handleChange}
-                style={{minWidth:'5rem'}} />
+                style={{ minWidth: '5rem' }} />
             </FormGroup>
           </div>
           <div className="col-md-6 col-sm-12 col-lg-2 col-xl-2">
@@ -202,7 +201,7 @@ class CadastroAnimal extends React.Component {
           </div>
           <div className="col-md-6 col-sm-12 col-lg-4">
             <FormGroup id="inputEspecie" label="Espécie: *">
-              <input type="text" className="form-control"
+              <SelectMenu className="form-control" lista={[]}
                 value={this.state.especie}
                 name="especie"
                 onChange={this.handleChange} />
@@ -240,7 +239,7 @@ class CadastroAnimal extends React.Component {
           </div>
           <div className="col-md-12 col-lg-4">
             <FormGroup id="inputMedicamentos" label="Medicamentos: ">
-              <textarea  value={this.state.medicamentos} class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
+              <textarea value={this.state.medicamentos} class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>

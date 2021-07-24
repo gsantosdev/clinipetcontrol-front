@@ -5,7 +5,7 @@ export default props => {
     const rows = props.funcionarios.map((funcionario, index) => {
         return (
 
-            <tr key={index}>
+            <tr style={{backgroundColor: index % 2 ? "rgb(250,250,250)": "rgb(241,241,241"}} key={index}>
                 <td>{funcionario.nome}</td>
                 <td>{funcionario.email}</td>
                 <td>{funcionario.telefone}</td>

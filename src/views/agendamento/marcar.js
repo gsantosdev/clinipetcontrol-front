@@ -17,6 +17,9 @@ import SelectMenu from '../../components/selectMenu';
 class MarcarAgendamento extends React.Component {
 
 
+
+
+
   state = {
     dataHorario: '',
     duracaoAprox: null,
@@ -29,6 +32,7 @@ class MarcarAgendamento extends React.Component {
     funcionarios: [],
     buscaAnimal: '',
     buscaFuncionario: '',
+    todayDate: ''
 
   }
 
@@ -38,6 +42,13 @@ class MarcarAgendamento extends React.Component {
     this.servicoService = new ServicoService();
     this.animalService = new AnimalService();
     this.funcionarioService = new FuncionarioService();
+
+  }
+
+  getTodayDate() {
+    var d = new Date();
+    d.setUTCHours(0, 0, 0, 0);
+    this.setState({ todayDate: d.toISOString() })
   }
 
 
@@ -58,7 +69,8 @@ class MarcarAgendamento extends React.Component {
     this.listarServicos();
     console.log(this.props.state);
     await this.setState(this.props.state);
-    console.log(this.state);
+    this.getTodayDate()
+
   }
 
   limpaCampos() {
@@ -143,17 +155,18 @@ class MarcarAgendamento extends React.Component {
     return (
       <div className="row mb-3">
         <div className="row">
-          <div className="col-6">
-            <div className="col-12">
+          <div className="col-md-10 col-xl-6 col-xxl-6">
+            <div className="col-md-12 col-xxl-8">
               <FormGroup id="inputDataHorario" label="Data e hora do agendamento *">
                 <input type="datetime-local" className="form-control"
                   value={this.state.dataHorario}
+                  min={this.state.todayDate.split(".")[0]}
                   name="dataHorario"
                   onChange={this.handleChange}
                 />
               </FormGroup>
             </div>
-            <div className="col-12">
+            <div className="col-md-12 col-xl-12 col-xxl-8">
               <FormGroup id="inputDuracao" label="Duração Aproximada*">
                 <SelectMenu lista={this.service.obterDuracoes()} className="form-control"
                   value={this.state.duracaoAprox}
@@ -164,7 +177,7 @@ class MarcarAgendamento extends React.Component {
             </div>
           </div>
 
-          <div className="col-md-12 col-sm-12 col-lg-6 col-xl-6 col-xxl-6">
+          <div className="col-sm-12 col-md-12  col-lg-12 col-xl-6 col-xxl-6">
             <FormGroup id="tableServico" fontSize="1.2rem" label="Selecione o serviço*">
               <ServicoTable selectAction={this.selectActionServico} telaAgendamento servicos={this.state.servicos} />
             </FormGroup>
@@ -172,15 +185,17 @@ class MarcarAgendamento extends React.Component {
 
         </div>
         <div className="row">
-          <div className="col-12">
+          <div className="col-10">
             <FormGroup fontSize="1.2rem" label="Selecione o animal*">
               <div className="input-group">
-                <div className="form-outline  col-xl-4 col-xxl-4">
+                <div className="form-outline col-sm-10 col-md-9 col-lg-9 col-xl-6 col-xxl-4">
                   <input id="search-input" value={this.state.buscaAnimal} placeholder="Nome do animal" name="buscaAnimal" onChange={this.handleChange} type="search" id="form1" className="form-control" />
                 </div>
-                <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarAnimal}>
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
+                <div className="col-sm-2 col-md-3 col-lg-3 col-xl-6">
+                  <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarAnimal}>
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
+                </div>
               </div>
             </FormGroup>
             <div>
@@ -188,16 +203,19 @@ class MarcarAgendamento extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row" style={{ marginTop: '4rem' }}>
-          <div className="col-12">
+        <div className="row pt-4" style={{ marginTop: '4rem' }}>
+          <div className="col-10">
             <FormGroup fontSize="1.2rem" label="Selecione o funcionário*">
               <div className="input-group">
-                <div className="form-outline  col-xl-4 col-xxl-4">
+                <div className="form-outline col-sm-10 col-md-9 col-lg-9 col-xl-6 col-xxl-4">
                   <input id="search-input" value={this.state.buscaFuncionario} placeholder="Nome/Telefone" name="buscaFuncionario" onChange={this.handleChange} type="search" id="form1" className="form-control" />
                 </div>
-                <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscaFuncionario}>
-                  <FontAwesomeIcon icon={faSearch} />
-                </button>
+                <div className="col-sm-2 col-md-3 col-lg-3 col-xl-6">
+
+                  <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscaFuncionario}>
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
+                </div>
               </div>
             </FormGroup>
             <div>

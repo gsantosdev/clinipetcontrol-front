@@ -163,7 +163,7 @@ class EspeciesHome extends React.Component {
 
         <Card title={!this.props.editar ? "Cadastro de Espécies" : "Atualizar a espécie"}>
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-sm-9 col-md-9 col-xl-6 col-xxl-5">
               <FormGroup id="inputNome" label="Nome da espécie: *">
                 <input type="text" className="form-control"
                   value={this.state.nome}
@@ -171,7 +171,7 @@ class EspeciesHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-md-3">
+            <div className="col-3">
               <FormGroup>
                 <div className="pt-2">
                   <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
@@ -183,7 +183,7 @@ class EspeciesHome extends React.Component {
           </div>
         </Card>
         {!this.props.editar ? <Card title="Todas espécies">
-          <div className="col-md-5">
+          <div className="col-12">
             <EspecieTable editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} especies={this.state.especies} />
           </div>
         </Card> : null}

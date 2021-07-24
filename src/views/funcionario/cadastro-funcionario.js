@@ -127,7 +127,7 @@ class CadastroFuncionario extends React.Component {
     return (
       <div className="row mb-3">
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-xl-6 col-xxl-3">
             <FormGroup id="inputNome" label="Nome completo: *">
               <input type="text" className="form-control"
                 value={this.state.nome}
@@ -135,7 +135,7 @@ class CadastroFuncionario extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-3">
+          <div className="col-xl-6 col-xxl-3">
             <FormGroup id="inputEmail" label="Email: *">
               <input type="email" className="form-control"
                 value={this.state.email}
@@ -143,7 +143,7 @@ class CadastroFuncionario extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-2">
+          <div className="col-xl-6 col-xxl-2">
             <FormGroup id="inputTelefone" label="Telefone: *">
               <input type="tel" className="form-control" id="telefone" placeholder="(00) 0000-0000"
                 name="telefone" maxLength="15" /*pattern="\(\d{2}\)\s*\d{5}-\d{4}"*/
@@ -152,7 +152,7 @@ class CadastroFuncionario extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-1">
+          <div className="col-md-6 col-xl-2 col-xxl-1">
             <FormGroup id="inputSexo" label="Sexo: *">
               <SelectMenu className="form-control" lista={this.service.obterSexos()}
                 value={this.state.sexo}
@@ -160,7 +160,7 @@ class CadastroFuncionario extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-6 col-xl-3 col-xxl-2">
             <FormGroup id="inputVeterinario" label="É Veterinário? *">
 
 
@@ -196,7 +196,7 @@ class CadastroFuncionario extends React.Component {
 
             </FormGroup>
           </div>
-          <div className="col-md-1">
+          <div className="col-sm-12 d-flex justify-content-end">
             <FormGroup>
               <div className="pt-2">
                 <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>

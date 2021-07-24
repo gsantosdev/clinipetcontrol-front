@@ -5,7 +5,7 @@ export default props => {
     const rows = props.especies.map((especie, index) => {
         return (
 
-            <tr  key={index}>
+            <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
                 <td className="col-md-8">{especie.nome}</td>
 
                 <td>

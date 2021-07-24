@@ -4,7 +4,7 @@ export default props => {
 
     const rows = props.clientes.map((cliente, index) => {
         return (
-            <tr key={index}>
+            <tr style={{backgroundColor: index % 2 ? "rgb(250,250,250)": "rgb(241,241,241"}} key={index}>
                 <td>{cliente.nome}</td>
                 <td>{cliente.cpf}</td>
                 <td>{cliente.email}</td>

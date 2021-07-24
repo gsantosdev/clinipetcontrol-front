@@ -197,7 +197,7 @@ class CadastroCliente extends React.Component {
         return (
             <div className="row mb-3">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-6">
                         <FormGroup id="inputNome" label="Nome completo: *">
                             <input type="text" className="form-control"
                                 value={this.state.nome}
@@ -206,7 +206,7 @@ class CadastroCliente extends React.Component {
                         </FormGroup>
                     </div>
 
-                    <div className="col-md-3">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
                         <FormGroup id="inputCpf" label="CPF: *">
                             <CpfCnpj
                                 /* TODO pattern=""*/
@@ -218,7 +218,7 @@ class CadastroCliente extends React.Component {
                             />
                         </FormGroup>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
                         <FormGroup id="inputDataNascimento" label="Data de nascimento: *">
                             <input id="dataNascimento" type="date" className="form-control"
                                 value={moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD")}
@@ -231,11 +231,9 @@ class CadastroCliente extends React.Component {
 
                              /* TODO pattern=""*/ required />
                         </FormGroup>
-                    </div>
 
-                </div>
-                <div className="row">
-                    <div className="col-md-3">
+                    </div>
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-4">
                         <FormGroup id="inputTelefone" label="Telefone: *">
                             <input type="tel" className="form-control" id="tel" placeholder="(00) 0000-0000"
                                 name="tel" maxLength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}"
@@ -244,7 +242,8 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-                    <div className="col-md-3">
+
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-4">
                         <FormGroup id="inputEmail" label="Email: *">
                             <input type="email" className="form-control"
                                 value={this.state.email}
@@ -252,7 +251,7 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-4">
                         <FormGroup id="inputLogradouro" label="Logradouro: *">
                             <input type="text" className="form-control"
                                 value={this.state.logradouro}
@@ -260,7 +259,7 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-2">
                         <FormGroup id="inputNumero" label="Número: *">
                             <input type="number" min="0" className="form-control"
                                 value={this.state.numero}
@@ -269,10 +268,7 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-
-                </div>
-                <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
                         <FormGroup id="inputBairo" label="Bairro: *">
                             <input type="text" className="form-control"
                                 value={this.state.bairro}
@@ -280,7 +276,7 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
                         <FormGroup id="inputCidade" label="Cidade: *">
                             <input type="text" className="form-control"
                                 value={this.state.cidade}
@@ -288,16 +284,7 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-                    <div className="col-md-3">
-                        <FormGroup id="inputCep" label="CEP: *">
-                            <input type="text" className="form-control"
-                                value={this.state.cep}
-                                name="cep"
-                                onChange={this.handleChange} />
-                        </FormGroup>
-                    </div>
-
-                    <div className="col-md-2">
+                    <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-1">
                         <FormGroup id="inputUf" label="UF: *">
                             <SelectMenu className="form-control" lista={UFs}
                                 value={this.state.uf}
@@ -305,6 +292,20 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
+                    <div className="col-sm-12 col-md-6 col-xl-12 col-xxl-3">
+                        <FormGroup id="inputCep" label="CEP: *">
+                            <input type="text" className="form-control"
+                                value={this.state.cep}
+                                name="cep"
+                                onChange={this.handleChange} />
+                        </FormGroup>
+                    </div>
+                  
+
+                    <div className="row">
+                    </div>
+
+
 
                 </div>
 

@@ -19,14 +19,19 @@ class EspecieService extends ApiService {
         return this.delete(`/${id}`)
     }
 
-    obterPorId(id){
+    obterPorId(id) {
         return this.get(`/${id}`)
     }
 
-    listar(){
-      return this.get(`/listar`)
+    listar() {
+        return this.get(`/listar`)
     }
 
+    listarNomes() {
+        return this.get(`/listarNomes`)
+    }
+
+ 
 
 }
 

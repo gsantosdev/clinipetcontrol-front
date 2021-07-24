@@ -28,9 +28,9 @@ class AnimalHome extends React.Component {
             </Card>
           </Tab>
           <Tab eventKey="contact" title="Agendamentos">
-            <Card title="Agendamentos">
+           {/* <Card title="Agendamentos">
 
-            </Card>
+            </Card>*/}
           </Tab>
           <Tab eventKey="especies" title="Espécies">
             <EspeciesHome/>

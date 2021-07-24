@@ -162,7 +162,7 @@ class ServicoHome extends React.Component {
 
         <Card title={!this.props.editar ? "Cadastro de Serviço" : "Atualizar o serviço"}>
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-sm-12 col-md-4 col-xl-4 col-xxl-4">
               <FormGroup id="inputNome" label="Nome do serviço: *">
                 <input type="text" className="form-control"
                   value={this.state.nome}
@@ -170,7 +170,7 @@ class ServicoHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-md-3">
+            <div className="col-sm-12 col-md-5 col-xl-5 col-xxl-5">
               <FormGroup id="inputNome" label="Observações: *">
                 <textarea className="form-control"
                   value={this.state.observacoes}
@@ -178,7 +178,7 @@ class ServicoHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-md-3">
+            <div className="col-sm-3">
               <FormGroup>
                 <div className="pt-2">
                   <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
