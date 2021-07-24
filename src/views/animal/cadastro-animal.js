@@ -31,10 +31,12 @@ class CadastroAnimal extends React.Component {
     idCliente: null,
     clientes: [],
     busca: '',
-    especies:[],
+    especies: [],
     clienteProprietario: '',
     selecionado: false
   }
+
+
 
 
   handleChange = (event) => {
@@ -46,7 +48,7 @@ class CadastroAnimal extends React.Component {
 
   limpaCampos() {
     Object.keys(this.state).forEach(key => {
-      if (key === "clientes") {
+      if (key === "clientes" || key === "especies") {
         this.setState({ [key]: [] })
       }
       else {
@@ -62,6 +64,7 @@ class CadastroAnimal extends React.Component {
     this.especieService = new EspecieService();
   }
 
+
   async componentDidMount() {
     if (this.props.editar) {
       console.log(this.props.state.cliente.id)
@@ -69,9 +72,15 @@ class CadastroAnimal extends React.Component {
       this.setState({ selecionado: true })
       await this.setState({ idCliente: this.props.state.cliente.id })
     }
+
+
+    const x = await this.especieService.getNomes()
+    this.setState({ especies: x })
+
     console.log(this.props.state);
     await this.setState(this.props.state);
     console.log(this.state);
+
 
   }
 
@@ -116,10 +125,8 @@ class CadastroAnimal extends React.Component {
       return false;
     }
 
-
     const { nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente } = this.state;
     const animal = { nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente };
-
 
     this.service.salvar(animal)
       .then(response => {
@@ -131,6 +138,7 @@ class CadastroAnimal extends React.Component {
       })
 
   }
+
   editar = () => {
 
     const msgs = this.validar()
@@ -201,7 +209,7 @@ class CadastroAnimal extends React.Component {
           </div>
           <div className="col-md-6 col-sm-12 col-lg-4">
             <FormGroup id="inputEspecie" label="Espécie: *">
-              <SelectMenu className="form-control" lista={[]}
+              <SelectMenu className="form-control" lista={this.state.especies}
                 value={this.state.especie}
                 name="especie"
                 onChange={this.handleChange} />

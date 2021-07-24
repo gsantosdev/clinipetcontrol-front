@@ -16,24 +16,19 @@ class AnimalHome extends React.Component {
     return (
       <div className="container-fluid">
 
-        <Tabs defaultActiveKey="cadastro" id="uncontrolled-tab">
+        <Tabs unmountOnExit defaultActiveKey="cadastro" id="uncontrolled-tab">
           <Tab eventKey="cadastro" title="Cadastro">
             <Card title="Cadastro de Animais">
               <CadastroAnimal />
             </Card>
           </Tab>
-          <Tab eventKey="prontuario" title="Prontuário">
-            <Card title="Prontuário">
+          <Tab eventKey="consultar" title="Consultar">
+            <Card title="Consultar">
               <ProntuarioAnimal />
             </Card>
           </Tab>
-          <Tab eventKey="contact" title="Agendamentos">
-           {/* <Card title="Agendamentos">
-
-            </Card>*/}
-          </Tab>
           <Tab eventKey="especies" title="Espécies">
-            <EspeciesHome/>
+            <EspeciesHome />
           </Tab>
         </Tabs>
 

@@ -3,8 +3,11 @@ import ApiService from "../apiservice";
 
 class EspecieService extends ApiService {
 
+
+
     constructor() {
         super('/api/especies')
+        this.especies = null
     }
 
     salvar(especie) {
@@ -31,7 +34,17 @@ class EspecieService extends ApiService {
         return this.get(`/listarNomes`)
     }
 
- 
+    async getNomes() {
+        const x = [{ label: 'Selecione...' }];
+
+        await this.listarNomes().then(response => {
+            response.data.forEach(element => {
+                x.push(element)
+            });
+        })
+
+        return Promise.resolve(x);
+    }
 
 }
 

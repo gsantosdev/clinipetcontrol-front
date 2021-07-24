@@ -13,22 +13,18 @@ class FuncionarioHome extends React.Component {
     return (
       <div className="container-fluid">
 
-        <Tabs defaultActiveKey="cadastro" id="uncontrolled-tab">
+        <Tabs unmountOnExit defaultActiveKey="cadastro" id="uncontrolled-tab">
           <Tab eventKey="cadastro" title="Cadastro">
             <Card title="Cadastro de Funcionarios">
               <CadastroFuncionario />
             </Card>
           </Tab>
-          <Tab eventKey="prontuario" title="Prontuário">
-            <Card title="Prontuário">
-              <ProntuarioFuncionario/>
+          <Tab eventKey="consultar" title="Consultar">
+            <Card title="Consultar">
+              <ProntuarioFuncionario />
             </Card>
           </Tab>
-          <Tab eventKey="contact" title="Agendamentos">
-            <Card title="Agendamentos">
-
-            </Card>
-          </Tab>
+        
         </Tabs>
 
 

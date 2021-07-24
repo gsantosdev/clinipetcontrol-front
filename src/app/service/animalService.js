@@ -42,6 +42,7 @@ class AnimalService extends ApiService {
 
 
 
+
 }
 
 export default AnimalService

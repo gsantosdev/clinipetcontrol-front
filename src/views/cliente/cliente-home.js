@@ -14,22 +14,18 @@ class ClienteHome extends React.Component {
         return (
             <div className="container-fluid">
 
-                <Tabs defaultActiveKey="cadastro" id="uncontrolled-tab">
+                <Tabs unmountOnExit defaultActiveKey="cadastro" id="uncontrolled-tab">
                     <Tab eventKey="cadastro" title="Cadastro">
                         <Card title="Cadastro de Clientes">
                             <CadastroCliente />
                         </Card>
                     </Tab>
-                    <Tab eventKey="prontuario" title="Prontuário">
-                        <Card title="Prontuário">
+                    <Tab eventKey="consultar" title="Consultar">
+                        <Card title="Consultar">
                             <ProntuarioCliente />
                         </Card>
                     </Tab>
-                    <Tab eventKey="contact" title="Agendamentos">
-                        <Card title="Agendamentos">
-
-                        </Card>
-                    </Tab>
+                   
                 </Tabs>
 
 
