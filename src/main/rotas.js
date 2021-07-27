@@ -4,7 +4,6 @@ import React from 'react'
 import Login from '../views/login'
 import Home from '../views/home'
 import CadastroUsuario from '../views/cadastroUsuario'
-import ConsultaLancamentos from '../views/lancamentos/consulta-lancamentos'
 import ClienteHome from '../views/cliente/cliente-home'
 import FuncionarioHome from '../views/funcionario/funcionario-home'
 import AgendamentoHome from '../views/agendamento/agenda-home'
@@ -19,7 +18,6 @@ function Rotas() {
             <Switch>
                 <Route path="/home" component={Home} />
                 <Route path="/login" component={Login} />
-                <Route path="/consulta-lancamentos" component={ConsultaLancamentos} />
                 <Route path="/cliente" component={ClienteHome} />
                 <Route path="/animal" component={AnimalHome} />
                 <Route path="/cadastro-usuarios" component={CadastroUsuario} />

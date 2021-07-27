@@ -107,7 +107,7 @@ class ServicoHome extends React.Component {
 
 
     const { nome, observacoes } = this.state;
-    const servico = { nome , observacoes};
+    const servico = { nome, observacoes };
 
 
     this.service.salvar(servico)

@@ -54,7 +54,7 @@ class AgendaCalendar extends React.Component {
 
           <Calendar
             localizer={localizer}
-            views={['month', 'day', 'week']}
+            views={['month', 'day', 'week', 'agenda']}
             startAcessor="start"
             step={10}
             endAcessoor="end"

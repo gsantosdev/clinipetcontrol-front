@@ -43,7 +43,8 @@ class ProntuarioFuncionario extends React.Component {
   cancelarDelecao = (funcionario) => {
     this.setState({ showConfirmDialogDeletar: false, funcionarioADeletar: funcionario })
   }
-  cancelarEdicao = (funcionario) => {
+  cancelarEdicao = async (funcionario) => {
+    await this.buscar()
     this.setState({ showConfirmDialogEditar: false, funcionarioAEditar: funcionario })
   }
 
@@ -73,7 +74,7 @@ class ProntuarioFuncionario extends React.Component {
         this.setState({ funcionarios: funcionarios, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("funcionario deletado com sucesso!")
       }).catch(erro => {
-        messages.mensagemErro("Ocorreu um erro ao tentar deletar o funcionario")
+        messages.mensagemErro(erro.response.data)
       })
   }
 
@@ -90,7 +91,7 @@ class ProntuarioFuncionario extends React.Component {
 
     const footerDialogEditar = (
       <div>
-        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={e => this.setState({ showConfirmDialogEditar: false })} />
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
       </div>
     );
 
@@ -140,12 +141,18 @@ class ProntuarioFuncionario extends React.Component {
             style={{ width: '97vw' }}
             footer={footerDialogEditar}
             modal={true}
-            onHide={() => this.setState({ showConfirmDialogEditar: false })}>
+            onHide={async () => {
+              await this.buscar();
+              this.setState({ showConfirmDialogEditar: false })
+              console.log(this.state.busca)
+            }
+            }
+          >
             <Card title="Atualize os dados do funcionario">
               <CadastroFuncionario editar={true} state={this.state.funcionarioAEditar} />
             </Card>
           </Dialog>
-        </div>
+        </div >
 
 
 

@@ -43,7 +43,8 @@ class ProntuarioAnimal extends React.Component {
   cancelarDelecao = (animal) => {
     this.setState({ showConfirmDialogDeletar: false, animalADeletar: animal })
   }
-  cancelarEdicao = (animal) => {
+  cancelarEdicao = async (animal) => {
+    await this.buscar()
     this.setState({ showConfirmDialogEditar: false, animalAEditar: animal })
   }
 
@@ -70,7 +71,7 @@ class ProntuarioAnimal extends React.Component {
         this.setState({ animais: animais, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("Animal deletado com sucesso!")
       }).catch(erro => {
-        messages.mensagemErro("Ocorreu um erro ao tentar deletar o Animal")
+        messages.mensagemErro(erro.response.data)
       })
   }
 
@@ -87,7 +88,7 @@ class ProntuarioAnimal extends React.Component {
 
     const footerDialogEditar = (
       <div>
-        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={e => this.setState({ busca: '', animais: [], showConfirmDialogEditar: false })} />
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
       </div>
     );
 
@@ -133,7 +134,7 @@ class ProntuarioAnimal extends React.Component {
             style={{ width: '90vw' }}
             footer={footerDialogEditar}
             modal={true}
-            onHide={() => this.setState({ busca: '', animais: [], showConfirmDialogEditar: false })}>
+            onHide={() => this.cancelarEdicao()}>
             <Card title="Atualize os dados do animal">
               <CadastroAnimal editar={true} state={this.state.animalAEditar} />
             </Card>

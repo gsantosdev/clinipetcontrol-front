@@ -43,7 +43,8 @@ class ProntuarioCliente extends React.Component {
   cancelarDelecao = (cliente) => {
     this.setState({ showConfirmDialogDeletar: false, clienteADeletar: cliente })
   }
-  cancelarEdicao = (cliente) => {
+  cancelarEdicao = async (cliente) => {
+    await this.buscar()
     this.setState({ showConfirmDialogEditar: false, clienteAEditar: cliente })
   }
 
@@ -70,7 +71,7 @@ class ProntuarioCliente extends React.Component {
         this.setState({ clientes: clientes, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("Cliente deletado com sucesso!")
       }).catch(erro => {
-        messages.mensagemErro("Ocorreu um erro ao tentar deletar o Cliente")
+        messages.mensagemErro(erro.response.data)
       })
   }
 
@@ -87,7 +88,7 @@ class ProntuarioCliente extends React.Component {
 
     const footerDialogEditar = (
       <div>
-        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={e => this.setState({ showConfirmDialogEditar: false })} />
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
       </div>
     );
 
@@ -133,7 +134,13 @@ class ProntuarioCliente extends React.Component {
             style={{ width: '60vw' }}
             footer={footerDialogEditar}
             modal={true}
-            onHide={() => this.setState({ showConfirmDialogEditar: false })}>
+            onHide={async () => {
+              await this.buscar()
+              this.setState({ showConfirmDialogEditar: false })
+
+
+            }}
+          >
             <Card title="Atualize os dados do cliente">
               <CadastroCliente editar={true} state={this.state.clienteAEditar} />
             </Card>

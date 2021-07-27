@@ -47,8 +47,6 @@ class CadastroCliente extends React.Component {
     constructor(props) {
         super(props);
         this.service = new ClienteService();
-
-
     }
 
     getTodayDate() {
