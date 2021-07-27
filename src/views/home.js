@@ -39,15 +39,12 @@ class Home extends React.Component {
     render() {
         return (
             <div className="jumbotron">
-                <h1 className="display-3">Bem vindo!</h1>
-                {/* */}
-                <p className="lead">Número de clientes cadastrados:  {this.state.numeroClientes}</p>
+                <div className="d-flex justify-content-center">
+                    <h1 className="display-3">Bem vindo ao CliniPetControl!</h1>
+                </div>
+
                 <hr className="my-4" />
-                <p className="lead">
-                    <a className="btn btn-primary btn-lg"
-                        href="#/cliente" role="button">
-                        <i className="fa fa-users"></i>  Cadastrar Cliente</a>
-                </p>
+
             </div>
         )
     }
