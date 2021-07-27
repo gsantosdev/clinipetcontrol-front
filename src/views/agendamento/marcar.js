@@ -46,9 +46,11 @@ class MarcarAgendamento extends React.Component {
   }
 
   getTodayDate() {
-    var d = new Date();
-    d.setUTCHours(0, 0, 0, 0);
-    this.setState({ todayDate: d.toISOString() })
+    var today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000);
+    today.setUTCSeconds(0)
+    today = today.toISOString().split(".")[0];
+    console.log(today)
+    return today;
   }
 
 
@@ -69,7 +71,7 @@ class MarcarAgendamento extends React.Component {
     this.listarServicos();
     console.log(this.props.state);
     await this.setState(this.props.state);
-    this.getTodayDate()
+
 
   }
 
@@ -160,7 +162,7 @@ class MarcarAgendamento extends React.Component {
               <FormGroup id="inputDataHorario" label="Data e hora do agendamento *">
                 <input type="datetime-local" className="form-control"
                   value={this.state.dataHorario}
-                  min={this.state.todayDate.split(".")[0]}
+                  min={this.getTodayDate()}
                   name="dataHorario"
                   onChange={this.handleChange}
                 />

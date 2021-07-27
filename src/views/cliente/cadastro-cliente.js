@@ -10,6 +10,7 @@ import { cpf } from 'cpf-cnpj-validator';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import moment from 'moment'
 import { onlyNumbers } from '@brazilian-utils/brazilian-utils'
+import InputMask from "react-input-mask";
 
 
 class CadastroCliente extends React.Component {
@@ -47,12 +48,22 @@ class CadastroCliente extends React.Component {
         super(props);
         this.service = new ClienteService();
 
+
+    }
+
+    getTodayDate() {
+        const today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+        console.log(today)
+        return today;
     }
 
     componentDidMount() {
         console.log(this.props.state)
         this.setState(this.props.state)
+
     }
+
+
 
     validar() {
         const msgs = []
@@ -117,6 +128,7 @@ class CadastroCliente extends React.Component {
 
         return msgs
     }
+
 
     cadastrar = () => {
         const msgs = this.validar()
@@ -220,7 +232,7 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
                         <FormGroup id="inputDataNascimento" label="Data de nascimento: *">
-                            <input id="dataNascimento" type="date" className="form-control"
+                            <input id="dataNascimento" max={this.getTodayDate()} type="date" className="form-control"
                                 value={moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD")}
                                 onChange={async e => {
                                     await this.setState({
@@ -235,8 +247,7 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-4">
                         <FormGroup id="inputTelefone" label="Telefone: *">
-                            <input type="tel" className="form-control" id="tel" placeholder="(00) 0000-0000"
-                                name="tel" maxLength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}"
+                            <InputMask mask="(99) 9 9999-9999" className="form-control" placeholder="(00) 0 000-0000"
                                 value={this.state.telefone}
                                 name="telefone"
                                 onChange={this.handleChange} />
@@ -294,13 +305,13 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-12 col-xxl-3">
                         <FormGroup id="inputCep" label="CEP: *">
-                            <input type="text" className="form-control"
+                            <InputMask mask="99999-999" type="text" className="form-control"
                                 value={this.state.cep}
                                 name="cep"
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-                  
+
 
                     <div className="row">
                     </div>
