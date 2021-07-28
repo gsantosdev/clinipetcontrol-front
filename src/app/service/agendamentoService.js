@@ -28,7 +28,7 @@ class AgendamentoService extends ApiService {
       { label: 'Selecione...' },
       { label: '15 minutos', value: 15 },
       { label: '30 minutos', value: 30 },
-      { label: '30 minutos', value: 45 },
+      { label: '45 minutos', value: 45 },
       { label: '1 hora', value: 60 }
     ]
   }

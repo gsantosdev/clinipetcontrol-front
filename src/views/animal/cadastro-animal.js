@@ -10,6 +10,7 @@ import AnimalService from '../../app/service/animalService'
 import ClienteTable from '../cliente/clienteTable';
 import ClienteService from '../../app/service/clienteService';
 import EspecieService from '../../app/service/especieService';
+import moment from 'moment'
 
 
 
@@ -20,7 +21,7 @@ class CadastroAnimal extends React.Component {
     id: null,
     nome: '',
     sexo: '',
-    idade: '',
+    dataNascimento: '',
     raca: '',
     especie: '',
     porte: '',
@@ -55,6 +56,11 @@ class CadastroAnimal extends React.Component {
         this.setState({ [key]: '' })
       }
     })
+  }
+  getTodayDate() {
+    const today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
+    console.log(today)
+    return today;
   }
 
   constructor(props) {
@@ -125,8 +131,8 @@ class CadastroAnimal extends React.Component {
       return false;
     }
 
-    const { nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente } = this.state;
-    const animal = { nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente };
+    const { nome, sexo, dataNascimento, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente } = this.state;
+    const animal = { nome, sexo, dataNascimento, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente };
 
     this.service.salvar(animal)
       .then(response => {
@@ -172,7 +178,7 @@ class CadastroAnimal extends React.Component {
     return (
       <div className="row mb-3">
         <div className="row">
-          <div className="col-md-6 col-sm-12 col-lg-4 col-xl-5">
+          <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-5">
             <FormGroup id="inputNome" label="Nome do animal: *">
               <input type="text" className="form-control"
                 value={this.state.nome}
@@ -181,7 +187,7 @@ class CadastroAnimal extends React.Component {
               />
             </FormGroup>
           </div>
-          <div className="col-md-6 col-sm-12 col-lg-3 col-xl-2">
+          <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-3">
             <FormGroup id="inputSexo" label="Sexo: *">
               <SelectMenu className="form-control" lista={this.service.obterSexos()}
                 value={this.state.sexo}
@@ -190,16 +196,23 @@ class CadastroAnimal extends React.Component {
                 style={{ minWidth: '5rem' }} />
             </FormGroup>
           </div>
-          <div className="col-md-6 col-sm-12 col-lg-2 col-xl-2">
-            <FormGroup id="inputIdade" label="Idade: *">
-              <input type="number" min="0" onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()} className="form-control"
-                value={this.state.idade}
-                name="idade"
-                onChange={this.handleChange} />
+          <div className="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-4">
+            <FormGroup id="inputDataNascimento" label="Data de nascimento: *">
+              <input id="dataNascimento" max={this.getTodayDate()} type="date" className="form-control"
+                value={moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD")}
+                onChange={async e => {
+                  await this.setState({
+                    dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
+                  })
+                  console.log(this.state.dataNascimento)
+                }}
+
+                             /* TODO pattern=""*/ required />
             </FormGroup>
+
           </div>
 
-          <div className="col-md-6 col-sm-12 col-lg-3">
+          <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-3">
             <FormGroup id="inputRaca" label="Raça: *">
               <input type="text" className="form-control"
                 value={this.state.raca}
@@ -207,7 +220,7 @@ class CadastroAnimal extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-6 col-sm-12 col-lg-4">
+          <div className="col-md-6 col-sm-12 col-lg-6  col-xxl-3">
             <FormGroup id="inputEspecie" label="Espécie: *">
               <SelectMenu className="form-control" lista={this.state.especies}
                 value={this.state.especie}
@@ -215,7 +228,7 @@ class CadastroAnimal extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-6 col-sm-12 col-lg-3">
+          <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-3">
             <FormGroup id="inputPorte" label="Porte: *">
               <SelectMenu className="form-control" lista={this.service.obterPortes()}
                 value={this.state.porte}
@@ -223,7 +236,7 @@ class CadastroAnimal extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-12 col-sm-12 col-lg-5">
+          <div className="col-md-12 col-sm-12 col-lg-12 col-xxl-3">
             <FormGroup id="inputCor" label="Cor: *">
               <input type="text" className="form-control"
                 value={this.state.cor}
@@ -253,10 +266,10 @@ class CadastroAnimal extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className=" col-md-12 col-lg-4">
+          <div className="col-12">
             <FormGroup id="inputCliente" label="Pesquise o cliente: *">
               <div className="input-group mb-4">
-                <div className="form-outline">
+                <div className="form-outline col-sm-9 col-lg-4">
                   <input id="search-input" placeholder="Nome/Telefone/CPF" name="busca" onChange={this.handleChange} type="search" className="form-control" />
                 </div>
                 <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarCliente}>

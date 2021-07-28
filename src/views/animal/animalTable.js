@@ -11,6 +11,8 @@ export default props => {
                 <td>{animal.especie}</td>
                 <td>{animal.cor}</td>
                 <td>{animal.porte}</td>
+                <td>{animal.cliente.nome}</td>
+
 
                 <td>
                     {props.telaAgendamento ?
@@ -35,6 +37,8 @@ export default props => {
                         <th scope="col">Espécie</th>
                         <th scope="col">Cor</th>
                         <th scope="col">Porte</th>
+                        <th scope="col">Proprietário</th>
+
                         <th scope="col"></th>
                     </tr>
                 </thead>
