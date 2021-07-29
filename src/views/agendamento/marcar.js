@@ -76,9 +76,15 @@ class MarcarAgendamento extends React.Component {
   }
 
   limpaCampos() {
-
+    Object.keys(this.state).forEach(key => {
+      if (key === 'animais' || key === 'funcionarios' || key === 'servicos') {
+        this.setState({ [key]: [] })
+      }
+      else {
+        this.setState({ [key]: '' })
+      }
+    })
   }
-
 
 
   listarServicos = () => {
@@ -127,6 +133,7 @@ class MarcarAgendamento extends React.Component {
       .then(response => {
         mensagemSucesso(response)
         this.limpaCampos()
+        this.listarServicos()
         //this.props.history.push('/login')
       }).catch(error => {
         mensagemErro(error.response.data)

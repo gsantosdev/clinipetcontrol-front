@@ -65,6 +65,7 @@ class CadastroCliente extends React.Component {
 
     validar() {
         const msgs = []
+        console.log(this.state.dataNascimento)
 
         console.log(cpf.strip(this.state.cpf))
 

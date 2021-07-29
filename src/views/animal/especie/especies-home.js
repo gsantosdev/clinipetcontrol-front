@@ -29,9 +29,14 @@ class EspeciesHome extends React.Component {
 
   validar() {
     const msgs = []
-
-    //Definir validacoes
+    if (!this.state.nome) {
+      msgs.push('O campo Nome é obrigatório.')
+    }
     return msgs
+  }
+
+  limpaCampos() {
+    this.setState({ nome: '' })
   }
 
   editar = () => {
@@ -55,7 +60,7 @@ class EspeciesHome extends React.Component {
         messages.mensagemErro(error.response.data)
       })
   }
-  deletar =  () => {
+  deletar = () => {
     this.service.deletar(this.state.especieADeletar.id)
       .then(response => {
         const especies = this.state.especies;
@@ -114,10 +119,10 @@ class EspeciesHome extends React.Component {
       .then(response => {
         messages.mensagemSucesso(response)
         this.listarEspecies()
-        //this.limpaCampos()
+        this.limpaCampos()
         //this.props.history.push('/login')
       }).catch(error => {
-        
+
         messages.mensagemErro(error.response)
       })
 

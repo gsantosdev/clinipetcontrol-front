@@ -27,10 +27,15 @@ class ServicoHome extends React.Component {
     this.service = new ServicoService();
   }
 
+  limpaCampos() {
+    this.setState({ nome: '', observacoes: '' })
+  }
+
   validar() {
     const msgs = []
-
-    //Definir validacoes
+    if (!this.state.nome) {
+      msgs.push('O campo Nome é obrigatório.')
+    }
     return msgs
   }
 
@@ -66,7 +71,7 @@ class ServicoHome extends React.Component {
         console.log(servicos)
         messages.mensagemSucesso("Espécie deletada com sucesso!")
       }).catch(erro => {
-        messages.mensagemErro("Ocorreu um erro ao tentar deletar o Serviço")
+        messages.mensagemErro(erro.response.data)
       })
   }
 
@@ -114,12 +119,13 @@ class ServicoHome extends React.Component {
       .then(response => {
         messages.mensagemSucesso(response)
         this.listarServicos()
-        //this.limpaCampos()
+        this.limpaCampos()
         //this.props.history.push('/login')
       }).catch(error => {
 
         messages.mensagemErro(error.response)
       })
+
 
   }
 
@@ -171,7 +177,7 @@ class ServicoHome extends React.Component {
               </FormGroup>
             </div>
             <div className="col-sm-12 col-md-5 col-xl-5 col-xxl-5">
-              <FormGroup id="inputNome" label="Observações: *">
+              <FormGroup id="inputNome" label="Observações: ">
                 <textarea className="form-control"
                   value={this.state.observacoes}
                   name="observacoes"

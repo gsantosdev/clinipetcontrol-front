@@ -56,6 +56,8 @@ class CadastroAnimal extends React.Component {
         this.setState({ [key]: '' })
       }
     })
+    this.listarEspecies()
+
   }
   getTodayDate() {
     const today = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
@@ -70,6 +72,11 @@ class CadastroAnimal extends React.Component {
     this.especieService = new EspecieService();
   }
 
+  async listarEspecies() {
+    const x = await this.especieService.getNomes()
+    this.setState({ especies: x })
+  }
+
 
   async componentDidMount() {
     if (this.props.editar) {
@@ -80,8 +87,7 @@ class CadastroAnimal extends React.Component {
     }
 
 
-    const x = await this.especieService.getNomes()
-    this.setState({ especies: x })
+    this.listarEspecies()
 
     console.log(this.props.state);
     await this.setState(this.props.state);
@@ -93,7 +99,46 @@ class CadastroAnimal extends React.Component {
   validar() {
     const msgs = []
 
-    //Definir validacoes
+    if (!this.state.nome) {
+      msgs.push('O campo Nome é obrigatório.')
+    }
+
+    else if (!this.state.sexo) {
+      msgs.push('O campo Sexo é obrigatório.')
+    }
+    else if (this.state.sexo == "Selecione...") {
+      msgs.push('O campo Sexo é obrigatório.')
+    }
+    else if (!this.state.dataNascimento) {
+      msgs.push('O campo Data de Nascimento é obrigatório.')
+    }
+
+    else if (!this.state.raca) {
+      msgs.push('O campo Raça é obrigatório.')
+    }
+
+    else if (!this.state.especie) {
+      msgs.push('O campo Espécie é obrigatório.')
+    }
+    else if (this.state.especie == "Selecione...") {
+      msgs.push('O campo Espécie é obrigatório.')
+    }
+
+    else if (!this.state.porte) {
+      msgs.push('O campo Porte é obrigatório.')
+    }
+    else if (this.state.porte == "Selecione...") {
+      msgs.push('O campo Porte é obrigatório.')
+    }
+
+    else if (!this.state.cor) {
+      msgs.push('O campo Cor é obrigatório.')
+    }
+
+    else if (!this.state.idCliente) {
+      msgs.push('Um cliente deve ser selecionado.')
+    }
+
     return msgs
   }
 
@@ -138,7 +183,6 @@ class CadastroAnimal extends React.Component {
       .then(response => {
         mensagemSucesso(response)
         this.limpaCampos()
-        //this.props.history.push('/login')
       }).catch(error => {
         mensagemErro(error.response.data)
       })
