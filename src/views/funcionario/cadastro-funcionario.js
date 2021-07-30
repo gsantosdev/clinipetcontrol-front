@@ -4,6 +4,7 @@ import FuncionarioService from '../../app/service/funcionarioService';
 import FormGroup from '../../components/form-group';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import SelectMenu from '../../components/selectMenu';
+import InputMask from "react-input-mask";
 
 
 
@@ -50,7 +51,30 @@ class CadastroFuncionario extends React.Component {
 
 
   validar() {
+    const msgs = []
+    if (!this.state.nome) {
+      msgs.push('O campo Nome é obrigatório.')
+    }
+    else if (!this.state.telefone) {
+      msgs.push('O campo Telefone é obrigatório.')
+    }
+    else if (!this.state.email) {
+      msgs.push('O campo Email é obrigatório.')
+    }
+    else if (!this.state.email.match(/^[a-z0-9.]+@[a-z0-9.]+\.[a-z]/)) {
+      msgs.push('Informe um email válido.')
+    }
+    else if (!this.state.sexo) {
+      msgs.push('O campo Sexo é obrigatório.')
+    }
+    else if (this.state.sexo == "Selecione...") {
+      msgs.push('O campo Sexo é obrigatório.')
+    }
+    else if (this.state.veterinario == null) {
+      msgs.push('Deve ser informado se é veterinário')
+    }
 
+    return msgs
   }
 
   cadastrar = () => {
@@ -145,14 +169,13 @@ class CadastroFuncionario extends React.Component {
           </div>
           <div className="col-xl-6 col-xxl-2">
             <FormGroup id="inputTelefone" label="Telefone: *">
-              <input type="tel" className="form-control" id="telefone" placeholder="(00) 0000-0000"
-                name="telefone" maxLength="15" /*pattern="\(\d{2}\)\s*\d{5}-\d{4}"*/
+              <InputMask mask="(99) 9 9999-9999" className="form-control" placeholder="(00) 0 000-0000"
                 value={this.state.telefone}
                 name="telefone"
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-6 col-xl-2 col-xxl-1">
+          <div className="col-md-6 col-xl-3 col-xxl-2">
             <FormGroup id="inputSexo" label="Sexo: *">
               <SelectMenu className="form-control" lista={this.service.obterSexos()}
                 value={this.state.sexo}

@@ -64,7 +64,26 @@ class MarcarAgendamento extends React.Component {
   }
 
   validar() {
-
+    const msgs = []
+    if (!this.state.dataHorario) {
+      msgs.push('O campo de data e hora é obrigatório.')
+    }
+    else if (!this.state.duracaoAprox) {
+      msgs.push('O campo de duração aproximada é obrigatório.')
+    }
+    else if (this.state.duracaoAprox == "Selecione...") {
+      msgs.push('Selecione uma duração aproximada válida.')
+    }
+    else if (!this.state.idServico) {
+      msgs.push('Selecione um serviço.')
+    }
+    else if (!this.state.idAnimal) {
+      msgs.push('Selecione um animal.')
+    }
+    else if (!this.state.idFuncionario) {
+      msgs.push('Selecione um funcionário.')
+    }
+    return msgs
   }
 
   async componentDidMount() {

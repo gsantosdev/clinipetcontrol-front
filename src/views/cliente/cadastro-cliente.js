@@ -65,29 +65,22 @@ class CadastroCliente extends React.Component {
 
     validar() {
         const msgs = []
-        console.log(this.state.dataNascimento)
-
-        console.log(cpf.strip(this.state.cpf))
 
         if (!this.state.nome) {
             msgs.push('O campo Nome é obrigatório.')
         }
-
         else if (!this.state.cpf) {
             msgs.push('O campo CPF é obrigatório.')
         }
         else if (!(cpf.isValid(cpf.strip(this.state.cpf)))) {
             msgs.push('O campo CPF está invalido')
         }
-
         else if (!this.state.dataNascimento) {
             msgs.push('O campo Data de Nascimento é obrigatório.')
         }
-
         else if (!this.state.telefone) {
             msgs.push('O campo Telefone é obrigatório.')
         }
-
         else if (!this.state.email) {
             msgs.push('O campo Email é obrigatório.')
         }
@@ -97,27 +90,21 @@ class CadastroCliente extends React.Component {
         else if (!this.state.email) {
             msgs.push('O campo Email é obrigatório.')
         }
-
         else if (!this.state.logradouro) {
             msgs.push('O campo Logradouro é obrigatório.')
         }
-
         else if (!this.state.numero) {
             msgs.push('O campo Número é obrigatório.')
         }
-
         else if (!this.state.bairro) {
             msgs.push('O campo Bairro é obrigatório.')
         }
-
         else if (!this.state.cidade) {
             msgs.push('O campo Cidade é obrigatório.')
         }
-
         else if (!this.state.cep) {
             msgs.push('O campo CEP é obrigatório.')
         }
-
         else if (!this.state.uf) {
             msgs.push('O campo UF é obrigatório.')
         }
