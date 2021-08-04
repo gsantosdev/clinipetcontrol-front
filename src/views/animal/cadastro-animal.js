@@ -34,6 +34,7 @@ class CadastroAnimal extends React.Component {
     busca: '',
     especies: [],
     clienteProprietario: '',
+    idClienteSelecionado: null,
     selecionado: false
   }
 
@@ -82,7 +83,7 @@ class CadastroAnimal extends React.Component {
     if (this.props.editar) {
       console.log(this.props.state.cliente.id)
       this.buscarProprietario(this.props.state.cliente.id);
-      this.setState({ selecionado: true })
+      await this.setState({ idClienteSelecionado: this.props.state.cliente.id })
       await this.setState({ idCliente: this.props.state.cliente.id })
     }
 
@@ -202,8 +203,8 @@ class CadastroAnimal extends React.Component {
 
 
 
-    const { id, nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente } = this.state;
-    const animal = { id, nome, sexo, idade, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente };
+    const { id, nome, sexo, dataNascimento, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente } = this.state;
+    const animal = { id, nome, sexo, dataNascimento, raca, especie, porte, cor, alergias, patologias, medicamentos, idCliente };
     console.log(animal.idCliente)
 
 
@@ -325,7 +326,7 @@ class CadastroAnimal extends React.Component {
         </div>
         <div className="row">
           <div className=" col-12">
-            <ClienteTable telaAnimal={true} selecionado={this.state.selecionado} selectAction={this.selectAction} clientes={this.state.clientes} />
+            <ClienteTable telaAnimal={true} selecionado={this.state.idClienteSelecionado} selectAction={this.selectAction} clientes={this.state.clientes} />
           </div>
         </div>
         <div className="row">

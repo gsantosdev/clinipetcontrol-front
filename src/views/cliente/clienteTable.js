@@ -1,7 +1,7 @@
 import React from 'react'
 
-export default props => {
 
+export default props => {
     const rows = props.clientes.map((cliente, index) => {
         return (
             <tr style={{backgroundColor: index % 2 ? "rgb(250,250,250)": "rgb(241,241,241"}} key={index}>
@@ -12,7 +12,7 @@ export default props => {
 
                 <td>
                     {props.telaAnimal ?
-                        <input name="cliente" type="radio" defaultChecked={props.selecionado} onClick={e => props.selectAction(cliente)}></input> : <div>
+                        <input name="cliente" type="radio" defaultChecked={props.selecionado === cliente.id} onClick={e => props.selectAction(cliente)}></input> : <div>
                             <button type="button" onClick={e => props.editarAction(cliente)} className="btn btn-primary">Editar</button>
                             <button type="button" onClick={e => props.deleteAction(cliente)} className="btn btn-danger">Deletar</button></div>
                     }
