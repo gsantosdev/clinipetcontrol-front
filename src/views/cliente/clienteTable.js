@@ -1,4 +1,5 @@
 import React from 'react'
+import { cpf } from 'cpf-cnpj-validator'
 
 
 export default props => {
@@ -6,7 +7,7 @@ export default props => {
         return (
             <tr style={{backgroundColor: index % 2 ? "rgb(250,250,250)": "rgb(241,241,241"}} key={index}>
                 <td>{cliente.nome}</td>
-                <td>{cliente.cpf}</td>
+                <td>{cpf.format(cliente.cpf)}</td>
                 <td>{cliente.email}</td>
                 <td>{cliente.telefone}</td>
 

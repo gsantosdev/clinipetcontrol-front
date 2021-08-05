@@ -256,6 +256,23 @@ class CadastroAnimal extends React.Component {
             </FormGroup>
 
           </div>
+          <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-3">
+            <FormGroup id="inputEspecie" label="Espécie: *">
+              <SelectMenu className="form-control" lista={this.state.especies}
+                value={this.state.especie}
+                name="especie"
+                onChange={this.handleChange} />
+            </FormGroup>
+          </div>
+
+          <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-3">
+            <FormGroup id="inputPorte" label="Porte: *">
+              <SelectMenu className="form-control" lista={this.service.obterPortes()}
+                value={this.state.porte}
+                name="porte"
+                onChange={this.handleChange} />
+            </FormGroup>
+          </div>
 
           <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-3">
             <FormGroup id="inputRaca" label="Raça: *">
@@ -265,22 +282,8 @@ class CadastroAnimal extends React.Component {
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-          <div className="col-md-6 col-sm-12 col-lg-6  col-xxl-3">
-            <FormGroup id="inputEspecie" label="Espécie: *">
-              <SelectMenu className="form-control" lista={this.state.especies}
-                value={this.state.especie}
-                name="especie"
-                onChange={this.handleChange} />
-            </FormGroup>
-          </div>
-          <div className="col-md-6 col-sm-12 col-lg-6 col-xl-6 col-xxl-3">
-            <FormGroup id="inputPorte" label="Porte: *">
-              <SelectMenu className="form-control" lista={this.service.obterPortes()}
-                value={this.state.porte}
-                name="porte"
-                onChange={this.handleChange} />
-            </FormGroup>
-          </div>
+
+
           <div className="col-md-12 col-sm-12 col-lg-12 col-xxl-3">
             <FormGroup id="inputCor" label="Cor: *">
               <input type="text" className="form-control"

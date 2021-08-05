@@ -9,7 +9,6 @@ export default props => {
                 <td>{funcionario.nome}</td>
                 <td>{funcionario.email}</td>
                 <td>{funcionario.telefone}</td>
-                <td>{funcionario.sexo}</td>
                 <td>{funcionario.veterinario ? "Veterinário": "Geral"}</td>
 
 
@@ -33,7 +32,6 @@ export default props => {
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>
                         <th scope="col">Telefone</th>
-                        <th scope="col">Sexo</th>
                         <th scope="col">Cargo</th>
                         <th scope="col"></th>
                     </tr>

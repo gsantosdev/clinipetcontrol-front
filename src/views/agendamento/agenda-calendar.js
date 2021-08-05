@@ -58,7 +58,7 @@ class AgendaCalendar extends React.Component {
             startAcessor="start"
             step={10}
             endAcessoor="end"
-            defaultView="day"
+            defaultView="month"
             defaultDate={moment().toDate()}
             events={this.state.events}
             messages={{
@@ -71,6 +71,7 @@ class AgendaCalendar extends React.Component {
               date: "Data",
               event: "Agendamento",
               time: "Duração",
+              agenda:"Periodo Mensal",
               showMore: function showMore(total) {
                 return '+' + total + ' agendamentos';
               }

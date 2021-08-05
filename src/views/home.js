@@ -16,7 +16,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-
+/*
         const usuarioLogado = localStorageService.obterItem('_usuario_logado')
 
         if (usuarioLogado == null) {
@@ -33,7 +33,7 @@ class Home extends React.Component {
             //     })
         }
 
-
+*/
     }
 
     render() {
