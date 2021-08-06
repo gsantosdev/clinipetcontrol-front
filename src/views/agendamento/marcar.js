@@ -205,7 +205,7 @@ class MarcarAgendamento extends React.Component {
             </div>
           </div>
 
-          <div className="col-sm-12 col-md-12  col-lg-12 col-xl-6 col-xxl-6">
+          <div className="pt-2 col-sm-12 col-md-12  col-lg-12 col-xl-6 col-xxl-6">
             <FormGroup id="tableServico" fontSize="1.2rem" label="Selecione o serviço*">
               <ServicoTable selectAction={this.selectActionServico} telaAgendamento servicos={this.state.servicos} />
             </FormGroup>
@@ -213,7 +213,7 @@ class MarcarAgendamento extends React.Component {
 
         </div>
         <div className="row">
-          <div className="col-10">
+          <div className="mt-5 col-12">
             <FormGroup fontSize="1.2rem" label="Selecione o animal*">
               <div className="input-group">
                 <div className="form-outline col-sm-10 col-md-9 col-lg-9 col-xl-6 col-xxl-4">
@@ -232,7 +232,7 @@ class MarcarAgendamento extends React.Component {
           </div>
         </div>
         <div className="row pt-4" style={{ marginTop: '4rem' }}>
-          <div className="col-10">
+          <div className="col-12">
             <FormGroup fontSize="1.2rem" label="Selecione o funcionário*">
               <div className="input-group">
                 <div className="form-outline col-sm-10 col-md-9 col-lg-9 col-xl-6 col-xxl-4">
