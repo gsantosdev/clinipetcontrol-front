@@ -5,13 +5,17 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { withRouter } from 'react-router-dom';
 import AgendamentoService from '../../app/service/agendamentoService';
+import { Dialog } from 'primereact/dialog';
+
 
 
 class AgendaCalendar extends React.Component {
 
   state = {
     agendamentos: [],
-    events: []
+    events: [],
+    showEventDialog: false,
+    eventOnScreen: {}
   }
 
   constructor() {
@@ -29,6 +33,11 @@ class AgendaCalendar extends React.Component {
           this.state.events.push({
             id: resposta.data[index].id,
             title: resposta.data[index].title,
+            nomeFuncionario: resposta.data[index].nomeFuncionario,
+            nomeAnimal: resposta.data[index].nomeAnimal,
+            nomeServico: resposta.data[index].nomeServico,
+            telefoneProprietario: resposta.data[index].telefoneProprietario,
+            nomeProprietario: resposta.data[index].nomeProprietario,
             start: moment(resposta.data[index].start, "YYYY-MM-DDTHH:mm:ss")._d,
             end: moment(resposta.data[index].end, "YYYY-MM-DDTHH:mm:ss")._d
           })
@@ -39,8 +48,14 @@ class AgendaCalendar extends React.Component {
     this.forceUpdate();
   }
 
-  componentDidMount() {
+  abrirEventDialog = async (event) => {
+    await this.setState({ showEventDialog: true, eventOnScreen: event })
+    console.log(this.state.eventOnScreen)
 
+  }
+
+
+  componentDidMount() {
     this.listarAgendamentos();
 
   }
@@ -61,6 +76,9 @@ class AgendaCalendar extends React.Component {
             defaultView="month"
             defaultDate={moment().toDate()}
             events={this.state.events}
+            onSelectEvent={event => {
+              this.abrirEventDialog(event)
+            }}
             messages={{
               next: "Próximo",
               previous: "Anterior",
@@ -71,7 +89,7 @@ class AgendaCalendar extends React.Component {
               date: "Data",
               event: "Agendamento",
               time: "Duração",
-              agenda:"Periodo Mensal",
+              agenda: "Periodo Mensal",
               showMore: function showMore(total) {
                 return '+' + total + ' agendamentos';
               }
@@ -83,6 +101,61 @@ class AgendaCalendar extends React.Component {
 
           </Calendar>
         </div>
+
+        <Dialog
+          visible={this.state.showEventDialog}
+          style={{ width: '50vw' }}
+          modal={true}
+          onHide={async () => {
+            this.setState({ showEventDialog: false, eventOnScreen: {} })
+          }
+          }
+        >
+          <div>
+
+
+            <div className="col d-flex justify-content-center">
+
+
+            <h1 style={{fontSize:"2.5rem"}}>
+              <b>
+                Dados do agendamento
+              </b>
+            </h1>
+            </div>
+
+            <div className="col d-flex justify-content-center">
+
+            <table className="mt-5 table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Funcionário</th>
+                  <th scope="col">Serviço</th>
+                  <th scope="col">Animal</th>
+                  <th scope="col">Proprietário</th>
+                  <th scope="col">Contato do Proprietário</th>
+                </tr>
+              </thead>
+              <tbody className="col-12">
+                <tr>
+                  <td> {this.state.eventOnScreen.nomeFuncionario}</td>
+                  <td> {this.state.eventOnScreen.nomeServico}</td>
+                  <td> {this.state.eventOnScreen.nomeAnimal}</td>
+                  <td> {this.state.eventOnScreen.nomeProprietario}</td>
+                  <td> {this.state.eventOnScreen.telefoneProprietario}</td>
+
+
+              </tr>
+              </tbody>
+
+            </table>
+            </div>
+            
+          </div>
+
+
+
+        </Dialog>
       </>
     )
   }
