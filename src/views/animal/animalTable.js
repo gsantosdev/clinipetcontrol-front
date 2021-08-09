@@ -38,7 +38,6 @@ export default props => {
                         <th scope="col">Cor</th>
                         <th scope="col">Porte</th>
                         <th scope="col">Proprietário</th>
-
                         <th scope="col"></th>
                     </tr>
                 </thead>

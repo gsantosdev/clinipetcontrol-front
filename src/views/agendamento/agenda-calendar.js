@@ -103,54 +103,55 @@ class AgendaCalendar extends React.Component {
         </div>
 
         <Dialog
+          contentStyle={{ overflowX: "auto" }}
           visible={this.state.showEventDialog}
-          style={{ width: '50vw' }}
+          style={{ width: '70vw' }}
           modal={true}
           onHide={async () => {
             this.setState({ showEventDialog: false, eventOnScreen: {} })
           }
           }
         >
-          <div>
+          <div className="row">
+            <div className="col-12" style={{ overflowX: "auto" }}>
 
-
-            <div className="col d-flex justify-content-center">
-
-
-            <h1 style={{fontSize:"2.5rem"}}>
-              <b>
-                Dados do agendamento
-              </b>
-            </h1>
+              <h1 style={{ fontSize: "2.5rem", textAlign:"center" }}>
+                <b>
+                  Dados do agendamento
+                </b>
+              </h1>
             </div>
 
-            <div className="col d-flex justify-content-center">
+            <div className="row">
+              <div className="col-12" style={{ overflowX: "auto" }}>
 
-            <table className="mt-5 table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Funcionário</th>
-                  <th scope="col">Serviço</th>
-                  <th scope="col">Animal</th>
-                  <th scope="col">Proprietário</th>
-                  <th scope="col">Contato do Proprietário</th>
-                </tr>
-              </thead>
-              <tbody className="col-12">
-                <tr>
-                  <td> {this.state.eventOnScreen.nomeFuncionario}</td>
-                  <td> {this.state.eventOnScreen.nomeServico}</td>
-                  <td> {this.state.eventOnScreen.nomeAnimal}</td>
-                  <td> {this.state.eventOnScreen.nomeProprietario}</td>
-                  <td> {this.state.eventOnScreen.telefoneProprietario}</td>
+                <div className="col-12" style={{ overflowX: "auto" }}>
 
+                  <table className="mt-5 table table-hover" style={{ overflowX: "auto" }}>
+                    <thead>
+                      <tr>
+                        <th scope="col">Funcionário</th>
+                        <th scope="col">Serviço</th>
+                        <th scope="col">Animal</th>
+                        <th scope="col">Proprietário</th>
+                        <th scope="col">Contato do Proprietário</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td> {this.state.eventOnScreen.nomeFuncionario}</td>
+                        <td> {this.state.eventOnScreen.nomeServico}</td>
+                        <td> {this.state.eventOnScreen.nomeAnimal}</td>
+                        <td> {this.state.eventOnScreen.nomeProprietario}</td>
+                        <td> {this.state.eventOnScreen.telefoneProprietario}</td>
 
-              </tr>
-              </tbody>
+                      </tr>
+                    </tbody>
 
-            </table>
+                  </table>
+                </div>
+              </div>
             </div>
-            
           </div>
 
 

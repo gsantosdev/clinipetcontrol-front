@@ -328,7 +328,7 @@ class CadastroAnimal extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className=" col-12">
+          <div className="col-12">
             <ClienteTable telaAnimal={true} selecionado={this.state.idClienteSelecionado} selectAction={this.selectAction} clientes={this.state.clientes} />
           </div>
         </div>
