@@ -1,8 +1,6 @@
-textarea{
+textarea {
     resize: none;
 }
-
-
 
 :root {
     -blue10: #000000
@@ -90,6 +88,10 @@ pre {
 }
 
 /* Componentes */
+
+.btn {
+    margin-right: 3px;
+}
 
 .bs-component {
     position: relative
@@ -345,12 +347,7 @@ body {
 /* CONTEÚDO */
 
 .content-navbar {
-    /*background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(173, 216, 230, 1) 20%, rgba(176, 218, 231, 1) 50%, rgba(197, 228, 238, 1) 95%, rgba(247, 251, 253, 1) 100%);
-    background: linear-gradient(90deg, rgba(31, 96, 148, 1) 8%, rgba(199, 217, 230, 1) 50%, rgba(31, 96, 148, 1) 100%);*/
     background: linear-gradient(90deg, rgba(31, 96, 148, 1) 10%, rgba(31, 96, 148, 1) 50%, rgba(64, 122, 166, 1) 83%, rgba(247, 251, 253, 1) 100%);
-    /*background: linear-gradient(90deg, rgba(61,118,163,1) 0%, rgba(199,217,230,1) 50%, rgba(31,96,148,1) 100%);
-    background: linear-gradient(90deg, rgba(31,96,148,1) 0%, rgba(199,217,230,1) 50%, rgba(31,96,148,1) 100%);
-*/
     overflow: hidden;
     border-bottom-left-radius: 40%;
     border-bottom-right-radius: 40%;

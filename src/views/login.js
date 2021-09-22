@@ -1,35 +1,34 @@
 import React from 'react';
-
 import Card from "../components/card"
-
 import FormGroup from '../components/form-group'
-
 import { withRouter } from "react-router-dom";
-
 import UsuarioService from '../app/service/usuarioService';
-
 import localStorageService from '../app/service/localstorageService';
-
 import { mensagemErro } from '../components/toastr'
+
+import { AuthContext } from '../main/provedorAutenticacao'
+
 
 class Login extends React.Component {
 
     state = {
-        email: '',
+        nome: '',
         senha: ''
     }
 
     constructor() {
         super();
+        console.log(this.context)
         this.service = new UsuarioService();
+        console.log(this.context)
     }
 
     entrar = () => {
         this.service.autenticar({
-            email: this.state.email,
+            nome: this.state.nome,
             senha: this.state.senha
         }).then(response => {
-            localStorageService.adicionarItem('_usuario_logado', response.data)
+            this.context.iniciarSessao(response.data)
             this.props.history.push('/home')
         }).catch(erro => {
             if (!erro.response) {
@@ -40,42 +39,40 @@ class Login extends React.Component {
         })
     }
 
-    prepareCadastrar = () => {
-        this.props.history.push("/cadastro-usuarios")
-    }
-
 
     render() {
         return (
             <div className="row">
-                <div className="col-md-6" style={{ position: 'relative', left: '300px' }}>
+                <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-6" style={{ position: 'relative', left: '200px' }}>
                     <div className="bs-docs-section">
                         <Card title="Login">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="bs-component">
-                                        <fieldset>
-                                            <FormGroup label="Email: *" htmlFor="exampleInputEmail1">
-                                                <input type="email"
-                                                    value={this.state.email}
-                                                    onChange={e => this.setState({ email: e.target.value })}
-                                                    className="form-control"
-                                                    id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                    placeholder="Digite o Email" />
-                                            </FormGroup>
-                                            <FormGroup label="Senha: *" htmlFor="ExampleInputPassword1">
-                                                <input type="password" className="form-control"
-                                                    value={this.state.senha}
-                                                    onChange={e => this.setState({ senha: e.target.value })}
-                                                    id="exampleInputPassword1" placeholder="Password" />
-                                            </FormGroup>
+                            <div className="col-lg-12">
+                                <div className="bs-component">
+                                    <fieldset>
+                                        <FormGroup label="Nome: *" htmlFor="exampleInputNome1">
+                                            <input type="nome"
+                                                value={this.state.nome}
+                                                onChange={e => this.setState({ nome: e.target.value })}
+                                                className="form-control"
+                                                id="exampleInputNome1" aria-describedby="nomeHelp"
+                                                placeholder="Digite o Nome" />
+                                        </FormGroup>
+                                        <FormGroup label="Senha: *" htmlFor="ExampleInputPassword1">
+                                            <input type="password" className="form-control"
+                                                value={this.state.senha}
+                                                onChange={e => this.setState({ senha: e.target.value })}
+                                                id="exampleInputPassword1" placeholder="Password" />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <div className="d-flex justify-content-center">
+                                                <button onClick={this.entrar} className="btn btn-success" style={{ width: '10rem', height: '10 rem' }}>Entrar</button>
+                                            </div>
+                                        </FormGroup>
 
-                                            <button onClick={this.entrar} className="btn btn-success">Entrar</button>
-                                            <button onClick={this.prepareCadastrar} className="btn btn-danger">Cadastrar</button>
-                                        </fieldset>
+
+                                    </fieldset>
 
 
-                                    </div>
                                 </div>
                             </div>
                         </Card>
@@ -85,5 +82,8 @@ class Login extends React.Component {
         )
     }
 }
+
+Login.contextType = AuthContext
+
 
 export default withRouter(Login);

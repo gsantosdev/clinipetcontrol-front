@@ -16,10 +16,6 @@ import SelectMenu from '../../components/selectMenu';
 
 class MarcarAgendamento extends React.Component {
 
-
-
-
-
   state = {
     dataHorario: '',
     duracaoAprox: null,
@@ -90,7 +86,6 @@ class MarcarAgendamento extends React.Component {
     this.listarServicos();
     console.log(this.props.state);
     await this.setState(this.props.state);
-
 
   }
 

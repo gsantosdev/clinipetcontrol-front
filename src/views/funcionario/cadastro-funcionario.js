@@ -49,7 +49,6 @@ class CadastroFuncionario extends React.Component {
   }
 
 
-
   validar() {
     const msgs = []
     if (!this.state.nome) {
