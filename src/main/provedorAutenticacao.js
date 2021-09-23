@@ -13,27 +13,30 @@ class ProvedorAutenticacao extends React.Component {
   state = {
     usuarioAutenticado: null,
     isAutenticado: false
-  }
+    }
 
   iniciarSessao = (usuario) => {
     AuthService.logar(usuario);
     console.log(usuario)
     this.setState({ isAutenticado: true, usuarioAutenticado: usuario })
+
   }
+
 
   encerrarSessao = () => {
     AuthService.removerUsuarioAutenticado();
-    this.setState({ ìsAutenticado: false, usuarioAutenticado: null })
+    this.setState({ isAutenticado: false, usuarioAutenticado: null })
 
   }
 
   render() {
 
+
     const contexto = {
       usuarioAutenticado: this.state.usuarioAutenticado,
       isAutenticado: this.state.isAutenticado,
       iniciarSessao: this.iniciarSessao,
-      encerrarSessao: this.encerrarSessao
+      encerrarSessao: this.encerrarSessao,
     }
     return (
       <AuthProvider value={contexto}>

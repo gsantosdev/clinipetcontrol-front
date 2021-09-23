@@ -6,7 +6,7 @@ import React from 'react';
 import 'toastr/build/toastr.css';
 import 'toastr/build/toastr.min.js';
 import SideBar from '../components/sidebar';
-import { UserBar } from '../components/userbar';
+import  UserBar  from '../components/userbar';
 import '../custom.css';
 import Rotas from './rotas';
 import ProvedorAutenticacao from './provedorAutenticacao';
@@ -25,7 +25,7 @@ class App extends React.Component {
       <ProvedorAutenticacao>
         <SideBar />
         <div className="content-navbar">
-          <UserBar username={this.state.usuario} />
+          <UserBar/>
 
         </div>
         <div className="content">

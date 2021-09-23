@@ -1,12 +1,12 @@
 import React from 'react';
-import Card from "../components/card"
-import FormGroup from '../components/form-group'
 import { withRouter } from "react-router-dom";
+import AuthService from '../app/service/authService';
 import UsuarioService from '../app/service/usuarioService';
-import localStorageService from '../app/service/localstorageService';
-import { mensagemErro } from '../components/toastr'
+import Card from "../components/card";
+import FormGroup from '../components/form-group';
+import { mensagemErro } from '../components/toastr';
+import { AuthContext } from '../main/provedorAutenticacao';
 
-import { AuthContext } from '../main/provedorAutenticacao'
 
 
 class Login extends React.Component {
@@ -18,9 +18,15 @@ class Login extends React.Component {
 
     constructor() {
         super();
-        console.log(this.context)
         this.service = new UsuarioService();
-        console.log(this.context)
+    }
+
+    componentDidMount() {
+        console.log(AuthService.isUsuarioAutenticado())
+        if (AuthService.isUsuarioAutenticado()) {
+            this.context.iniciarSessao(AuthService.obterUsuarioAutenticado())
+            this.props.history.push('/home')
+        }
     }
 
     entrar = () => {

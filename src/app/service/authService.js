@@ -7,7 +7,9 @@ export default class AuthService {
   static isUsuarioAutenticado() {
     const usuario = localStorageService.obterItem(USUARIO_LOGADO)
 
-    return usuario && usuario.id;
+    const isAutenticado = usuario && usuario.id ? true : false 
+    console.log(isAutenticado)
+    return isAutenticado;
   }
 
   static removerUsuarioAutenticado() {
