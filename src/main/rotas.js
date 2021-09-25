@@ -1,17 +1,17 @@
 import React from 'react'
-
-
-import Login from '../views/login'
-import Home from '../views/home'
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
+import { AuthConsumer } from '../main/provedorAutenticacao'
+import AgendamentoHome from '../views/agendamento/agenda-home'
+import AnimalHome from '../views/animal/animal-home'
 import CadastroUsuario from '../views/cadastroUsuario'
 import ClienteHome from '../views/cliente/cliente-home'
 import FuncionarioHome from '../views/funcionario/funcionario-home'
-import AgendamentoHome from '../views/agendamento/agenda-home'
-import { AuthContext, AuthConsumer } from '../main/provedorAutenticacao';
-import { Route, Switch, HashRouter, Redirect } from 'react-router-dom'
-import AnimalHome from '../views/animal/animal-home'
+import Home from '../views/home'
+import Login from '../views/login'
+import NotFound from '../views/redirects/notFound'
 import ServicoHome from '../views/servico/servico-home'
-import AuthService from '../app/service/authService'
+
+
 
 
 
@@ -19,9 +19,19 @@ function RotaAutenticada({ component: Component, isUsuarioAutenticado, ...props 
     return (
         <Route {...props} render={(componentProps) => {
             if (isUsuarioAutenticado) {
-                return (
-                    <Component {...componentProps} />
-                )
+
+                if (props.isAutorizado) {
+                    return (
+                        <Component {...componentProps} />
+                    )
+                }
+                else {
+                    console.log(props);
+                    return (
+                        <Redirect to={{ pathname: '/404', state: { from: componentProps.location } }} />
+                    )
+                }
+
             }
             else {
                 return (
@@ -30,20 +40,25 @@ function RotaAutenticada({ component: Component, isUsuarioAutenticado, ...props 
             }
         }} />
     )
-}
+}//|
 
 function Rotas(props) {
+    console.log(props)
     return (
         <HashRouter>
             <Switch>
-                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/home" component={Home} />
+                {/* DEFINIR PRIVILEGIOS DE CADA USUÁRIO */}
+                
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria || props.isVeterinario} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/home" component={Home} />
                 <Route path="/login" component={Login} />
-                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cliente" component={ClienteHome} />
-                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/animal" component={AnimalHome} />
-                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cadastro-usuarios" component={CadastroUsuario} />
-                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/funcionario" component={FuncionarioHome} />
-                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/servico" component={ServicoHome} />
-                <RotaAutenticada isUsuarioAutenticado={props.isUsuarioAutenticado} path="/agendamento" component={AgendamentoHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cliente" component={ClienteHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/animal" component={AnimalHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cadastro-usuarios" component={CadastroUsuario} />
+                <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/funcionario" component={FuncionarioHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/servico" component={ServicoHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/agendamento" component={AgendamentoHome} />
+                <Route path="/404" component={NotFound} />
+
                 <Redirect exact from="/" to="home" />
             </Switch>
         </HashRouter>
@@ -53,6 +68,6 @@ function Rotas(props) {
 
 export default () => (
     <AuthConsumer>
-        {(context) => (<Rotas isUsuarioAutenticado={context.isAutenticado} />)}
+        {(context) => (<Rotas isUsuarioAutenticado={context.isAutenticado} isSecretaria={context.isSecretaria} isAdmin={context.isAdmin} isVeterinario={context.isVeterinario} />)}
     </AuthConsumer>
 );

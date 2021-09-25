@@ -120,7 +120,6 @@ class ServicoHome extends React.Component {
         messages.mensagemSucesso(response)
         this.listarServicos()
         this.limpaCampos()
-        //this.props.history.push('/login')
       }).catch(error => {
 
         messages.mensagemErro(error.response)
@@ -230,6 +229,5 @@ class ServicoHome extends React.Component {
     )
   }
 }
-
 
 export default withRouter(ServicoHome);

@@ -1,6 +1,7 @@
 import React from "react";
 
 import AuthService from "../app/service/authService";
+import { tiposUsuariosEnum } from "../utils/tipoUsuarioEnum";
 
 export const AuthContext = React.createContext('default')
 export const AuthConsumer = AuthContext.Consumer;
@@ -12,12 +13,32 @@ class ProvedorAutenticacao extends React.Component {
 
   state = {
     usuarioAutenticado: null,
-    isAutenticado: false
-    }
+    isAutenticado: false,
+    isAdmin: false,
+    isSecretaria: false,
+    isVeterinario: false
+  }
 
   iniciarSessao = (usuario) => {
     AuthService.logar(usuario);
+    const tipo = AuthService.obterUsuarioAutenticado().tipo
+    if (tipo === tiposUsuariosEnum.A) {
+      this.setState({ isAdmin: true });
+    }
+    else if (tipo === tiposUsuariosEnum.V) {
+      this.setState({ isVeterinario: true });
+
+    } else {
+      this.setState({ isSecretaria: true });
+    }
+
+    console.log(tipo === tiposUsuariosEnum.V)
     console.log(usuario)
+    console.log("isAdmin:", this.state.isAdmin)
+    console.log("isSecretaria:", this.state.isSecretaria)
+    console.log("isVeterinario:", this.state.isVeterinario)
+
+
     this.setState({ isAutenticado: true, usuarioAutenticado: usuario })
 
   }
@@ -35,8 +56,12 @@ class ProvedorAutenticacao extends React.Component {
     const contexto = {
       usuarioAutenticado: this.state.usuarioAutenticado,
       isAutenticado: this.state.isAutenticado,
+      isAdmin: this.state.isAdmin,
+      isSecretaria: this.state.isSecretaria,
+      isVeterinario: this.state.isVeterinario,
       iniciarSessao: this.iniciarSessao,
-      encerrarSessao: this.encerrarSessao,
+      encerrarSessao: this.encerrarSessao
+
     }
     return (
       <AuthProvider value={contexto}>
