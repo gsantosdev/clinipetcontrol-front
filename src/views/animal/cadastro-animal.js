@@ -39,8 +39,6 @@ class CadastroAnimal extends React.Component {
   }
 
 
-
-
   handleChange = (event) => {
     const value = event.target.value;
     const name = event.target.name;
@@ -107,7 +105,7 @@ class CadastroAnimal extends React.Component {
     else if (!this.state.sexo) {
       msgs.push('O campo Sexo é obrigatório.')
     }
-    else if (this.state.sexo == "Selecione...") {
+    else if (this.state.sexo === "Selecione...") {
       msgs.push('O campo Sexo é obrigatório.')
     }
     else if (!this.state.dataNascimento) {
@@ -121,14 +119,14 @@ class CadastroAnimal extends React.Component {
     else if (!this.state.especie) {
       msgs.push('O campo Espécie é obrigatório.')
     }
-    else if (this.state.especie == "Selecione...") {
+    else if (this.state.especie === "Selecione...") {
       msgs.push('O campo Espécie é obrigatório.')
     }
 
     else if (!this.state.porte) {
       msgs.push('O campo Porte é obrigatório.')
     }
-    else if (this.state.porte == "Selecione...") {
+    else if (this.state.porte === "Selecione...") {
       msgs.push('O campo Porte é obrigatório.')
     }
 
@@ -252,7 +250,7 @@ class CadastroAnimal extends React.Component {
                   console.log(this.state.dataNascimento)
                 }}
 
-                             /* TODO pattern=""*/ required />
+                        required />
             </FormGroup>
 
           </div>

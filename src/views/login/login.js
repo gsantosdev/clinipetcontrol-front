@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import AuthService from '../app/service/authService';
-import UsuarioService from '../app/service/usuarioService';
-import Card from "../components/card";
-import FormGroup from '../components/form-group';
-import { mensagemErro } from '../components/toastr';
-import { AuthContext } from '../main/provedorAutenticacao';
+import AuthService from '../../app/service/authService';
+import UsuarioService from '../../app/service/usuarioService';
+import Card from "../../components/card";
+import FormGroup from '../../components/form-group';
+import { mensagemErro } from '../../components/toastr';
+import { AuthContext } from '../../main/provedorAutenticacao';
 
 
 

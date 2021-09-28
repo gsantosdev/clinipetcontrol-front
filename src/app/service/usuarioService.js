@@ -19,6 +19,22 @@ class UsuarioService extends ApiService {
     salvar(usuario) {
         return this.post('/', usuario)
     }
+
+    listarTipos() {
+        return this.get(`/tipos`)
+    }
+
+    async getTipos() {
+        const x = [{ label: 'Selecione...' }];
+
+        await this.listarTipos().then(response => {
+            response.data.forEach(element => {
+                x.push(element)
+            });
+        })
+
+        return Promise.resolve(x);
+    }
 }
 
 export default UsuarioService
