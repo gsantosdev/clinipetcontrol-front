@@ -10,7 +10,7 @@ class NotFound extends React.Component {
     super();
   }
 
-  voltarHome = () =>{
+  voltarHome = () => {
     this.props.history.push('/home')
   }
 
@@ -22,8 +22,12 @@ class NotFound extends React.Component {
         </div>
 
         <hr className="my-4" />
+        <div className="d-flex justify-content-center">
+          <div className="p-1">
+            <button onClick={() => this.voltarHome()} type="button" className="btn btn-success" style={{ backgroundColor: '#256597' }}>Voltar</button>
+          </div>
+        </div>
 
-        <input type="button" value="VOLTAR" onClick={()=>this.voltarHome()}></input>
 
       </div>
     )

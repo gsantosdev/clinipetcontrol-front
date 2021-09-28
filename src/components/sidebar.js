@@ -15,17 +15,17 @@ function SideBar(props) {
           </figure>
         </div>
 
-        <SideBarItem icon={faHome} href="#/home" label="Home" />
-        <SideBarItem icon={faUsers} href="#/cliente" label="Clientes" />
+        <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faHome} href="#/home" label="Home" />
+        <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faUsers} href="#/cliente" label="Clientes" />
 
-        <SideBarItem icon={faDog} href="#/animal" label="Animais" />
-        <SideBarItem icon={faHandHoldingMedical} href="#/servico" label="Serviços" />
-        <SideBarItem icon={faAddressCard} href="#/funcionario" label="Funcionários" />
+        <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faDog} href="#/animal" label="Animais" />
+        <SideBarItem render={props.isAdmin} icon={faHandHoldingMedical} href="#/servico" label="Serviços" />
+        <SideBarItem render={props.isAdmin} icon={faAddressCard} href="#/funcionario" label="Funcionários" />
 
-        <SideBarItem icon={faCalendar} href="#/agendamento" label="Agenda" />
-        <SideBarItem icon={faUser} href="#/usuarios" label="Usuarios" />
+        <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faCalendar} href="#/agendamento" label="Agenda" />
+        <SideBarItem render={props.isAdmin} icon={faUser} href="#/usuarios" label="Usuarios" />
 
-        <SideBarItem onClick={props.encerrarSessao} icon={faArrowLeft} href="#/login" label="Sair" />
+        <SideBarItem render={true} onClick={props.encerrarSessao} icon={faArrowLeft} href="#/login" label="Sair" />
         {/*<SideBarItem icon={faNotesMedical} href="#/" label="Relatórios" />*/}
 
 
@@ -43,6 +43,6 @@ function SideBar(props) {
 
 export default () => (
   <AuthConsumer>
-    {(context) => (<SideBar isUsuarioAutenticado={context.isAutenticado} encerrarSessao={context.encerrarSessao} />)}
+    {(context) => (<SideBar isUsuarioAutenticado={context.isAutenticado} encerrarSessao={context.encerrarSessao} isSecretaria={context.isSecretaria} isAdmin={context.isAdmin} isVeterinario={context.isVeterinario} />)}
   </AuthConsumer>
 );
