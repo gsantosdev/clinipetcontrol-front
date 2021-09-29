@@ -1,58 +1,55 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import ClienteService from '../../app/service/clienteService';
-import FormGroup from '../../components/form-group';
-import ClienteTable from './clienteTable';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
-import Card from '../../components/card'
+import React from 'react';
+import UsuarioService from '../../app/service/usuarioService';
+import Card from '../../components/card';
+import FormGroup from '../../components/form-group';
+import * as messages from '../../components/toastr';
+import UsuarioTable from './usuario-table';
+import CadastroUsuario from './cadastro-usuario';
 
-import * as messages from '../../components/toastr'
-import CadastroCliente from './cadastro-cliente';
 
-
-
-
-class ProntuarioCliente extends React.Component {
+class ProntuarioUsuario extends React.Component {
 
 
   state = {
     busca: '',
-    clientes: [],
+    usuarios: [],
     showConfirmDialogDeletar: false,
     showConfirmDialogEditar: false,
-    clienteADeletar: {},
-    clienteAEditar: {},
+    usuarioADeletar: {},
+    usuarioAEditar: {},
     message: ''
   }
 
   constructor() {
     super();
-    this.service = new ClienteService();
+    this.service = new UsuarioService();
   }
 
-  abrirConfirmacaoEditar = (cliente) => {
-    this.setState({ showConfirmDialogEditar: true, clienteAEditar: cliente })
+  abrirConfirmacaoEditar = (usuario) => {
+    this.setState({ showConfirmDialogEditar: true, usuarioAEditar: usuario })
   }
 
-  abrirConfirmacaoDeletar = (cliente) => {
-    this.setState({ showConfirmDialogDeletar: true, clienteADeletar: cliente })
+  abrirConfirmacaoDeletar = (usuario) => {
+    this.setState({ showConfirmDialogDeletar: true, usuarioADeletar: usuario })
   }
 
-  cancelarDelecao = (cliente) => {
-    this.setState({ showConfirmDialogDeletar: false, clienteADeletar: cliente })
+  cancelarDelecao = (usuario) => {
+    this.setState({ showConfirmDialogDeletar: false, usuarioADeletar: usuario })
   }
-  cancelarEdicao = async (cliente) => {
+  cancelarEdicao = async (usuario) => {
     await this.buscar()
-    this.setState({ showConfirmDialogEditar: false, clienteAEditar: cliente })
+    this.setState({ showConfirmDialogEditar: false, usuarioAEditar: usuario })
   }
 
 
   buscar = () => {
-    this.service.obterPorNomeCpfTelefone(this.state.busca)
+    this.service.obterPorNome(this.state.busca)
       .then(resposta => {
-        this.setState({ clientes: resposta.data })
+        this.setState({ usuarios: resposta.data })
       }).catch(error => {
         console.log(error)
       })
@@ -63,17 +60,19 @@ class ProntuarioCliente extends React.Component {
   }
 
   deletar = () => {
-    this.service.deletar(this.state.clienteADeletar.id)
+    this.service.deletar(this.state.usuarioADeletar.id)
       .then(response => {
-        const clientes = this.state.clientes;
-        const index = clientes.indexOf(this.state.clienteADeletar)
-        clientes.splice(index, 1);
-        this.setState({ clientes: clientes, showConfirmDialogDeletar: false });
+        const usuarios = this.state.usuarios;
+        const index = usuarios.indexOf(this.state.usuarioADeletar)
+        usuarios.splice(index, 1);
+        this.setState({ usuarios: usuarios, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("Cliente deletado com sucesso!")
       }).catch(erro => {
         messages.mensagemErro(erro.response.data)
       })
   }
+
+  
 
 
 
@@ -99,10 +98,10 @@ class ProntuarioCliente extends React.Component {
           <div className="row mb-3">
             <div>
 
-              <FormGroup label="Pesquisar Cliente">
+              <FormGroup label="Pesquisar Usuario">
                 <div className="input-group">
                   <div style={{ marginLeft: "-1rem" }} className="form-outline col-sm-10 col-md-8 col-lg-5 col-xl-4 col-xxl-3">
-                    <input id="search-input" placeholder="Nome/CPF" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
+                    <input id="search-input" placeholder="Nome" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
                   <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
                     <FontAwesomeIcon icon={faSearch} />
@@ -111,7 +110,7 @@ class ProntuarioCliente extends React.Component {
               </FormGroup>
 
               <div>
-                <ClienteTable clientes={this.state.clientes} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+                <UsuarioTable usuarios={this.state.usuarios} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
               </div>
             </div>
           </div>
@@ -125,7 +124,7 @@ class ProntuarioCliente extends React.Component {
             footer={footerDialogDeletar}
             modal={true}
             onHide={() => this.setState({ showConfirmDialogDeletar: false })}>
-            Deseja excluir o cliente?
+            Deseja excluir o usuario?
           </Dialog>
 
           <Dialog
@@ -142,8 +141,8 @@ class ProntuarioCliente extends React.Component {
 
             }}
           >
-            <Card title="Atualize os dados do cliente">
-              <CadastroCliente editar={true} state={this.state.clienteAEditar} />
+            <Card title="Atualize os dados do usuario">
+              <CadastroUsuario editar={true} state={this.state.usuarioAEditar} />
             </Card>
           </Dialog>
         </div>
@@ -155,4 +154,4 @@ class ProntuarioCliente extends React.Component {
   }
 }
 
-export default ProntuarioCliente
+export default ProntuarioUsuario

@@ -8,9 +8,6 @@ import EspeciesHome from './especie/especies-home'
 import ProntuarioAnimal from './prontuario-animal'
 
 
-
-
-
 class AnimalHome extends React.Component {
   render() {
     return (

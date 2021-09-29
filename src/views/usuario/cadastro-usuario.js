@@ -9,6 +9,7 @@ import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 class CadastroUsuario extends React.Component {
 
     state = {
+        id: null,
         nome: '',
         email: '',
         senha: '',
@@ -37,6 +38,8 @@ class CadastroUsuario extends React.Component {
 
     componentDidMount() {
         this.listarTipos()
+        console.log(this.props.state)
+        this.setState(this.props.state)
     }
 
     async listarTipos() {
@@ -101,6 +104,29 @@ class CadastroUsuario extends React.Component {
             })
     }
 
+    editar = () => {
+
+        const msgs = this.validar()
+
+        if (msgs && msgs.length > 0) {
+            msgs.forEach((msg, index) => {
+                mensagemErro(msg)
+            });
+            return false;
+        }
+
+
+        const { nome, senha, tipo } = this.state;
+        const usuario = { nome, senha, tipo };
+
+        this.service.editar(this.state.id, usuario)
+            .then(response => {
+                mensagemSucesso(response)
+            }).catch(error => {
+                mensagemErro(error.response.data)
+            })
+    }
+
     cancelar = () => {
         this.props.history.push('/login')
     }
@@ -153,6 +179,7 @@ class CadastroUsuario extends React.Component {
                     </div>
                     <FormGroup>
                         <div className="d-flex justify-content-end">
+                            {console.log("editar", this.props.editar)}
                             <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
                         </div>
                     </FormGroup>
@@ -165,4 +192,4 @@ class CadastroUsuario extends React.Component {
     }
 }
 
-export default withRouter(CadastroUsuario)
+export default CadastroUsuario

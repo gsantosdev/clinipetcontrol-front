@@ -11,9 +11,6 @@ import AnimalTable from './animalTable';
 import * as messages from '../../components/toastr'
 import CadastroAnimal from './cadastro-animal';
 
-
-
-
 class ProntuarioAnimal extends React.Component {
 
 
@@ -99,7 +96,7 @@ class ProntuarioAnimal extends React.Component {
           <div className="d-flex flex-row mb-3">
             <div className="col-md-12">
               <FormGroup label="Pesquisar Animal">
-                <div style={{marginLeft:"-1rem"}} className="input-group">
+                <div style={{ marginLeft: "-1rem" }} className="input-group">
                   <div className="form-outline col-sm-10 col-md-8 col-lg-5 col-xl-4 col-xxl-3">
                     <input id="search-input" value={this.state.busca} placeholder="Nome do animal" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
