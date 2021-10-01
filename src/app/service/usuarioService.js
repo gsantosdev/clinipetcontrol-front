@@ -26,7 +26,7 @@ class UsuarioService extends ApiService {
 
 
     obterPorNome(busca) {
-        return this.get(`?busca=${busca}`)
+        return this.get(`/teste?busca=${busca}`)
     }
 
     listarTipos() {

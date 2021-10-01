@@ -51,6 +51,8 @@ class ProntuarioUsuario extends React.Component {
       .then(resposta => {
         this.setState({ usuarios: resposta.data })
       }).catch(error => {
+        this.setState({ usuarios: [] })
+
         console.log(error)
       })
   }
