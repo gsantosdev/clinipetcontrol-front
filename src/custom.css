@@ -408,12 +408,14 @@ div.content {
     color: rgb(0, 136, 199);
 }
 
+
 .paginationBttns{
     width: 80%;
-    height: 40px;
+    height: 20px;
     list-style: none;
     display: flex;
     justify-content: center;
+    box-sizing: border-box;
 }
 
 .paginationBttns a{
@@ -449,3 +451,4 @@ div.content {
     top: 0%;
     transform: translateX(-50%);
 }
+

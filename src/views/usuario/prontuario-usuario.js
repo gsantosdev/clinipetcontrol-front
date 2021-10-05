@@ -99,7 +99,6 @@ class ProntuarioUsuario extends React.Component {
         <div className="p-3">
           <div className="row mb-3">
             <div>
-
               <FormGroup label="Pesquisar Usuario">
                 <div className="input-group">
                   <div style={{ marginLeft: "-1rem" }} className="form-outline col-sm-10 col-md-8 col-lg-5 col-xl-4 col-xxl-3">

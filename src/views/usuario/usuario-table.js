@@ -3,7 +3,6 @@ import ReactPaginate from 'react-paginate'
 
 export default props => {
 
-    // const [users, setUsers] = useState(props.usuarios.slice(0, 50))
     const [pageNumber, setPageNumber] = useState(0)
 
     const users = props.usuarios;
@@ -38,8 +37,8 @@ export default props => {
     }
 
     return (
-        <div style={{ height: '40rem' }}>
-            <div style={{ overflowX: "auto" }}>
+        <div style={{ minHeight: 'max-content', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div style={{ height: 'max-content', marginBottom: '2rem', overflowX: "auto" }}>
                 <table className="table table-hover ">
                     <thead>
                         <tr>
@@ -55,9 +54,8 @@ export default props => {
 
                 </table>
 
-
             </div>
-            <div>
+            <div style={{ height: 'max-content', display: 'flex', boxSizing: 'border-box' }}>
                 {users.length > 0 ? <ReactPaginate
                     previousLabel={"Anterior"}
                     nextLabel={"Próximo"}

@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ReactPaginate from 'react-paginate'
 
 export default props => {
 
-    const rows = props.animais.map((animal, index) => {
+    const [pageNumber, setPageNumber] = useState(0)
+
+    const animais = props.animais;
+    console.log(animais)
+
+    const animaisPerPage = 5
+    const pagesVisited = pageNumber * animaisPerPage
+
+    const rows = animais.slice(pagesVisited, pagesVisited + animaisPerPage).map((animal, index) => {
         return (
 
-            <tr style={{backgroundColor: index % 2 ? "rgb(250,250,250)": "rgb(241,241,241"}} key={index}>
+            <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
                 <td>{animal.nome}</td>
                 <td>{animal.raca}</td>
                 <td>{animal.especie}</td>
@@ -25,28 +34,55 @@ export default props => {
                 </td>
             </tr>
         )
-    })
+    });
+
+    const pageCount = Math.ceil(animais.length / animaisPerPage);
+
+    const changePage = ({ selected }) => {
+        setPageNumber(selected)
+    }
+
+
     return (
 
         <div style={{ overflowX: "auto" }}>
-            <table className="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Raça</th>
-                        <th scope="col">Espécie</th>
-                        <th scope="col">Cor</th>
-                        <th scope="col">Porte</th>
-                        <th scope="col">Proprietário</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
+            <div style={{ height: 'max-content', marginBottom: '2rem', overflowX: "auto" }}>
 
-            </table>
-        </div>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Raça</th>
+                            <th scope="col">Espécie</th>
+                            <th scope="col">Cor</th>
+                            <th scope="col">Porte</th>
+                            <th scope="col">Proprietário</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div style={{ height: 'max-content', display: 'flex', boxSizing: 'border-box' }}>
+                {animais.length > 0 ? <ReactPaginate
+                    previousLabel={"Anterior"}
+                    nextLabel={"Próximo"}
+                    pageCount={pageCount}
+                    onPageChange={changePage}
+                    containerClassName={"paginationBttns"}
+                    previousLinkClassName={"previouBttn"}
+                    nextLinkClassName={"nextBttn"}
+                    disabledClassName={"paginationDisabled"}
+                    pageLinkClassName={"paginationLink"}
+                    activeClassName={"paginationActive"}
+                    activeLinkClassName={"paginationActive"}
+                /> : false}
+            </div>
+        </div >
 
 
     )

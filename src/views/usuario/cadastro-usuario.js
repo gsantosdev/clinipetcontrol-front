@@ -100,7 +100,7 @@ class CadastroUsuario extends React.Component {
                 mensagemSucesso('Usuário cadastrado com sucesso!')
                 this.limpaCampos()
             }).catch(error => {
-                mensagemErro(error.response)
+                mensagemErro(error.response.data)
             })
     }
 
