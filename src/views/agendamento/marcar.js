@@ -148,7 +148,6 @@ class MarcarAgendamento extends React.Component {
         mensagemSucesso(response)
         this.limpaCampos()
         this.listarServicos()
-        //this.props.history.push('/login')
       }).catch(error => {
         mensagemErro(error.response.data)
       })

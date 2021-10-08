@@ -10,6 +10,7 @@ import Home from '../views/home'
 import Login from '../views/login/login'
 import NotFound from '../views/redirects/notFound'
 import ServicoHome from '../views/servico/servico-home'
+import comercialHome from '../views/comercial/comercial-home'
 
 
 
@@ -48,7 +49,7 @@ function Rotas(props) {
         <HashRouter>
             <Switch>
                 {/* DEFINIR PRIVILEGIOS DE CADA USUÁRIO */}
-                
+
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria || props.isVeterinario} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/home" component={Home} />
                 <Route path="/login" component={Login} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cliente" component={ClienteHome} />
@@ -57,7 +58,9 @@ function Rotas(props) {
                 <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/servico" component={ServicoHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/agendamento" component={AgendamentoHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/usuarios" component={UsuarioHome} />
-                
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/comercial" component={comercialHome} />
+
+
 
                 <Route path="/404" component={NotFound} />
 
