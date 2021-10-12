@@ -99,11 +99,11 @@ class ProntuarioFuncionario extends React.Component {
     return (
       <>
         <div className="p-3">
-          <div className="d-flex flex-row p-3">
-            <div className="col-12">
+          <div className="row">
+            <div className="col-12 mb-3">
               <FormGroup label="Pesquisar funcionario">
                 <div className="input-group">
-                  <div style={{marginLeft:"-1rem"}} className="form-outline col-sm-10 col-md-8 col-lg-5 col-xl-4 col-xxl-3">
+                  <div style={{ marginLeft: "-1rem" }} className="form-outline col-11 col-sm-11 col-md-11 col-lg-7 col-xl-8 col-xxl-5">
                     <input id="search-input" placeholder="Nome/Telefone" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
                   <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
@@ -111,16 +111,10 @@ class ProntuarioFuncionario extends React.Component {
                   </button>
                 </div>
               </FormGroup>
-
-              <div className="row">
-                <div className="col-12">
-                  <div className="bs-component">
-                    <FuncionarioTable funcionarios={this.state.funcionarios} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
-                  </div>
-                </div>
-              </div>
             </div>
-
+            <div>
+              <FuncionarioTable funcionarios={this.state.funcionarios} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+            </div>
           </div>
 
         </div>

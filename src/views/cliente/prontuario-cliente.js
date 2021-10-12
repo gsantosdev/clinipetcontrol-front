@@ -33,7 +33,7 @@ class ProntuarioCliente extends React.Component {
   }
 
   abrirConfirmacaoEditar = (cliente) => {
-    this.setState({ showConfirmDialogEditar: true, clienteAEditar: cliente })
+  this.setState({ showConfirmDialogEditar: true, clienteAEditar: cliente })
   }
 
   abrirConfirmacaoDeletar = (cliente) => {
@@ -96,12 +96,11 @@ class ProntuarioCliente extends React.Component {
     return (
       <>
         <div className="p-3">
-          <div className="row mb-3">
-            <div>
-
+          <div className="row">
+            <div className="col-12 mb-3">
               <FormGroup label="Pesquisar Cliente">
                 <div className="input-group">
-                  <div style={{ marginLeft: "-1rem" }} className="form-outline col-sm-10 col-md-8 col-lg-5 col-xl-4 col-xxl-3">
+                  <div style={{ marginLeft: "-1rem" }} className="form-outline col-11 col-sm-11 col-md-11 col-lg-8 col-xl-8 col-xxl-5">
                     <input id="search-input" placeholder="Nome/CPF" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
                   <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
@@ -110,9 +109,9 @@ class ProntuarioCliente extends React.Component {
                 </div>
               </FormGroup>
 
-              <div>
-                <ClienteTable clientes={this.state.clientes} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
-              </div>
+            </div>
+            <div>
+              <ClienteTable clientes={this.state.clientes} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
             </div>
           </div>
 

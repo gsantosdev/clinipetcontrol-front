@@ -1,6 +1,5 @@
-import { cpf } from 'cpf-cnpj-validator'
-import React, { useState } from 'react'
-import ReactPaginate from 'react-paginate'
+import { formatCPF } from '@brazilian-utils/brazilian-utils';
+import React from 'react'
 
 export default props => {
 
@@ -9,7 +8,7 @@ export default props => {
         return (
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
                 <td>{item.nome}</td>
-                <td>{cpf.format(cliente.cpf)}</td>
+                <td>{formatCPF(cliente.cpf)}</td>
                 <td>{cliente.email}</td>
                 <td>{cliente.telefone}</td>
 

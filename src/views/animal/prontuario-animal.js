@@ -93,11 +93,11 @@ class ProntuarioAnimal extends React.Component {
     return (
       <>
         <div className="p-3">
-          <div className="d-flex flex-row mb-3">
-            <div className="col-md-12">
+          <div className="row">
+            <div className="col-12 mb-3">
               <FormGroup label="Pesquisar Animal">
                 <div style={{ marginLeft: "-1rem" }} className="input-group">
-                  <div className="form-outline col-sm-10 col-md-8 col-lg-5 col-xl-4 col-xxl-3">
+                  <div className="form-outline col-10 col-sm-10 col-md-10 col-lg-7 col-xl-8 col-xxl-5">
                     <input id="search-input" value={this.state.busca} placeholder="Nome do animal" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
                   <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
@@ -105,13 +105,10 @@ class ProntuarioAnimal extends React.Component {
                   </button>
                 </div>
               </FormGroup>
-
-              <div>
-                <AnimalTable animais={this.state.animais} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
-              </div>
             </div>
-
-
+            <div>
+              <AnimalTable animais={this.state.animais} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+            </div>
           </div>
 
         </div>
@@ -129,7 +126,6 @@ class ProntuarioAnimal extends React.Component {
             onChange={e => this.setState({ showConfirmDialogEditar: false })}
             visible={this.state.showConfirmDialogEditar}
             style={{ width: '90vw' }}
-            footer={footerDialogEditar}
             modal={true}
             onHide={() => this.cancelarEdicao()}>
             <Card title="Atualize os dados do animal">

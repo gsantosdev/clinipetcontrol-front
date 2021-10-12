@@ -48,7 +48,7 @@ export default props => {
         <div style={{ overflowX: "auto" }}>
             <div style={{ height: 'max-content', marginBottom: '2rem', overflowX: "auto" }}>
 
-                <table className="table table-hover">
+                <table className="table table-hover table-sm-responsive">
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
