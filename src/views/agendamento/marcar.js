@@ -29,11 +29,10 @@ class MarcarAgendamento extends React.Component {
     buscaAnimal: '',
     buscaFuncionario: '',
     todayDate: ''
-
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.service = new AgendamentoService();
     this.servicoService = new ServicoService();
     this.animalService = new AnimalService();
@@ -67,7 +66,7 @@ class MarcarAgendamento extends React.Component {
     else if (!this.state.duracaoAprox) {
       msgs.push('O campo de duração aproximada é obrigatório.')
     }
-    else if (this.state.duracaoAprox == "Selecione...") {
+    else if (this.state.duracaoAprox === "Selecione...") {
       msgs.push('Selecione uma duração aproximada válida.')
     }
     else if (!this.state.idServico) {
@@ -151,6 +150,23 @@ class MarcarAgendamento extends React.Component {
       }).catch(error => {
         mensagemErro(error.response.data)
       })
+  }
+
+
+  adicionarAgendamento = () => {
+    const msgs = this.validar()
+
+    if (msgs && msgs.length > 0) {
+      msgs.forEach((msg, index) => {
+        mensagemErro(msg)
+      });
+      return false;
+    }
+    console.log(this.state.dataHorario)
+    const { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario } = this.state
+    const agendamento = { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario }
+
+    this.props.adicionarAgendamento(agendamento)
   }
 
   selectActionServico = async (servico) => {
@@ -250,7 +266,17 @@ class MarcarAgendamento extends React.Component {
         <div className="row">
           <div className="d-flex justify-content-end">
             <div className="mt-5">
-              <button style={{ minWidth: '17rem' }} onClick={this.props.editar ? this.editar : this.agendar} type="button" className="btn btn-success">Realizar Agendamento</button>
+              <button style={{ minWidth: '17rem' }} onClick={() => {
+                if (this.props.editar) {
+                  return this.editar
+                }
+                else if (this.props.agendar) {
+                  return this.agendar()
+                }
+                else {
+                  return this.adicionarAgendamento()
+                }
+              }}/*onClick={this.props.editar ? this.editar : this.agendar}*/ type="button" className="btn btn-success">Adicionar agendamento</button>
             </div>
           </div>
         </div>

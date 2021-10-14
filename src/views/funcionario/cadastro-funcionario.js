@@ -186,7 +186,7 @@ class CadastroFuncionario extends React.Component {
             <FormGroup id="inputVeterinario" label="É Veterinário? *">
 
 
-              <div class="form-check">
+              <div className="form-check">
                 <input className="form-check-input" type="radio" name="veterinario" id="flexRadioSim"
                   checked={this.props.editar ? this.state.veterinario : this.state.simChecked}
                   defaultChecked={this.state.veterinario}
@@ -201,7 +201,7 @@ class CadastroFuncionario extends React.Component {
                   Sim
                 </label>
               </div>
-              <div class="form-check">
+              <div className="form-check">
                 <input className="form-check-input" type="radio" name="veterinario" id="flexRadioNao"
                   checked={this.props.editar ? !this.state.veterinario : this.state.naoChecked}
                   defaultChecked={!this.state.veterinario}

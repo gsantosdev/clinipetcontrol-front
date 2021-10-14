@@ -12,13 +12,13 @@ function UserBar(props) {
     <nav className="navbar justify-content-end">
       <ul>
         <li style={{ listStyle: "none" }}>
-          <h1 class="navbar-brand ">Usuário:  {props.usuarioAutenticado.nome}</h1>
+          <h1 className="navbar-brand ">Usuário:  {props.usuarioAutenticado.nome}</h1>
           <FontAwesomeIcon icon={faUser} />
         </li>
       </ul>
       <ul>
         <li style={{ listStyle: "none" }}>
-          <h1 class="navbar-brand ">Tipo:  {props.usuarioAutenticado.tipo}</h1>
+          <h1 className="navbar-brand ">Tipo:  {props.usuarioAutenticado.tipo}</h1>
           <FontAwesomeIcon icon={faUser} />
         </li>
       </ul>

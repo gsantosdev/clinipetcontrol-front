@@ -21,7 +21,7 @@ class AgendamentoHome extends React.Component {
           </Tab>
           <Tab eventKey="marcar" title="Marcar">
             <Card title="Marcar Agendamento">
-              <MarcarAgendamento />
+              <MarcarAgendamento agendar />
             </Card>
           </Tab>
 

@@ -294,19 +294,19 @@ class CadastroAnimal extends React.Component {
         <div className="row">
           <div className="col-md-12 col-lg-4">
             <FormGroup id="inputAlergia" label="Alergias: ">
-              <textarea value={this.state.alergias} class="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
+              <textarea value={this.state.alergias} className="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-12 col-lg-4">
             <FormGroup id="inputPatologias" label="Patologias: ">
-              <textarea value={this.state.patologias} class="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
+              <textarea value={this.state.patologias} className="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-12 col-lg-4">
             <FormGroup id="inputMedicamentos" label="Medicamentos: ">
-              <textarea value={this.state.medicamentos} class="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
+              <textarea value={this.state.medicamentos} className="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>

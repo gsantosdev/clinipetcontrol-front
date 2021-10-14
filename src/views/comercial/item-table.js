@@ -1,35 +1,53 @@
-import { formatCPF } from '@brazilian-utils/brazilian-utils';
 import React from 'react'
 
 export default props => {
 
 
-    const rows = itens.slice(pagesVisited, pagesVisited + clientesPerPage).map((item, index) => {
+
+    function add0(value) {
+        if (value < 10) {
+            return '0' + value;
+        } else {
+            return value;
+        }
+    }
+
+    function getIntervalo(item) {
+
+        var dataInicio = new Date(item.agendamento.dataHorario);
+        var dataFim = new Date(item.agendamento.dataHorario);
+
+
+        dataFim.setMinutes(dataInicio.getMinutes() + Number(item.agendamento.duracaoAprox))
+
+
+
+
+
+        return add0(dataInicio.getHours().toString()) + ":" + add0(dataInicio.getMinutes().toString())
+            + " - " + add0(dataFim.getHours().toString()) + ":" + add0(dataFim.getMinutes())
+
+
+    }
+
+
+
+    const rows = props.itensVenda.map((item, index) => {
         return (
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
-                <td>{item.nome}</td>
-                <td>{formatCPF(cliente.cpf)}</td>
-                <td>{cliente.email}</td>
-                <td>{cliente.telefone}</td>
-
+                <td>{getIntervalo(item)}</td>
+                <td>{item.agendamento.idAnimal}</td>
                 <td>
-                    {props.telaAnimal ?
-                        <input name="cliente" type="radio" defaultChecked={props.selecionado === cliente.id} onClick={e => props.selectAction(cliente)}></input> : <div>
-                            <button type="button" onClick={e => props.editarAction(item)} className="btn btn-primary">Editar</button>
-                            <button type="button" onClick={e => props.deleteAction(item)} className="btn btn-danger">Deletar</button></div>
-                    }
-
+                    <div>
+                        <button type="button" onClick={e => props.editarAction(item)} className="btn btn-primary">Editar</button>
+                        <button type="button" onClick={e => props.deleteAction(item)} className="btn btn-danger">Deletar</button>
+                    </div>
                 </td>
+
             </tr>
 
         )
     });
-
-    const pageCount = Math.ceil(clientes.length / clientesPerPage);
-
-    const changePage = ({ selected }) => {
-        setPageNumber(selected)
-    }
 
     return (
 
@@ -38,9 +56,10 @@ export default props => {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Valor</th>
+                            <th scope="col">Duração</th>
+                            <th scope="col">Id do animal</th>
                             <th scope="col"></th>
+
                         </tr>
                     </thead>
                     <tbody className="col-12">
@@ -50,7 +69,7 @@ export default props => {
                 </table>
             </div>
 
-  
+
 
         </div>
 

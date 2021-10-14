@@ -23,6 +23,10 @@ class ServicoService extends ApiService {
         return this.get(`/${id}`)
     }
 
+    obterValorVenda(id) {
+        return this.get(`/${id}/valor`)
+    }
+
     listar() {
         return this.get(`/listar`)
     }

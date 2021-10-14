@@ -1,16 +1,20 @@
-import React from "react";
-
-import Card from "../../components/card"
-import { withRouter } from "react-router";
-import { Button } from "react-bootstrap";
-import FormGroup from "../../components/form-group"
-import { faPlus, faRemoveFormat, faSearch, faUserTimes, faWindowClose, faXRay } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DadosClienteTable from "./dados-cliente-table";
-import ClienteTable from "../cliente/clienteTable";
-import ClienteService from "../../app/service/clienteService";
-import SelectClienteTable from "./selectClienteTable";
 import { Dialog } from "primereact/dialog";
+import React from "react";
+import { Button as BootstrapButton } from "react-bootstrap";
+import { Button as PrimeButton } from "primereact/button";
+
+import { withRouter } from "react-router";
+import ClienteService from "../../app/service/clienteService";
+import Card from "../../components/card";
+import FormGroup from "../../components/form-group";
+import DadosClienteTable from "./dados-cliente-table";
+import SelectClienteTable from "./selectClienteTable";
+import MarcarAgendamento from "../agendamento/marcar";
+import ItemTable from "./item-table";
+import ServicoService from "../../app/service/servicoService";
+
 
 
 class Venda extends React.Component {
@@ -21,18 +25,71 @@ class Venda extends React.Component {
     clientes: [],
     buscaCliente: '',
     venda: {},
-    itensVenda: {},
+    totalVenda: null,
+    itensVenda: [],
     showTelaAgendamento: false,
-    showTelaProduto: false
+    showTelaProduto: false,
+    showConfirmDialogDeletar: false,
+    showConfirmDialogEditar: false,
   }
 
   constructor() {
     super();
     this.clienteService = new ClienteService();
+    this.servicoService = new ServicoService();
   }
+
+
+  obterValorTotalVenda() {
+
+    this.setState({ totalVenda: 0 })//Seta pra 0 pra passar por toda a lista novamente
+
+    this.state.itensVenda.forEach(item => {
+      if (item.agendamento.idServico !== null) {
+        this.servicoService.obterValorVenda(item.agendamento.idServico).then(response => {
+          console.log("Valor Serviço: ", response.data)
+
+          this.setState({ totalVenda: this.state.totalVenda + response.data });
+          console.log("Valor Total: ", this.state.totalVenda)
+
+        });
+
+      }
+    })
+
+  }
+
+
 
   abrirTelaAgendamento = () => {
     this.setState({ showTelaAgendamento: true })
+  }
+
+  abrirConfirmacaoEditar = () => {
+    this.setState({ showConfirmDialogEditar: true })
+  }
+
+  abrirConfirmacaoDeletar = () => {
+    this.setState({ showConfirmDialogDeletar: true })
+  }
+
+  cancelarDelecao = () => {
+    this.setState({ showConfirmDialogDeletar: false })
+  }
+
+  cancelarEdicao = () => {
+
+    this.setState({ showConfirmDialogEditar: false })
+  }
+
+  adicionarAgendamento = (agendamento) => {
+
+    this.state.itensVenda.push({ agendamento: agendamento, quantidade: 1 })
+    this.setState({ showTelaAgendamento: false, itensVenda: this.state.itensVenda })
+
+    this.obterValorTotalVenda()
+
+    console.log("itensVenda:", this.state.itensVenda)
   }
 
 
@@ -45,8 +102,9 @@ class Venda extends React.Component {
   }
 
   deselecionarCliente = async () => {
-    await this.setState({ clienteSelecionado: {}, clientes: [] })
-    console.log(this.state.clienteSelecionado)
+    await this.setState({ clienteSelecionado: {}, clientes: [], itensVenda: [], venda: {} })
+    console.log("Cliente selecionado: ", this.state.clienteSelecionado);
+    console.log("Itens venda: ", this.state.itensVenda);
   }
 
 
@@ -64,8 +122,22 @@ class Venda extends React.Component {
   }
 
 
-
   render() {
+
+    const footerDialogDeletar = (
+      <div>
+        <PrimeButton label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
+        <PrimeButton label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
+      </div>
+    );
+
+    const footerDialogEditar = (
+      <div>
+        <PrimeButton style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
+      </div>
+    );
+
+
     return (
       <div className="row">
         <div className="row">
@@ -85,14 +157,14 @@ class Venda extends React.Component {
               </div>
             </div>
             : false}
-          {this.state.clientes.length !== 0 ? <div style={{ backgroundColor: '' }} className="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+          {this.state.clientes.length !== 0 ? <div style={{ backgroundColor: '' }} className="col-12">
             {Object.keys(this.state.clienteSelecionado).length !== 0 ?
               <Card subtitulo title="Dados do cliente">
                 <div>
                   <DadosClienteTable cliente={this.state.clienteSelecionado} />
                   <div className="d-flex justify-content-center">
 
-                    <Button className="btn btn-warning" onClick={this.deselecionarCliente}>Alterar cliente<FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faWindowClose} /></Button>
+                    <BootstrapButton className="btn btn-warning" onClick={this.deselecionarCliente}>Alterar cliente<FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faWindowClose} /></BootstrapButton>
                   </div>
                 </div>
               </Card> : <><h6>Selecione o cliente:</h6><SelectClienteTable clientes={this.state.clientes} selectAction={this.selecionarCliente} /></>}
@@ -104,10 +176,15 @@ class Venda extends React.Component {
         {Object.keys(this.state.clienteSelecionado).length !== 0 ? <div className="row mt-3">
           <div style={{ backgroundColor: '' }}>
             <Card subtitulo title="Itens">
+              {Object.keys(this.state.itensVenda).length !== 0 ?
+                <div>
+                  <ItemTable editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} itensVenda={this.state.itensVenda} />
+                </div>
+                : false}
               <div className="d-flex justify-content-center">
-                <Button onClick={this.abrirTelaAgendamento}> Adicionar Agendamento <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></Button>
+                <BootstrapButton onClick={this.abrirTelaAgendamento}> Adicionar Agendamento <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
                 <div className="d-flex flex-column justify-content-center m-2">OU</div>
-                <Button onClick={this.abrirTelaProduto} className="btn btn-success"> Adicionar Produto <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></Button>
+                <BootstrapButton onClick={this.abrirTelaProduto} className="btn btn-success"> Adicionar Produto <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
 
               </div>
             </Card>
@@ -116,7 +193,7 @@ class Venda extends React.Component {
 
           <div style={{ backgroundColor: '' }}>
             <div className="d-flex justify-content-end mt-5">
-              <h4>Total da venda</h4>
+              <h4>Total da venda: {this.state.totalVenda !== null ? this.state.totalVenda + " R$" : false} </h4>
 
             </div>
           </div>
@@ -133,6 +210,7 @@ class Venda extends React.Component {
           }}
         >
           <Card title="Agendamento">
+            <MarcarAgendamento adicionarAgendamento={this.adicionarAgendamento} />
           </Card>
         </Dialog>
 
@@ -147,6 +225,26 @@ class Venda extends React.Component {
           }}
         >
           <Card title="Produto">
+          </Card>
+
+        </Dialog>
+        <Dialog
+          visible={this.state.showConfirmDialogDeletar}
+          style={{ width: '50vw' }}
+          footer={footerDialogDeletar}
+          modal={true}
+          onHide={() => this.setState({ showConfirmDialogDeletar: false })}>
+          Deseja remover o item?
+        </Dialog>
+
+        <Dialog
+          onChange={e => this.setState({ showConfirmDialogEditar: false })}
+          visible={this.state.showConfirmDialogEditar}
+          footer={footerDialogEditar}
+          style={{ width: '90vw' }}
+          modal={true}
+          onHide={() => this.cancelarEdicao()}>
+          <Card title="Atualize os dados do agendamento">
           </Card>
         </Dialog>
       </div>
