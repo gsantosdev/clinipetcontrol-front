@@ -11,6 +11,10 @@ class AgendamentoService extends ApiService {
     return this.post('/', agendamento)
   }
 
+  validar(agendamento) {
+    return this.post('/validar', agendamento)
+  }
+
   editar(id, agendamento) {
     return this.put(`/${id}`, agendamento)
   }

@@ -17,10 +17,12 @@ import SelectMenu from '../../components/selectMenu';
 class MarcarAgendamento extends React.Component {
 
   state = {
+    agendamentoValido: true,
     dataHorario: '',
     duracaoAprox: null,
     observacoes: '',
     idServico: null,
+    servico: {},
     idAnimal: null,
     idFuncionario: null,
     servicos: [],
@@ -59,7 +61,9 @@ class MarcarAgendamento extends React.Component {
   }
 
   validar() {
+
     const msgs = []
+
     if (!this.state.dataHorario) {
       msgs.push('O campo de data e hora é obrigatório.')
     }
@@ -138,7 +142,6 @@ class MarcarAgendamento extends React.Component {
       });
       return false;
     }
-    console.log(this.state.dataHorario)
     const { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario } = this.state
     const agendamento = { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario }
 
@@ -153,8 +156,15 @@ class MarcarAgendamento extends React.Component {
   }
 
 
-  adicionarAgendamento = () => {
+  adicionarAgendamento = async () => {
     const msgs = this.validar()
+
+
+    await this.servicoService.obterPorId(this.state.idServico).then(response => {
+      this.setState({ servico: response.data })
+    }).catch(error => {
+      mensagemErro(error);
+    })
 
     if (msgs && msgs.length > 0) {
       msgs.forEach((msg, index) => {
@@ -162,28 +172,38 @@ class MarcarAgendamento extends React.Component {
       });
       return false;
     }
-    console.log(this.state.dataHorario)
-    const { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario } = this.state
-    const agendamento = { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario }
 
-    this.props.adicionarAgendamento(agendamento)
+    const { dataHorario, duracaoAprox, observacoes, idServico, servico, idAnimal, idFuncionario } = this.state
+    const agendamento = { dataHorario, duracaoAprox, observacoes, idServico, servico, idAnimal, idFuncionario }
+
+    await this.service.validar(agendamento).then(response => {
+      console.log(response)
+      this.setState({ agendamentoValido: true })
+    }).catch(error => {
+      mensagemErro(error.response.data)
+      this.setState({ agendamentoValido: false })
+    })
+
+
+    if (this.state.agendamentoValido) {
+      this.props.adicionarAgendamento(agendamento)
+    }
+    else {
+      return false;
+    }
   }
+
 
   selectActionServico = async (servico) => {
     await this.setState({ idServico: servico.id })
-    console.log(this.state.idServico)
   }
 
   selectActionFuncionario = async (funcionario) => {
     await this.setState({ idFuncionario: funcionario.id })
-    console.log(this.state.idFuncionario)
-
   }
 
   selectActionAnimal = async (animal) => {
     await this.setState({ idAnimal: animal.id })
-    console.log(this.state.idAnimal)
-
   }
 
 

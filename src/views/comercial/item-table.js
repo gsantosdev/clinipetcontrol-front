@@ -31,16 +31,16 @@ export default props => {
     }
 
 
-
     const rows = props.itensVenda.map((item, index) => {
         return (
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
-                <td>{getIntervalo(item)}</td>
-                <td>{item.agendamento.idAnimal}</td>
+                <td>{item.agendamento.servico.nome}</td>
+                <td>{item.agendamento.servico.valorItem} R$</td>
+
                 <td>
                     <div>
                         <button type="button" onClick={e => props.editarAction(item)} className="btn btn-primary">Editar</button>
-                        <button type="button" onClick={e => props.deleteAction(item)} className="btn btn-danger">Deletar</button>
+                        <button type="button" onClick={e => props.deleteAction(item)} className="btn btn-danger">Remover</button>
                     </div>
                 </td>
 
@@ -56,8 +56,8 @@ export default props => {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Duração</th>
-                            <th scope="col">Id do animal</th>
+                            <th scope="col">Produto/Serviço</th>
+                            <th scope="col">Valor</th>
                             <th scope="col"></th>
 
                         </tr>

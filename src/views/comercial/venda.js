@@ -1,4 +1,4 @@
-import { faPlus, faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faPlus, faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dialog } from "primereact/dialog";
 import React from "react";
@@ -14,6 +14,9 @@ import SelectClienteTable from "./selectClienteTable";
 import MarcarAgendamento from "../agendamento/marcar";
 import ItemTable from "./item-table";
 import ServicoService from "../../app/service/servicoService";
+import VendaService from "../../app/service/vendaService";
+
+import * as messages from "../../components/toastr"
 
 
 
@@ -24,7 +27,6 @@ class Venda extends React.Component {
     clienteSelecionado: {},
     clientes: [],
     buscaCliente: '',
-    venda: {},
     totalVenda: null,
     itensVenda: [],
     showTelaAgendamento: false,
@@ -37,6 +39,7 @@ class Venda extends React.Component {
     super();
     this.clienteService = new ClienteService();
     this.servicoService = new ServicoService();
+    this.vendaService = new VendaService();
   }
 
 
@@ -45,8 +48,17 @@ class Venda extends React.Component {
     this.setState({ totalVenda: 0 })//Seta pra 0 pra passar por toda a lista novamente
 
     this.state.itensVenda.forEach(item => {
-      if (item.agendamento.idServico !== null) {
-        this.servicoService.obterValorVenda(item.agendamento.idServico).then(response => {
+      if (item.agendamento.idServico !== null || item.venda.idProduto !== null) {
+
+        var idItem;
+        if (item.agendamento.idServico === null) {
+          idItem = item.venda.idProduto;
+        }
+        else {
+          idItem = item.agendamento.idServico;
+        }
+
+        this.servicoService.obterValorVenda(idItem).then(response => {
           console.log("Valor Serviço: ", response.data)
 
           this.setState({ totalVenda: this.state.totalVenda + response.data });
@@ -102,7 +114,7 @@ class Venda extends React.Component {
   }
 
   deselecionarCliente = async () => {
-    await this.setState({ clienteSelecionado: {}, clientes: [], itensVenda: [], venda: {} })
+    await this.setState({ clienteSelecionado: {}, clientes: [], itensVenda: [], totalVenda: null })
     console.log("Cliente selecionado: ", this.state.clienteSelecionado);
     console.log("Itens venda: ", this.state.itensVenda);
   }
@@ -110,14 +122,26 @@ class Venda extends React.Component {
 
   buscar = () => {
     this.clienteService.obterPorNomeCpfTelefone(this.state.buscaCliente)
-      .then(resposta => {
-        this.setState({ clientes: resposta.data })
+      .then(response => {
+        this.setState({ clientes: response.data })
       }).catch(error => {
         console.log(error)
       })
   }
 
-  criaItemVenda() {
+  efetuarVenda = () => {
+    const { itensVenda } = this.state
+    const venda = { itensVenda, status: "PENDENTE" }
+    console.log(venda);
+
+    this.vendaService.efetuar(venda)
+      .then(response => {
+        messages.mensagemSucesso(response.data)
+        this.deselecionarCliente()
+
+      }).catch(error => {
+        messages.mensagemErro(error.data)
+      })
 
   }
 
@@ -190,14 +214,26 @@ class Venda extends React.Component {
             </Card>
           </div>
 
+          {this.state.totalVenda !== null ?
+            <div style={{ backgroundColor: '' }}>
+              <div className="d-flex justify-content-end mt-5">
+                <h4>Total da venda:  {this.state.totalVenda + " R$"} </h4>
 
-          <div style={{ backgroundColor: '' }}>
-            <div className="d-flex justify-content-end mt-5">
-              <h4>Total da venda: {this.state.totalVenda !== null ? this.state.totalVenda + " R$" : false} </h4>
-
-            </div>
-          </div>
+              </div>
+            </div> : false}
         </div> : false}
+
+
+        {Object.keys(this.state.itensVenda).length !== 0 ?
+          <div className="d-flex justify-content-end mt-5">
+            <PrimeButton onClick={this.efetuarVenda}> Efetuar Venda <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faCheck} /></PrimeButton>
+
+          </div> : false}
+
+
+
+
+
 
         <Dialog
 
