@@ -130,8 +130,8 @@ class Venda extends React.Component {
   }
 
   efetuarVenda = () => {
-    const { itensVenda } = this.state
-    const venda = { itensVenda, status: "PENDENTE" }
+    const { itensVenda, clienteSelecionado } = this.state
+    const venda = { itensVenda, status: "PENDENTE", idCliente: clienteSelecionado.id }
     console.log(venda);
 
     this.vendaService.efetuar(venda)
@@ -140,7 +140,14 @@ class Venda extends React.Component {
         this.deselecionarCliente()
 
       }).catch(error => {
-        messages.mensagemErro(error.data)
+
+        if (error.response.status === 406) {
+          messages.mensagemErro("Não é possível efetuar 2 ou mais agendamentos contendo o mesmo animal ou veterinário no mesmo intervalo")
+        }
+        else {
+          messages.mensagemErro(error.response.data)
+        }
+
       })
 
   }
