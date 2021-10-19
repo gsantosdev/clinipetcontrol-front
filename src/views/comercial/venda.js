@@ -74,7 +74,12 @@ class Venda extends React.Component {
 
 
   abrirTelaAgendamento = () => {
-    this.setState({ showTelaAgendamento: true })
+    this.clienteService.obterAnimais(this.state.clienteSelecionado.id).then(() => {
+      this.setState({ showTelaAgendamento: true })
+    }).catch(error => {
+      messages.mensagemErro("O Cliente não possui nenhum animal vinculado.")
+      console.log("ERROR", error)
+    })
   }
 
   abrirConfirmacaoEditar = () => {
@@ -95,11 +100,12 @@ class Venda extends React.Component {
   }
 
   adicionarAgendamento = (agendamento) => {
-
     this.state.itensVenda.push({ agendamento: agendamento, quantidade: 1 })
     this.setState({ showTelaAgendamento: false, itensVenda: this.state.itensVenda })
+    this.obterValorTotalVenda();
 
-    this.obterValorTotalVenda()
+
+
 
     console.log("itensVenda:", this.state.itensVenda)
   }
@@ -109,13 +115,14 @@ class Venda extends React.Component {
     this.setState({ showTelaProduto: true })
   }
 
-  selecionarCliente = (cliente) => {
-    this.setState({ clienteSelecionado: cliente })
+  selecionarCliente = async (cliente) => {
+    await this.setState({ clienteSelecionado: cliente })
   }
 
   deselecionarCliente = async () => {
+
     await this.setState({ clienteSelecionado: {}, clientes: [], itensVenda: [], totalVenda: null })
-    console.log("Cliente selecionado: ", this.state.clienteSelecionado);
+    console.log("Cliente selecionado depois: ", this.state.clienteSelecionado);
     console.log("Itens venda: ", this.state.itensVenda);
   }
 
@@ -178,7 +185,7 @@ class Venda extends React.Component {
                 <FormGroup label="Pesquisar Cliente">
                   <div className="input-group">
                     <div style={{ marginLeft: "-1rem" }} className="form-outline col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-8">
-                      <input id="search-input" placeholder="Nome/CPF" onChange={e => this.setState({ buscaCliente: e.target.value })} type="search" id="form1" className="form-control" />
+                      <input id="search-input" maxLength="80" placeholder="Nome/CPF" onChange={e => this.setState({ buscaCliente: e.target.value })} type="search" id="form1" className="form-control" />
                     </div>
                     <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
                       <FontAwesomeIcon icon={faSearch} />
@@ -188,7 +195,7 @@ class Venda extends React.Component {
               </div>
             </div>
             : false}
-          {this.state.clientes.length !== 0 ? <div style={{ backgroundColor: '' }} className="col-12">
+          {this.state.clientes.length !== 0 ? <div style={{ backgroundColor: '' }} className="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
             {Object.keys(this.state.clienteSelecionado).length !== 0 ?
               <Card subtitulo title="Dados do cliente">
                 <div>
@@ -201,34 +208,35 @@ class Venda extends React.Component {
               </Card> : <><h6>Selecione o cliente:</h6><SelectClienteTable clientes={this.state.clientes} selectAction={this.selecionarCliente} /></>}
 
           </div> : false}
+          {Object.keys(this.state.clienteSelecionado).length !== 0 ? <div className="col-12">
+            <div style={{ backgroundColor: '' }}>
+              <Card subtitulo title="Itens">
+                {Object.keys(this.state.itensVenda).length !== 0 ?
+                  <div>
+                    <ItemTable editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} itensVenda={this.state.itensVenda} />
+                  </div>
+                  : false}
+                <div className="d-flex justify-content-center">
+                  <BootstrapButton onClick={this.abrirTelaAgendamento}> Adicionar Agendamento <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
+                  <div className="d-flex flex-column justify-content-center m-2">OU</div>
+                  <BootstrapButton onClick={this.abrirTelaProduto} className="btn btn-success"> Adicionar Produto <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
+
+                </div>
+              </Card>
+            </div>
+
+            {this.state.totalVenda !== null ?
+              <div style={{ backgroundColor: '' }}>
+                <div className="d-flex justify-content-end mt-5">
+                  <h4>Total da venda:  {this.state.totalVenda + " R$"} </h4>
+
+                </div>
+              </div> : false}
+          </div> : false}
 
         </div>
 
-        {Object.keys(this.state.clienteSelecionado).length !== 0 ? <div className="row mt-3">
-          <div style={{ backgroundColor: '' }}>
-            <Card subtitulo title="Itens">
-              {Object.keys(this.state.itensVenda).length !== 0 ?
-                <div>
-                  <ItemTable editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} itensVenda={this.state.itensVenda} />
-                </div>
-                : false}
-              <div className="d-flex justify-content-center">
-                <BootstrapButton onClick={this.abrirTelaAgendamento}> Adicionar Agendamento <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
-                <div className="d-flex flex-column justify-content-center m-2">OU</div>
-                <BootstrapButton onClick={this.abrirTelaProduto} className="btn btn-success"> Adicionar Produto <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
 
-              </div>
-            </Card>
-          </div>
-
-          {this.state.totalVenda !== null ?
-            <div style={{ backgroundColor: '' }}>
-              <div className="d-flex justify-content-end mt-5">
-                <h4>Total da venda:  {this.state.totalVenda + " R$"} </h4>
-
-              </div>
-            </div> : false}
-        </div> : false}
 
 
         {Object.keys(this.state.itensVenda).length !== 0 ?
@@ -253,7 +261,7 @@ class Venda extends React.Component {
           }}
         >
           <Card title="Agendamento">
-            <MarcarAgendamento adicionarAgendamento={this.adicionarAgendamento} />
+            <MarcarAgendamento idCliente={this.state.clienteSelecionado.id} adicionarAgendamento={this.adicionarAgendamento} />
           </Card>
         </Dialog>
 

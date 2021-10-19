@@ -2,7 +2,6 @@ import React from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
 import Card from '../../components/card';
-import ProntuarioCliente from '../cliente/prontuario-cliente';
 import CadastroUsuario from './cadastro-usuario';
 import ProntuarioUsuario from './prontuario-usuario';
 
@@ -18,8 +17,8 @@ class UsuarioHome extends React.Component {
               <CadastroUsuario />
             </Card>
           </Tab>
-          <Tab eventKey="consultar" title="Consultar">
-            <Card title="Consultar">
+          <Tab eventKey="consultar" title="Consultar/Editar/Deletar">
+            <Card title="Consultar/Editar/Deletar">
               <ProntuarioUsuario />
             </Card>
           </Tab>

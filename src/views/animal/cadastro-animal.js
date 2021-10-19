@@ -225,6 +225,8 @@ class CadastroAnimal extends React.Component {
             <FormGroup id="inputNome" label="Nome do animal: *">
               <input type="text" className="form-control"
                 value={this.state.nome}
+                maxLength="80"
+
                 name="nome"
                 onChange={this.handleChange}
               />
@@ -250,7 +252,7 @@ class CadastroAnimal extends React.Component {
                   console.log(this.state.dataNascimento)
                 }}
 
-                        required />
+                required />
             </FormGroup>
 
           </div>
@@ -276,6 +278,7 @@ class CadastroAnimal extends React.Component {
             <FormGroup id="inputRaca" label="Raça: *">
               <input type="text" className="form-control"
                 value={this.state.raca}
+                maxLength="60"
                 name="raca"
                 onChange={this.handleChange} />
             </FormGroup>
@@ -286,6 +289,7 @@ class CadastroAnimal extends React.Component {
             <FormGroup id="inputCor" label="Cor: *">
               <input type="text" className="form-control"
                 value={this.state.cor}
+                maxLength="250"
                 name="cor"
                 onChange={this.handleChange} />
             </FormGroup>
@@ -294,19 +298,19 @@ class CadastroAnimal extends React.Component {
         <div className="row">
           <div className="col-md-12 col-lg-4">
             <FormGroup id="inputAlergia" label="Alergias: ">
-              <textarea value={this.state.alergias} className="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
+              <textarea maxLength="250" value={this.state.alergias} className="form-control" name="alergias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-12 col-lg-4">
             <FormGroup id="inputPatologias" label="Patologias: ">
-              <textarea value={this.state.patologias} className="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
+              <textarea maxLength="250" value={this.state.patologias} className="form-control" name="patologias" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
           <div className="col-md-12 col-lg-4">
             <FormGroup id="inputMedicamentos" label="Medicamentos: ">
-              <textarea value={this.state.medicamentos} className="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
+              <textarea maxLength="250" value={this.state.medicamentos} className="form-control" name="medicamentos" onChange={this.handleChange} rows="4"></textarea>
             </FormGroup>
 
           </div>
@@ -316,7 +320,7 @@ class CadastroAnimal extends React.Component {
             <FormGroup id="inputCliente" label="Pesquise o cliente: *">
               <div className="input-group mb-4">
                 <div className="form-outline col-sm-9 col-lg-4">
-                  <input id="search-input" placeholder="Nome/Telefone/CPF" name="busca" onChange={this.handleChange} type="search" className="form-control" />
+                  <input maxLength="80" id="search-input" placeholder="Nome/Telefone/CPF" name="busca" onChange={this.handleChange} type="search" className="form-control" />
                 </div>
                 <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarCliente}>
                   <FontAwesomeIcon icon={faSearch} />

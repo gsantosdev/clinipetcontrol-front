@@ -18,12 +18,8 @@ class ApiService {
     post(url, objeto) {
         const requestUrl = `${this.apiurl}${url}`
 
-        try {
-            return httpClient.post(requestUrl, objeto);
-        }
-        catch (E) {
-            return E;
-        }
+        return httpClient.post(requestUrl, objeto);
+
     }
 
     put(url, objeto) {

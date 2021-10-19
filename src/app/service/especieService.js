@@ -35,13 +35,14 @@ class EspecieService extends ApiService {
     }
 
     async getNomes() {
-        const x = [{ label: 'Selecione...' }];
+        const x = [{ label: 'Selecione...', value: null }];
 
         await this.listarNomes().then(response => {
             response.data.forEach(element => {
                 x.push(element)
             });
         })
+        console.log(x)
 
         return Promise.resolve(x);
     }

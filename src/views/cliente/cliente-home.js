@@ -20,12 +20,12 @@ class ClienteHome extends React.Component {
                             <CadastroCliente />
                         </Card>
                     </Tab>
-                    <Tab eventKey="consultar" title="Consultar">
-                        <Card title="Consultar">
+                    <Tab eventKey="consultar" title="Consultar/Editar/Deletar">
+                        <Card title="Consultar/Editar/Deletar">
                             <ProntuarioCliente />
                         </Card>
                     </Tab>
-                   
+
                 </Tabs>
 
 

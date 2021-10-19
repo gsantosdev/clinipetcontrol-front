@@ -19,8 +19,8 @@ class AnimalHome extends React.Component {
               <CadastroAnimal />
             </Card>
           </Tab>
-          <Tab eventKey="consultar" title="Consultar">
-            <Card title="Consultar">
+          <Tab eventKey="consultar" title="Consultar/Editar/Deletar">
+            <Card title="Consultar/Editar/Deletar">
               <ProntuarioAnimal />
             </Card>
           </Tab>

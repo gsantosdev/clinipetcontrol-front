@@ -22,8 +22,32 @@ class ClienteService extends ApiService {
     obterPorNomeCpfTelefone(busca) {
         return this.get(`?busca=${busca}`)
     }
-    obterPorId(id){
+
+    obterPorNomeCpfTelefone(busca) {
+        return this.get(`?busca=${busca}`)
+    }
+
+    obterPorId(id) {
         return this.get(`/${id}`)
+    }
+
+    obterAnimais(id) {
+        return this.get(`/${id}/animais`)
+    }
+
+    async getAnimais(id) {
+        const x = [{ label: 'Selecione...', value: null }];
+
+        await this.obterAnimais(id).then(response => {
+            response.data.forEach(element => {
+                x.push(element)
+            });
+        })
+
+
+        console.log(x);
+
+        return Promise.resolve(x);
     }
 
     obterUFs() {

@@ -60,12 +60,14 @@ class Login extends React.Component {
                                                 value={this.state.nome}
                                                 onChange={e => this.setState({ nome: e.target.value })}
                                                 className="form-control"
+                                                maxLength="80"
                                                 id="exampleInputNome1" aria-describedby="nomeHelp"
                                                 placeholder="Digite o Nome" />
                                         </FormGroup>
                                         <FormGroup label="Senha: *" htmlFor="ExampleInputPassword1">
                                             <input type="password" className="form-control"
                                                 value={this.state.senha}
+                                                maxLength="80"
                                                 onChange={e => this.setState({ senha: e.target.value })}
                                                 id="exampleInputPassword1" placeholder="Password" />
                                         </FormGroup>

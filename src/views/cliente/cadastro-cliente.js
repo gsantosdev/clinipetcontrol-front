@@ -61,6 +61,12 @@ class CadastroCliente extends React.Component {
 
     }
 
+    maxLengthCheck = (object) => {
+        if (object.target.value.length > object.target.maxLength) {
+            object.target.value = object.target.value.slice(0, object.target.maxLength)
+        }
+    }
+
 
 
     validar() {
@@ -197,7 +203,7 @@ class CadastroCliente extends React.Component {
                 <div className="row">
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-6">
                         <FormGroup id="inputNome" label="Nome completo: *">
-                            <input type="text" className="form-control"
+                            <input type="text" maxLength="80" className="form-control"
                                 value={this.state.nome}
                                 name="nome"
                                 onChange={this.handleChange} />
@@ -242,7 +248,7 @@ class CadastroCliente extends React.Component {
 
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-4">
                         <FormGroup id="inputEmail" label="Email: *">
-                            <input type="email" className="form-control"
+                            <input type="email" maxLength="250" className="form-control"
                                 value={this.state.email}
                                 name="email"
                                 onChange={this.handleChange} />
@@ -250,7 +256,7 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-4">
                         <FormGroup id="inputLogradouro" label="Logradouro: *">
-                            <input type="text" className="form-control"
+                            <input type="text" maxLength="100" className="form-control"
                                 value={this.state.logradouro}
                                 name="logradouro"
                                 onChange={this.handleChange} />
@@ -258,16 +264,19 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-2">
                         <FormGroup id="inputNumero" label="Número: *">
-                            <input type="number" min="0" className="form-control"
-                                value={this.state.numero}
+
+                            <input type="number" className="form-control"
+                                onInput={this.maxLengthCheck}
                                 onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
                                 name="numero"
+                                maxLength="7"
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
-                        <FormGroup id="inputBairo" label="Bairro: *">
+                        <FormGroup id="inputBairro" label="Bairro: *">
                             <input type="text" className="form-control"
+                                maxLength="50"
                                 value={this.state.bairro}
                                 name="bairro"
                                 onChange={this.handleChange} />
@@ -277,6 +286,8 @@ class CadastroCliente extends React.Component {
                         <FormGroup id="inputCidade" label="Cidade: *">
                             <input type="text" className="form-control"
                                 value={this.state.cidade}
+                                maxLength="50"
+
                                 name="cidade"
                                 onChange={this.handleChange} />
                         </FormGroup>
@@ -297,13 +308,6 @@ class CadastroCliente extends React.Component {
                                 onChange={this.handleChange} />
                         </FormGroup>
                     </div>
-
-
-                    <div className="row">
-                    </div>
-
-
-
                 </div>
 
                 <div className="row">

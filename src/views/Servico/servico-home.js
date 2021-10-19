@@ -17,6 +17,8 @@ class ServicoHome extends React.Component {
     id: null,
     nome: '',
     observacoes: '',
+    valorBase: null,
+    margemLucro: null,
     servicos: [],
     servicoAEditar: {},
     servicoADeletar: {}
@@ -28,13 +30,25 @@ class ServicoHome extends React.Component {
   }
 
   limpaCampos() {
-    this.setState({ nome: '', observacoes: '' })
+    this.setState({ nome: '', observacoes: '', valorBase: null, margemLucro: null })
+  }
+
+  maxLengthCheck = (object) => {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(0, object.target.maxLength)
+    }
   }
 
   validar() {
     const msgs = []
     if (!this.state.nome) {
       msgs.push('O campo Nome é obrigatório.')
+    }
+    else if (!this.state.valorBase) {
+      msgs.push('O campo Valor Base é obrigatório.')
+    }
+    else if (!this.state.margemLucro) {
+      msgs.push('O campo Margem de Lucro é obrigatório.')
     }
     return msgs
   }
@@ -48,8 +62,8 @@ class ServicoHome extends React.Component {
       return false;
     }
 
-    const { nome, observacoes } = this.state;
-    const servico = { nome, observacoes };
+    const { nome, observacoes, valorBase, margemLucro } = this.state;
+    const servico = { nome, observacoes, valorBase, margemLucro };
 
     this.service.editar(this.state.id, servico)
       .then(response => {
@@ -111,8 +125,8 @@ class ServicoHome extends React.Component {
     }
 
 
-    const { nome, observacoes } = this.state;
-    const servico = { nome, observacoes };
+    const { nome, observacoes, valorBase, margemLucro } = this.state;
+    const servico = { nome, observacoes, valorBase, margemLucro };
 
 
     this.service.salvar(servico)
@@ -172,18 +186,42 @@ class ServicoHome extends React.Component {
                 <input type="text" className="form-control"
                   value={this.state.nome}
                   name="nome"
+                  maxLength="80"
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-sm-12 col-md-5 col-xl-5 col-xxl-5">
-              <FormGroup id="inputNome" label="Observações: ">
+            <div className="col-sm-12 col-md-2 col-xl-1 col-xxl-4">
+              <FormGroup id="inputValorBase" label="Valor base (R$): ">
+                <input type="number" className="form-control"
+                  value={this.state.valorBase}
+                  name="valorBase"
+                  onInput={this.maxLengthCheck}
+                  onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+                  maxLength="7"
+                  onChange={this.handleChange} />
+              </FormGroup>
+            </div>
+            <div className="col-sm-12 col-md-2 col-xl-1 col-xxl-4">
+              <FormGroup id="inputMargemLucro" label="Margem de Lucro (%): ">
+                <input type="number" className="form-control"
+                  value={this.state.margemLucro}
+                  name="margemLucro"
+                  onInput={this.maxLengthCheck}
+                  onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+                  maxLength="7"
+                  onChange={this.handleChange} />
+              </FormGroup>
+            </div>
+            <div className="col-10">
+              <FormGroup id="inputObservacoes" label="Observações: ">
                 <textarea className="form-control"
                   value={this.state.observacoes}
                   name="observacoes"
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-sm-3">
+
+            <div className="d-flex justify-content-center col-2">
               <FormGroup>
                 <div className="pt-2">
                   <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
@@ -194,7 +232,7 @@ class ServicoHome extends React.Component {
             </div>
           </div>
         </Card>
-        {!this.props.editar ? <Card title="Todos serviços">
+        {!this.props.editar ? <Card title="Listagem de serviços">
           <div className="col-md-12">
             <ServicoTable editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} servicos={this.state.servicos} />
           </div>

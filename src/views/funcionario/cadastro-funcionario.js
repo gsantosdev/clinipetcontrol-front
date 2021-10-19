@@ -154,6 +154,7 @@ class CadastroFuncionario extends React.Component {
             <FormGroup id="inputNome" label="Nome completo: *">
               <input type="text" className="form-control"
                 value={this.state.nome}
+                maxLength="80"
                 name="nome"
                 onChange={this.handleChange} />
             </FormGroup>
@@ -162,6 +163,7 @@ class CadastroFuncionario extends React.Component {
             <FormGroup id="inputEmail" label="Email: *">
               <input type="email" className="form-control"
                 value={this.state.email}
+                maxLength="180"
                 name="email"
                 onChange={this.handleChange} />
             </FormGroup>
@@ -184,8 +186,6 @@ class CadastroFuncionario extends React.Component {
           </div>
           <div className="col-md-6 col-xl-3 col-xxl-2">
             <FormGroup id="inputVeterinario" label="É Veterinário? *">
-
-
               <div className="form-check">
                 <input className="form-check-input" type="radio" name="veterinario" id="flexRadioSim"
                   checked={this.props.editar ? this.state.veterinario : this.state.simChecked}

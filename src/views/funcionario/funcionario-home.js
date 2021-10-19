@@ -19,12 +19,12 @@ class FuncionarioHome extends React.Component {
               <CadastroFuncionario />
             </Card>
           </Tab>
-          <Tab eventKey="consultar" title="Consultar">
-            <Card title="Consultar">
+          <Tab eventKey="consultar" title="Consultar/Editar/Deletar">
+            <Card title="Consultar/Editar/Deletar">
               <ProntuarioFuncionario />
             </Card>
           </Tab>
-        
+
         </Tabs>
 
 

@@ -15,12 +15,12 @@ export default props => {
         return (
 
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
-                <td className="col-md-4">{servico.nome}</td>
-                <td className="col-md-8">{servico.observacoes}</td>
+                <td>{servico.nome}</td>
+                <td>{servico.observacoes}</td>
 
 
                 <td>
-                    {!props.telaAgendamento ? <div className="m-2">
+                    {!props.telaAgendamento ? <div>
                         <button type="button" onClick={e => props.editarAction(servico)} className="btn btn-primary">Editar</button>
                         <button type="button" onClick={e => props.deleteAction(servico)} className="btn btn-danger">Deletar</button></div>
                         : <input name="servico" type="radio" onClick={e => props.selectAction(servico)}></input>}
@@ -39,7 +39,7 @@ export default props => {
         <div style={{ overflowX: "auto" }}>
             <div style={{ height: 'max-content', marginBottom: '2rem', overflowX: "auto" }}>
 
-                <table className="table table-hover">
+                <table className="table table-hover ">
                     <thead>
                         <tr>
                             <th scope="col">Serviço</th>

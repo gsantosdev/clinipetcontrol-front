@@ -101,7 +101,7 @@ class ProntuarioCliente extends React.Component {
               <FormGroup label="Pesquisar Cliente">
                 <div className="input-group">
                   <div style={{ marginLeft: "-1rem" }} className="form-outline col-11 col-sm-11 col-md-11 col-lg-8 col-xl-8 col-xxl-5">
-                    <input id="search-input" placeholder="Nome/CPF" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
+                    <input maxLength="80" id="search-input" placeholder="Nome/CPF" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
                   <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
                     <FontAwesomeIcon icon={faSearch} />

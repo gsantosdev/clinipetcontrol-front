@@ -13,6 +13,7 @@ import AnimalService from '../../app/service/animalService';
 import FuncionarioService from '../../app/service/funcionarioService';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import SelectMenu from '../../components/selectMenu';
+import ClienteService from '../../app/service/clienteService';
 
 class MarcarAgendamento extends React.Component {
 
@@ -39,6 +40,7 @@ class MarcarAgendamento extends React.Component {
     this.servicoService = new ServicoService();
     this.animalService = new AnimalService();
     this.funcionarioService = new FuncionarioService();
+    this.clienteService = new ClienteService();
 
   }
 
@@ -79,6 +81,9 @@ class MarcarAgendamento extends React.Component {
     else if (!this.state.idAnimal) {
       msgs.push('Selecione um animal.')
     }
+    else if (this.state.idAnimal == "Selecione...") {
+      msgs.push('Selecione um animal.')
+    }
     else if (!this.state.idFuncionario) {
       msgs.push('Selecione um funcionário.')
     }
@@ -87,9 +92,7 @@ class MarcarAgendamento extends React.Component {
 
   async componentDidMount() {
     this.listarServicos();
-    console.log(this.props.state);
-    await this.setState(this.props.state);
-
+    await this.listarAnimais(this.props.idCliente);
   }
 
   limpaCampos() {
@@ -120,6 +123,11 @@ class MarcarAgendamento extends React.Component {
       }).catch(error => {
         console.log(error)
       })
+  }
+
+  async listarAnimais(id) {
+    const animais = await this.clienteService.getAnimais(id)
+    this.setState({ animais: animais })
   }
 
 
@@ -242,24 +250,19 @@ class MarcarAgendamento extends React.Component {
           </div>
 
         </div>
+
+
         <div className="row">
-          <div className="mt-5 col-12">
-            <FormGroup fontSize="1.2rem" label="Selecione o animal*">
-              <div className="input-group">
-                <div className="form-outline col-sm-10 col-md-9 col-lg-9 col-xl-6 col-xxl-4">
-                  <input id="search-input" value={this.state.buscaAnimal} placeholder="Nome do animal" name="buscaAnimal" onChange={this.handleChange} type="search" id="form1" className="form-control" />
-                </div>
-                <div className="col-sm-2 col-md-3 col-lg-3 col-xl-6">
-                  <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarAnimal}>
-                    <FontAwesomeIcon icon={faSearch} />
-                  </button>
-                </div>
-              </div>
+
+          <div className="col-12">
+            <FormGroup id="inputEspecie" label="Selecione o animal: *">
+              <SelectMenu className="form-control" lista={this.state.animais}
+                value={this.state.idAnimal}
+                name="idAnimal"
+                onChange={this.handleChange} />
             </FormGroup>
-            <div>
-              <AnimalTable selectAction={this.selectActionAnimal} animais={this.state.animais} telaAgendamento />
-            </div>
           </div>
+
         </div>
         <div className="row pt-4" style={{ marginTop: '4rem' }}>
           <div className="col-12">

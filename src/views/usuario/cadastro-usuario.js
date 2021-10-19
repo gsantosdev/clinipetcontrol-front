@@ -140,6 +140,7 @@ class CadastroUsuario extends React.Component {
                             <input className="form-control" type="text"
                                 value={this.state.nome}
                                 id="inputNome"
+                                maxLength="80"
                                 name="nome"
                                 onChange={e => this.setState({ nome: e.target.value })}
                             />
@@ -150,6 +151,7 @@ class CadastroUsuario extends React.Component {
                         <FormGroup id="inputTipos" label="Tipo de Usuário: *">
                             <SelectMenu className="form-control" lista={this.state.tiposUsuario}
                                 value={this.state.tipo}
+
                                 name="tipo"
                                 onChange={this.handleChange} />
                         </FormGroup>
@@ -158,7 +160,7 @@ class CadastroUsuario extends React.Component {
                         <FormGroup label="Senha: *" htmlFor="inputSenha">
                             <input className="form-control"
                                 value={this.state.senha}
-
+                                maxLength="80"
                                 type="password"
                                 id="inputSenha"
                                 name="senha"
@@ -170,6 +172,7 @@ class CadastroUsuario extends React.Component {
                         <FormGroup label="Repita a senha: *" htmlFor="inputRepitaSenha">
                             <input className="form-control"
                                 value={this.state.senhaRepeticao}
+                                maxLength="80"
                                 type="password"
                                 id="inputRepitaSenha"
                                 name="senhaRepeticao"
