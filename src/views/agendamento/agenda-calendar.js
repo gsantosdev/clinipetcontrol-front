@@ -6,6 +6,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { withRouter } from 'react-router-dom';
 import AgendamentoService from '../../app/service/agendamentoService';
 import { Dialog } from 'primereact/dialog';
+import configData from "../../config.json"
 
 
 
@@ -68,10 +69,11 @@ class AgendaCalendar extends React.Component {
         <div style={{ height: '500pt' }} className="row mb-3">
 
           <Calendar
+            min={new Date(2021, 1, 0, configData.HORARIO_FUNCIONAMENTO_MIN, 0, 0)} max={new Date(2020, 1, 0, configData.HORARIO_FUNCIONAMENTO_MAX, 0, 0)}
             localizer={localizer}
             views={['month', 'day', 'week', 'agenda']}
             startAcessor="start"
-            step={10}
+            step={15}
             endAcessoor="end"
             defaultView="month"
             defaultDate={moment().toDate()}
@@ -115,7 +117,7 @@ class AgendaCalendar extends React.Component {
           <div className="row">
             <div className="col-12" style={{ overflowX: "auto" }}>
 
-              <h1 style={{ fontSize: "2.5rem", textAlign:"center" }}>
+              <h1 style={{ fontSize: "2.5rem", textAlign: "center" }}>
                 <b>
                   Dados do agendamento
                 </b>
@@ -130,7 +132,7 @@ class AgendaCalendar extends React.Component {
                   <table className="mt-5 table table-hover" style={{ overflowX: "auto" }}>
                     <thead>
                       <tr>
-                        <th scope="col">Funcionário</th>
+                        <th scope="col">Colaborador</th>
                         <th scope="col">Serviço</th>
                         <th scope="col">Animal</th>
                         <th scope="col">Proprietário</th>

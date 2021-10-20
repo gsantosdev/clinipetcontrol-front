@@ -15,11 +15,6 @@ import ProvedorAutenticacao from './provedorAutenticacao';
 
 class App extends React.Component {
 
-  state = {
-    usuario: 'Gustavo Santos'
-  }
-
-
   render() {
     return (
       <ProvedorAutenticacao>
