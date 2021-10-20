@@ -340,7 +340,7 @@ body {
 .sidebar .sidebar-header {
     padding: 1rem;
     background: #ffffff;
-    border-radius: 17%;
+    border-radius: 14%;
     margin: 1rem;
 }
 
@@ -371,6 +371,8 @@ div.content {
         position: relative;
     }
     .sidebar a {
+        display: flex;
+        justify-content: center;
         float: left;
     }
     div.content {
