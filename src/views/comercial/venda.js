@@ -17,6 +17,7 @@ import ServicoService from "../../app/service/servicoService";
 import VendaService from "../../app/service/vendaService";
 
 import * as messages from "../../components/toastr"
+import { AuthContext } from "../../main/provedorAutenticacao";
 
 
 
@@ -30,16 +31,20 @@ class Venda extends React.Component {
     totalVenda: null,
     itensVenda: [],
     showTelaAgendamento: false,
-    showTelaProduto: false,
     showConfirmDialogDeletar: false,
-    showConfirmDialogEditar: false,
+    showConfirmDialogEditar: false
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.clienteService = new ClienteService();
     this.servicoService = new ServicoService();
     this.vendaService = new VendaService();
+
+  }
+
+  componentDidMount() {
+    console.log(this.context.usuarioAutenticado)
   }
 
 
@@ -110,11 +115,6 @@ class Venda extends React.Component {
     console.log("itensVenda:", this.state.itensVenda)
   }
 
-
-  abrirTelaProduto = () => {
-    this.setState({ showTelaProduto: true })
-  }
-
   selecionarCliente = async (cliente) => {
     await this.setState({ clienteSelecionado: cliente })
   }
@@ -138,7 +138,7 @@ class Venda extends React.Component {
 
   efetuarVenda = () => {
     const { itensVenda, clienteSelecionado } = this.state
-    const venda = { itensVenda, status: "PENDENTE", idCliente: clienteSelecionado.id }
+    const venda = { itensVenda, status: "PENDENTE", idCliente: clienteSelecionado.id, idUsuario: this.context.usuarioAutenticado.id }
     console.log(venda);
 
     this.vendaService.efetuar(venda)
@@ -218,9 +218,6 @@ class Venda extends React.Component {
                   : false}
                 <div className="d-flex justify-content-center">
                   <BootstrapButton onClick={this.abrirTelaAgendamento}> Adicionar Agendamento <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
-                  <div className="d-flex flex-column justify-content-center m-2">OU</div>
-                  <BootstrapButton onClick={this.abrirTelaProduto} className="btn btn-success"> Adicionar Produto <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faPlus} /></BootstrapButton>
-
                 </div>
               </Card>
             </div>
@@ -228,7 +225,7 @@ class Venda extends React.Component {
             {this.state.totalVenda !== null ?
               <div style={{ backgroundColor: '' }}>
                 <div className="d-flex justify-content-end mt-5">
-                  <h4>Total da venda:  {this.state.totalVenda + " R$"} </h4>
+                  <h4>Total estimado:  {this.state.totalVenda + " R$"} </h4>
 
                 </div>
               </div> : false}
@@ -305,6 +302,8 @@ class Venda extends React.Component {
 
 
 }
+
+Venda.contextType = AuthContext
 
 
 
