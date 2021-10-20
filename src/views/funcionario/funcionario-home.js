@@ -15,7 +15,7 @@ class FuncionarioHome extends React.Component {
 
         <Tabs unmountOnExit defaultActiveKey="cadastro" id="uncontrolled-tab">
           <Tab eventKey="cadastro" title="Cadastro">
-            <Card title="Cadastro de Funcionarios">
+            <Card title="Cadastro de Colaboradores">
               <CadastroFuncionario />
             </Card>
           </Tab>

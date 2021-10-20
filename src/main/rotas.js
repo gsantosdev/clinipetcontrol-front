@@ -54,7 +54,7 @@ function Rotas(props) {
                 <Route path="/login" component={Login} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cliente" component={ClienteHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/animal" component={AnimalHome} />
-                <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/funcionario" component={FuncionarioHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/colaboradores" component={FuncionarioHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/servico" component={ServicoHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/agendamento" component={AgendamentoHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/usuarios" component={UsuarioHome} />
@@ -73,6 +73,6 @@ function Rotas(props) {
 
 export default () => (
     <AuthConsumer>
-        {(context) => (<Rotas isUsuarioAutenticado={context.isAutenticado} isSecretaria={context.isSecretaria} isAdmin={context.isAdmin} isVeterinario={context.isVeterinario} />)}
+        {(context) => (<Rotas usuario={context.usuarioAutenticado} isUsuarioAutenticado={context.isAutenticado} isSecretaria={context.isSecretaria} isAdmin={context.isAdmin} isVeterinario={context.isVeterinario} />)}
     </AuthConsumer>
 );

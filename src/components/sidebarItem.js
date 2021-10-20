@@ -5,7 +5,7 @@ function SideBarItem(props) {
 
     if (props.render) {
         return (
-            <a onClick={props.onClick} href={props.href}><FontAwesomeIcon className="mr-3" spacing="fa-fw" icon={props.icon} />{props.label}</a>
+            <a className="col-sm-12" onClick={props.onClick} href={props.href}><FontAwesomeIcon className="mr-3" spacing="fa-fw" icon={props.icon} />{props.label}</a>
         )
     }
     return false

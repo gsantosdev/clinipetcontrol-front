@@ -9,9 +9,9 @@ function SideBar(props) {
   if (props.isUsuarioAutenticado) {
     return (
       <div className="sidebar">
-        <div className="sidebar-header">
+        <div className="sidebar-header d-flex justify-content-center">
           <figure>
-            <img width="100%" height="50%" src="/logo.png"></img>
+            <img width="100%" src="/logo.png"></img>
           </figure>
         </div>
 
@@ -24,7 +24,7 @@ function SideBar(props) {
         <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faCalendar} href="#/agendamento" label="Agenda" />
 
         <SideBarItem render={props.isAdmin} icon={faHandHoldingMedical} href="#/servico" label="Serviços" />
-        <SideBarItem render={props.isAdmin} icon={faAddressCard} href="#/funcionario" label="Funcionários" />
+        <SideBarItem render={props.isAdmin} icon={faAddressCard} href="#/colaboradores" label="Colaboradores" />
 
         <SideBarItem render={props.isAdmin} icon={faUser} href="#/usuarios" label="Usuarios" />
 

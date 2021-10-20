@@ -57,7 +57,7 @@ export default props => {
                     <thead>
                         <tr>
                             <th scope="col">Produto/Serviço</th>
-                            <th scope="col">Valor</th>
+                            <th scope="col">Valor estimado</th>
                             <th scope="col"></th>
 
                         </tr>
