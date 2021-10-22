@@ -11,6 +11,10 @@ class VendaService extends ApiService {
     return this.post('/', venda)
   }
 
+  listarOrdensPorCliente(busca){
+    return this.get(`/listar/servicos?busca=${busca}`)
+  }
+
 }
 
 export default VendaService

@@ -233,22 +233,14 @@ class Venda extends React.Component {
 
         </div>
 
-
-
-
         {Object.keys(this.state.itensVenda).length !== 0 ?
           <div className="d-flex justify-content-end mt-5">
-            <PrimeButton onClick={this.efetuarVenda}> Efetuar Venda <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faCheck} /></PrimeButton>
+            <PrimeButton onClick={this.efetuarVenda}> Cadastrar ordem de serviço <FontAwesomeIcon className="ml-2" spacing="fa-fw" icon={faCheck} /></PrimeButton>
 
           </div> : false}
 
 
-
-
-
-
         <Dialog
-
           onChange={e => this.setState({ showTelaAgendamento: false })}
           visible={this.state.showTelaAgendamento}
           style={{ width: '60vw' }}
