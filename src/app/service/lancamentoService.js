@@ -5,6 +5,14 @@ export default class LancamentoService extends ApiService {
         super('/api/lancamentos')
     }
 
+    atualizar(status, id) {
+        return this.put(`/${id}/atualiza-status`, status)
+    }
+
+    getSaldoCaixa(){
+        return this.get('/caixa');
+    }
+
     obterListaMeses() {
         return [
             { label: 'Selecione...', value: '' },

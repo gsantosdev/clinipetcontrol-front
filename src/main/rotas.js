@@ -10,7 +10,8 @@ import Home from '../views/home'
 import Login from '../views/login/login'
 import NotFound from '../views/redirects/notFound'
 import ServicoHome from '../views/servico/servico-home'
-import comercialHome from '../views/comercial/comercial-home'
+import ComercialHome from '../views/comercial/comercial-home'
+import CaixaHome from '../views/caixa/caixa-home'
 
 
 
@@ -58,7 +59,8 @@ function Rotas(props) {
                 <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/servico" component={ServicoHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/agendamento" component={AgendamentoHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/usuarios" component={UsuarioHome} />
-                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/comercial" component={comercialHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/comercial" component={ComercialHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/caixa" component={CaixaHome} />
 
 
 
