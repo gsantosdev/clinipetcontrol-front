@@ -4,6 +4,7 @@ import React from "react";
 import FormGroup from "../../components/form-group";
 import { withRouter } from "react-router";
 import VendaService from "../../app/service/vendaService";
+import LancamentoService from "../../app/service/lancamentoService";
 import * as messages from "../../components/toastr"
 import OrdemServicoTable from "./ordemServicoTable";
 
@@ -12,6 +13,7 @@ class ProntuarioOrdemServico extends React.Component {
   constructor(props) {
     super(props);
     this.vendaService = new VendaService();
+    this.lancamentoService = new LancamentoService();
   }
 
   state = {
@@ -22,7 +24,7 @@ class ProntuarioOrdemServico extends React.Component {
   buscarOrdens = () => {
     this.vendaService.listarOrdensPorCliente(this.state.buscaCliente)
       .then(response => {
-      
+
         if (response.status == 204) {
           messages.mensagemAlerta("Nenhum cliente foi encontrado!")
         }
@@ -36,6 +38,19 @@ class ProntuarioOrdemServico extends React.Component {
           messages.mensagemErro(error.response.data)
         }
       })
+  }
+
+  atualizaStatusAction = (status, id) => {
+
+    const statusBody = { status: status }
+
+    this.lancamentoService.atualizar(statusBody, id).then(response => {
+      messages.mensagemSucesso("Status atualizado com sucesso!")
+      this.buscarOrdens();
+    }).catch(error => {
+      messages.mensagemErro(error.response.data)
+    })
+
   }
 
 
@@ -58,7 +73,7 @@ class ProntuarioOrdemServico extends React.Component {
         </div>
 
         <div>
-          <OrdemServicoTable ordens={this.state.ordens} />
+          <OrdemServicoTable atualizaStatusAction={this.atualizaStatusAction} ordens={this.state.ordens} />
         </div>
       </div>
     )
