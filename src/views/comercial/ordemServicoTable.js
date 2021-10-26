@@ -27,6 +27,8 @@ export default props => {
                 <td>{ordem.descricao}</td>
                 <td>{ordem.nome}</td>
                 <td>{formatCPF(ordem.cpf)}</td>
+                <td>{new Date(ordem.dataCriacao).toLocaleDateString() + " " + new Date(ordem.dataCriacao).toLocaleTimeString()}</td>
+
 
                 <td>
                     {ordem.statusOrdem === "PENDENTE" ?
@@ -40,13 +42,6 @@ export default props => {
                             <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
                         </>
                         : false}
-
-
-                    {/* {props.telaAnimal ?
-                        <input name="cliente" type="radio" defaultChecked={props.selecionado === cliente.id} onClick={e => props.selectAction(cliente)}></input> : <div>
-                            <button type="button" onClick={e => props.editarAction(cliente)} className="btn btn-primary">Editar</button>
-                            <button type="button" onClick={e => props.deleteAction(cliente)} className="btn btn-danger">Deletar</button></div>
-                    } */}
 
                 </td>
             </tr>
@@ -71,6 +66,7 @@ export default props => {
                             <th scope="col">Descrição</th>
                             <th scope="col">Nome</th>
                             <th scope="col">CPF</th>
+                            <th scope="col">Data e hora</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>

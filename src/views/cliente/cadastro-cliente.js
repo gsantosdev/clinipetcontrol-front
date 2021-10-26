@@ -42,6 +42,9 @@ class CadastroCliente extends React.Component {
         Object.keys(this.state).forEach(key => {
             this.setState({ [key]: '' })
         })
+
+        this.setState({ numero: '' })
+
     }
 
     constructor(props) {
@@ -264,9 +267,9 @@ class CadastroCliente extends React.Component {
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-2">
                         <FormGroup id="inputNumero" label="Número: *">
-
                             <input type="number" className="form-control"
                                 onInput={this.maxLengthCheck}
+                                value={this.state.numero}
                                 onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
                                 name="numero"
                                 maxLength="7"

@@ -1,4 +1,4 @@
-import { faAddressCard, faArrowLeft, faCalendar, faDog, faHandHoldingMedical, faHome, faMoneyBill, faShoppingCart, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faAddressCard, faArrowLeft, faBoxes, faBoxOpen, faCalendar, faDog, faHandHoldingMedical, faHome, faMoneyBill, faShoppingCart, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import { AuthConsumer } from '../main/provedorAutenticacao'
 import SideBarItem from './sidebarItem'
@@ -24,6 +24,8 @@ function SideBar(props) {
         <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faCalendar} href="#/agendamento" label="Agenda" />
 
         <SideBarItem render={props.isAdmin} icon={faHandHoldingMedical} href="#/servico" label="Serviços" />
+        <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faBoxOpen} href="#/produto" label="Produtos" />
+
         <SideBarItem render={props.isAdmin} icon={faAddressCard} href="#/colaboradores" label="Colaboradores" />
         <SideBarItem render={props.isAdmin || props.isSecretaria} icon={faMoneyBill} href="#/caixa" label="Caixa" />
 
