@@ -30,7 +30,7 @@ class ServicoHome extends React.Component {
   }
 
   limpaCampos() {
-    this.setState({ nome: '', observacoes: '', valorBase: null, margemLucro: null })
+    this.setState({ nome: '', observacoes: '', valorBase: '', margemLucro: '' })
   }
 
   maxLengthCheck = (object) => {
@@ -69,7 +69,6 @@ class ServicoHome extends React.Component {
       .then(response => {
         messages.mensagemSucesso(response)
 
-        //this.props.history.push('/login')
       }).catch(error => {
         messages.mensagemErro(error.response.data)
       })
@@ -181,7 +180,7 @@ class ServicoHome extends React.Component {
 
         <Card title={!this.props.editar ? "Cadastro de Serviço" : "Atualizar o serviço"}>
           <div className="row">
-            <div className="col-sm-12 col-md-4 col-xl-4 col-xxl-4">
+            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
               <FormGroup id="inputNome" label="Nome do serviço: *">
                 <input type="text" className="form-control"
                   value={this.state.nome}
@@ -190,8 +189,8 @@ class ServicoHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-sm-12 col-md-2 col-xl-1 col-xxl-4">
-              <FormGroup id="inputValorBase" label="Valor base (R$): ">
+            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+              <FormGroup id="inputValorBase" label="Valor base (R$): *">
                 <input type="number" className="form-control"
                   value={this.state.valorBase}
                   name="valorBase"
@@ -201,8 +200,8 @@ class ServicoHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-sm-12 col-md-2 col-xl-1 col-xxl-4">
-              <FormGroup id="inputMargemLucro" label="Margem de Lucro (%): ">
+            <div className="col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-4">
+              <FormGroup id="inputMargemLucro" label="Margem de Lucro (%): *">
                 <input type="number" className="form-control"
                   value={this.state.margemLucro}
                   name="margemLucro"
