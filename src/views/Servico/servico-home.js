@@ -195,7 +195,7 @@ class ServicoHome extends React.Component {
                   value={this.state.valorBase}
                   name="valorBase"
                   onInput={this.maxLengthCheck}
-                  onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+                  onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
                   maxLength="7"
                   onChange={this.handleChange} />
               </FormGroup>
@@ -206,7 +206,7 @@ class ServicoHome extends React.Component {
                   value={this.state.margemLucro}
                   name="margemLucro"
                   onInput={this.maxLengthCheck}
-                  onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+                  onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
                   maxLength="7"
                   onChange={this.handleChange} />
               </FormGroup>

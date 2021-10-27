@@ -4,6 +4,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import CadastroProduto from './cadastro-produto'
+import ProntuarioProduto from './prontuario-produto'
 
 
 
@@ -20,6 +21,7 @@ class ProdutoHome extends React.Component {
           </Tab>
           <Tab eventKey="consultar" title="Consultar/Editar/Deletar">
             <Card title="Consultar/Editar/Deletar">
+              <ProntuarioProduto/>
             </Card>
           </Tab>
 

@@ -11,6 +11,10 @@ class ProdutoService extends ApiService {
     return this.post('/', produto)
   }
 
+  obterPorNome(busca) {
+    return this.get(`/?busca=${busca}`)
+  }
+
   editar(id, produto) {
     return this.put(`/${id}`, produto)
   }

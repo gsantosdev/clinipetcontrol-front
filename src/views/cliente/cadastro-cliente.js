@@ -270,7 +270,7 @@ class CadastroCliente extends React.Component {
                             <input type="number" className="form-control"
                                 onInput={this.maxLengthCheck}
                                 value={this.state.numero}
-                                onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+                                onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
                                 name="numero"
                                 maxLength="7"
                                 onChange={this.handleChange} />

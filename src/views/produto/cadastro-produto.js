@@ -16,6 +16,7 @@ class CadastroProduto extends React.Component {
   state = {
     id: null,
     nome: '',
+    marca: '',
     valorBase: null,
     margemLucro: null,
     quantidadeEstoque: null,
@@ -23,8 +24,8 @@ class CadastroProduto extends React.Component {
     estoqueMaximo: null
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.service = new ProdutoService();
   }
 
@@ -32,6 +33,7 @@ class CadastroProduto extends React.Component {
   limpaCampos() {
     this.setState({
       nome: '',
+      marca: '',
       valorBase: '',
       margemLucro: '',
       quantidadeEstoque: '',
@@ -58,8 +60,8 @@ class CadastroProduto extends React.Component {
     }
 
 
-    const { nome, valorBase, margemLucro, quantidadeEstoque, estoqueMinimo, estoqueMaximo } = this.state;
-    const produto = { nome, valorBase, margemLucro, quantidadeEstoque, estoqueMinimo, estoqueMaximo };
+    const { nome, marca, valorBase, margemLucro, quantidadeEstoque, estoqueMinimo, estoqueMaximo } = this.state;
+    const produto = { nome, marca, valorBase, margemLucro, quantidadeEstoque, estoqueMinimo, estoqueMaximo };
 
 
     this.service.salvar(produto)
@@ -70,8 +72,32 @@ class CadastroProduto extends React.Component {
         messages.mensagemErro(error.response.data)
       })
 
-
   }
+
+  editar = () => {
+
+    const msgs = this.validar()
+
+    if (msgs && msgs.length > 0) {
+      msgs.forEach((msg, index) => {
+        messages.mensagemErro(msg)
+      });
+      return false;
+    }
+
+
+    const { nome, marca, valorBase, margemLucro, quantidadeEstoque, estoqueMinimo, estoqueMaximo } = this.state;
+    const produto = { nome, marca, valorBase, margemLucro, quantidadeEstoque, estoqueMinimo, estoqueMaximo };
+
+
+    this.service.editar(this.state.id, produto)
+      .then(response => {
+        messages.mensagemSucesso(response)
+      }).catch(error => {
+        messages.mensagemErro(error.response.data)
+      })
+  }
+
 
 
   validar() {
@@ -92,7 +118,9 @@ class CadastroProduto extends React.Component {
     }
     else if (!this.state.estoqueMinimo) {
       msgs.push('O campo Quantidade Mínima é obrigatório.')
-
+    }
+    else if (this.state.estoqueMinimo > this.state.estoqueMaximo) {
+      msgs.push('A quantidade mínima não pode ser maior que a máxima.')
     }
     else if (!this.state.estoqueMaximo) {
       msgs.push('O campo Quantidade Máxima é obrigatório.')
@@ -109,10 +137,17 @@ class CadastroProduto extends React.Component {
     this.setState({ [name]: value })
   }
 
+
+  componentDidMount() {
+    console.log(this.props.state)
+    this.setState(this.props.state)
+
+  }
+
   render() {
     return (
       <div className="row">
-        <div className="col-12  col-lg-6 col-xl-4 col-xxl-4">
+        <div className="col-12 col-lg-6 col-xl-4 col-xxl-4">
           <FormGroup id="inputNome" label="Nome do produto: *">
             <input type="text" className="form-control"
               value={this.state.nome}
@@ -121,58 +156,68 @@ class CadastroProduto extends React.Component {
               onChange={this.handleChange} />
           </FormGroup>
         </div>
-        <div className="col-12  col-lg-6 col-xl-4 col-xxl-4">
+        <div className="col-12 col-lg-6 col-xl-4 col-xxl-2">
+          <FormGroup id="inputNome" label="Marca: *">
+            <input type="text" className="form-control"
+              value={this.state.marca}
+              name="marca"
+              maxLength="80"
+              onChange={this.handleChange} />
+          </FormGroup>
+        </div>
+        <div className="col-12 col-lg-6 col-xl-4 col-xxl-2">
           <FormGroup id="inputValorBase" label="Valor base (R$): *">
             <input type="number" className="form-control"
               value={this.state.valorBase}
               name="valorBase"
               onInput={this.maxLengthCheck}
-              onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+              onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
               maxLength="7"
+              min="0"
               onChange={this.handleChange} />
           </FormGroup>
         </div>
-        <div className="col-12  col-lg-6 col-xl-4 col-xxl-4">
+        <div className="col-12 col-lg-6 col-xl-4 col-xxl-4">
           <FormGroup id="inputMargemLucro" label="Margem de Lucro (%): *">
             <input type="number" className="form-control"
               value={this.state.margemLucro}
               name="margemLucro"
               onInput={this.maxLengthCheck}
-              onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+              onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
               maxLength="7"
               onChange={this.handleChange} />
           </FormGroup>
         </div>
-        <div className="col-12  col-lg-6 col-xl-4 col-xxl-4">
+        <div className="col-12 col-lg-6 col-xl-4 col-xxl-4">
           <FormGroup id="inputQuantidadeEstoque" label="Quantidade inicial (Estoque): *">
             <input type="number" className="form-control"
               value={this.state.quantidadeEstoque}
               name="quantidadeEstoque"
               onInput={this.maxLengthCheck}
-              onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+              onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
               maxLength="7"
               onChange={this.handleChange} />
           </FormGroup>
         </div>
-        <div className="col-12  col-lg-6 col-xl-4 col-xxl-4">
+        <div className="col-12 col-lg-6 col-xl-4 col-xxl-4">
           <FormGroup id="inputQuantidadeEstoque" label="Quantidade mínima (Estoque): *">
             <input type="number" className="form-control"
               value={this.state.estoqueMinimo}
               name="estoqueMinimo"
               onInput={this.maxLengthCheck}
-              onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+              onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
               maxLength="7"
               onChange={this.handleChange} />
           </FormGroup>
         </div>
 
-        <div className="col-12  col-lg-6 col-xl-4 col-xxl-4">
+        <div className="col-12  col-xxl-4">
           <FormGroup id="inputQuantidadeEstoque" label="Quantidade máxima (Estoque): *">
             <input type="number" className="form-control"
               value={this.state.estoqueMaximo}
               name="estoqueMaximo"
               onInput={this.maxLengthCheck}
-              onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
+              onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
               maxLength="7"
               onChange={this.handleChange} />
           </FormGroup>
@@ -184,9 +229,8 @@ class CadastroProduto extends React.Component {
               <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
             </div>
           </FormGroup>
-
-
         </div>
+
       </div>
     )
   }
@@ -198,4 +242,4 @@ class CadastroProduto extends React.Component {
 }
 
 
-export default withRouter(CadastroProduto);
+export default CadastroProduto;
