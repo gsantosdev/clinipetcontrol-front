@@ -22,12 +22,32 @@ class ProntuarioProduto extends React.Component {
     showConfirmDialogEditar: false,
     produtoADeletar: {},
     produtoAEditar: {},
-    message: ''
+    message: '',
+    quantidade: null,
   }
 
   constructor() {
     super();
     this.service = new ProdutoService();
+  }
+
+  handleChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+
+    this.setState({ [name]: value })
+  }
+
+  componentDidMount() {
+    if (this.state.quantidade == null) {
+      this.setState({ quantidade: 1 })
+    }
+  }
+
+  maxLengthCheck = (object) => {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(0, object.target.maxLength)
+    }
   }
 
   abrirConfirmacaoEditar = (produto) => {
@@ -48,7 +68,8 @@ class ProntuarioProduto extends React.Component {
 
 
   buscar = () => {
-    this.service.obterPorNome(this.state.busca)
+    this.setState({ produtos: [] })
+    this.service.obterPorNomeOuMarca(this.state.busca)
       .then(resposta => {
         this.setState({ produtos: resposta.data })
       }).catch(error => {
@@ -98,7 +119,7 @@ class ProntuarioProduto extends React.Component {
             <div className="col-12 mb-3">
               <FormGroup label="Pesquisar Produto">
                 <div className="input-group">
-                  <div style={{ marginLeft: "-1rem" }} className="form-outline col-11 col-sm-11 col-md-11 col-lg-8 col-xl-8 col-xxl-5">
+                  <div style={{ marginLeft: "-1rem" }} className="form-outline col-11 col-sm-11 col-md-11 col-lg-8 col-xl-8 col-xxl-11">
                     <input maxLength="80" id="search-input" placeholder="Nome/Marca" onChange={e => this.setState({ busca: e.target.value })} type="search" id="form1" className="form-control" />
                   </div>
                   <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
@@ -108,8 +129,24 @@ class ProntuarioProduto extends React.Component {
               </FormGroup>
 
             </div>
+            {this.props.telaVenda ? this.state.produtos.length > 0 ?
+              <div className="col-6 mb-3">
+                <FormGroup label="Quantidade">
+                  <input type="number" className="form-control"
+                    onInput={this.maxLengthCheck}
+                    minLength="1"
+                    min="1"
+                    value={this.state.quantidade}
+                    onKeyDown={(evt) => (evt.key === 'e' || evt.key === '0' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
+                    name="quantidade"
+                    maxLength="7"
+                    onChange={this.handleChange} />
+                </FormGroup>
+              </div> : false
+              : false}
+
             <div>
-              <ProdutoTable produtos={this.state.produtos} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+              <ProdutoTable quantidade={this.state.quantidade} selecionarProduto={this.props.selecionarProduto} telaVenda={this.props.telaVenda} produtos={this.state.produtos} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
             </div>
           </div>
 

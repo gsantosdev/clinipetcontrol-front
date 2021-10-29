@@ -21,7 +21,7 @@ import { AuthContext } from "../../main/provedorAutenticacao";
 
 
 
-class Venda extends React.Component {
+class VendaServico extends React.Component {
 
 
   state = {
@@ -109,9 +109,6 @@ class Venda extends React.Component {
     this.setState({ showTelaAgendamento: false, itensVenda: this.state.itensVenda })
     this.obterValorTotalVenda();
 
-
-
-
     console.log("itensVenda:", this.state.itensVenda)
   }
 
@@ -141,7 +138,7 @@ class Venda extends React.Component {
     const venda = { itensVenda, status: "PENDENTE", idCliente: clienteSelecionado.id, idUsuario: this.context.usuarioAutenticado.id }
     console.log(venda);
 
-    this.vendaService.efetuar(venda)
+    this.vendaService.efetuarVendaServico(venda)
       .then(response => {
         messages.mensagemSucesso(response.data)
         this.deselecionarCliente()
@@ -295,8 +292,8 @@ class Venda extends React.Component {
 
 }
 
-Venda.contextType = AuthContext
+VendaServico.contextType = AuthContext
 
 
 
-export default withRouter(Venda)
+export default withRouter(VendaServico)

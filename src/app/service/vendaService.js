@@ -7,8 +7,12 @@ class VendaService extends ApiService {
     super('/api/vendas')
   }
 
-  efetuar(venda) {
-    return this.post('/', venda)
+  efetuarVendaServico(venda) {
+    return this.post('/servico', venda)
+  }
+
+  efetuarVendaProduto(venda) {
+    return this.post('/produto', venda)
   }
 
   listarOrdensPorCliente(busca){

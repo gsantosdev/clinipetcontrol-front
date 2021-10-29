@@ -3,8 +3,9 @@ import Card from '../../components/card'
 
 import { Tab, Tabs } from "react-bootstrap";
 import { withRouter } from "react-router";
-import Venda from "./venda";
+import VendaServico from "./vendaServico";
 import ProntuarioOrdemServico from "./prontuario-ordemServico";
+import VendaProduto from "./vendaProduto";
 
 
 
@@ -20,12 +21,17 @@ class ComercialHome extends React.Component {
         <Tabs unmountOnExit defaultActiveKey="cadastrar_ordem" id="uncontrolled-tab">
           <Tab eventKey="cadastrar_ordem" title="Cadastrar ordem de serviço">
             <Card title="Cadastrar ordem de serviço">
-              <Venda />
+              <VendaServico />
             </Card>
           </Tab>
           <Tab eventKey="consultar_ordem" title="Consultar ordem de serviço">
             <Card title="Consultar ordem de serviço">
               <ProntuarioOrdemServico />
+            </Card>
+          </Tab>
+          <Tab eventKey="venda_produto" title="Venda de produtos">
+            <Card title="Efetuar venda">
+              <VendaProduto />
             </Card>
           </Tab>
         </Tabs>

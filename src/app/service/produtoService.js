@@ -11,7 +11,7 @@ class ProdutoService extends ApiService {
     return this.post('/', produto)
   }
 
-  obterPorNome(busca) {
+  obterPorNomeOuMarca(busca) {
     return this.get(`/?busca=${busca}`)
   }
 
@@ -25,6 +25,10 @@ class ProdutoService extends ApiService {
 
   obterPorId(id) {
     return this.get(`/${id}`)
+  }
+
+  obterValorVenda(id) {
+    return this.get(`/${id}/valor`)
   }
 
 }
