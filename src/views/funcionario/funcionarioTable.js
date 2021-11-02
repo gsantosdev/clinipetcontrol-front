@@ -19,11 +19,10 @@ export default props => {
                 <td>{funcionario.email}</td>
                 <td>{funcionario.telefone}</td>
                 <td>{funcionario.veterinario ? "Veterinário" : "Geral"}</td>
-
-
+                
                 <td>
                     {props.telaAgendamento ?
-                        <input name="funcionario" type="radio" defaultChecked={props.selecionado} onClick={e => props.selectAction(funcionario)}></input> : <div>
+                        <input name="funcionario" type="radio" defaultChecked={props.selecionado === funcionario.id} onClick={e => props.selectAction(funcionario)}></input> : <div>
                             <button type="button" onClick={e => props.editarAction(funcionario)} className="btn btn-primary">Editar</button>
                             <button type="button" onClick={e => props.deleteAction(funcionario)} className="btn btn-danger">Deletar</button></div>
                     }

@@ -35,11 +35,11 @@ export default props => {
         return (
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
                 <td>{item.agendamento.servico.nome}</td>
-                <td>{item.agendamento.servico.valorItem} R$</td>
+                <td>R$ {item.agendamento.servico.valorItem}</td>
 
                 <td>
                     <div>
-                        <button type="button" onClick={e => props.editarAction(item)} className="btn btn-primary">Editar</button>
+                        <button type="button" onClick={e => props.editarAction(item, index)} className="btn btn-primary">Editar</button>
                         <button type="button" onClick={e => props.deleteAction(item)} className="btn btn-danger">Remover</button>
                     </div>
                 </td>

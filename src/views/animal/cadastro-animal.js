@@ -85,9 +85,7 @@ class CadastroAnimal extends React.Component {
       await this.setState({ idCliente: this.props.state.cliente.id })
     }
 
-
     this.listarEspecies()
-
     console.log(this.props.state);
     await this.setState(this.props.state);
     console.log(this.state);
