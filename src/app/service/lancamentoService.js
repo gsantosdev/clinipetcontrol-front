@@ -5,11 +5,15 @@ export default class LancamentoService extends ApiService {
         super('/api/lancamentos')
     }
 
+    salvar(lancamento) {
+        return this.post(`/`, lancamento)
+    }
+
     atualizar(status, id) {
         return this.put(`/${id}/atualiza-status`, status)
     }
 
-    getSaldoCaixa(){
+    getSaldoCaixa() {
         return this.get('/caixa');
     }
 
@@ -36,6 +40,15 @@ export default class LancamentoService extends ApiService {
             { label: 'Selecione...', value: '' },
             { label: 'Despesa', value: 'DESPESA' },
             { label: 'Receita', value: 'RECEITA' }
+        ]
+
+    }
+
+    obterListaStatus() {
+        return [
+            { label: 'Selecione...', value: '' },
+            { label: 'Pendente', value: 'PENDENTE' },
+            { label: 'Concluido', value: 'CONCLUIDO' }
         ]
 
     }

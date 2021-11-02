@@ -14,6 +14,7 @@ import FuncionarioService from '../../app/service/funcionarioService';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import SelectMenu from '../../components/selectMenu';
 import ClienteService from '../../app/service/clienteService';
+import Config from "../../config.json"
 
 class MarcarAgendamento extends React.Component {
 
@@ -60,23 +61,32 @@ class MarcarAgendamento extends React.Component {
     this.setState({ [name]: value })
 
     console.log(value)
+    const dataInicio = new Date(this.state.dataHorario);
+
+    console.log(dataInicio)
   }
 
   validar() {
 
     const msgs = []
 
+    const dataInicio = new Date(this.state.dataHorario);
+
+    if (dataInicio.getHours() < Config.HORARIO_FUNCIONAMENTO_MIN) {
+      msgs.push('Agendamento fora do horário.')
+    }
+    if (dataInicio.getHours() > Config.HORARIO_FUNCIONAMENTO_MAX) {
+      msgs.push('Agendamento fora do horário.')
+    }
+
     if (!this.state.dataHorario) {
       msgs.push('O campo de data e hora é obrigatório.')
     }
-    else if (!this.state.duracaoAprox) {
-      msgs.push('O campo de duração aproximada é obrigatório.')
-    }
-    else if (this.state.duracaoAprox === "Selecione...") {
-      msgs.push('Selecione uma duração aproximada válida.')
-    }
     else if (!this.state.idServico) {
       msgs.push('Selecione um serviço.')
+    }
+    else if (this.state.idAnimal == "Selecione...") {
+      msgs.push('Selecione um animal.')
     }
     else if (!this.state.idAnimal) {
       msgs.push('Selecione um animal.')
@@ -87,13 +97,42 @@ class MarcarAgendamento extends React.Component {
     else if (!this.state.idFuncionario) {
       msgs.push('Selecione um funcionário.')
     }
+    else if (!this.state.idServico) {
+      msgs.push('Selecione um serviço.')
+    }
     return msgs
   }
+
+
+  buscarPorIdFuncionario = () => {
+    this.funcionarioService.obterPorId(this.props.agendamentoAEditar.agendamento.idFuncionario)
+      .then(resposta => {
+        this.setState({ funcionarios: [resposta.data] })
+      }).catch(error => {
+        console.log(error)
+      })
+  }
+
 
   async componentDidMount() {
     this.listarServicos();
     await this.listarAnimais(this.props.idCliente);
+    await this.listarServicos();
+    if (this.props.agendamentoAEditar) {
+      await this.setState(this.props.agendamentoAEditar.agendamento)
+      console.log(this.props.agendamentoAEditar.agendamento.idFuncionario)
+      console.log(this.props.agendamentoAEditar.agendamento.idServico)
+      this.buscarPorIdFuncionario(this.props.agendamentoAEditar.agendamento.idFuncionario);
+      this.listarServicos();
+      await this.setState({ idFuncionarioSelecionado: this.props.agendamentoAEditar.agendamento.idFuncionario })
+      await this.setState({ idServicoSelecionado: this.props.agendamentoAEditar.agendamento.idServico })
+      console.log("idServicoSelecionado:", this.state.idServicoSelecionado)
+
+    }
+    //console.log("Agendamento a editar: ", this.props.agendamentoAEditar.agendamento)
   }
+
+
 
   limpaCampos() {
     Object.keys(this.state).forEach(key => {
@@ -104,16 +143,6 @@ class MarcarAgendamento extends React.Component {
         this.setState({ [key]: '' })
       }
     })
-  }
-
-
-  listarServicos = () => {
-    this.servicoService.listar()
-      .then(resposta => {
-        this.setState({ servicos: resposta.data })
-      }).catch(error => {
-        console.log(error)
-      })
   }
 
   buscarAnimal = () => {
@@ -128,6 +157,11 @@ class MarcarAgendamento extends React.Component {
   async listarAnimais(id) {
     const animais = await this.clienteService.getAnimais(id)
     this.setState({ animais: animais })
+  }
+
+  async listarServicos() {
+    const servicos = await this.servicoService.getNomesServicos()
+    this.setState({ servicos: servicos })
   }
 
 
@@ -150,8 +184,9 @@ class MarcarAgendamento extends React.Component {
       });
       return false;
     }
-    const { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario } = this.state
-    const agendamento = { dataHorario, duracaoAprox, observacoes, idServico, idAnimal, idFuncionario }
+
+    const { dataHorario, observacoes, idServico, idAnimal, idFuncionario } = this.state
+    const agendamento = { dataHorario, observacoes, idServico, idAnimal, idFuncionario }
 
     this.service.salvar(agendamento)
       .then(response => {
@@ -167,13 +202,6 @@ class MarcarAgendamento extends React.Component {
   adicionarAgendamento = async () => {
     const msgs = this.validar()
 
-
-    await this.servicoService.obterPorId(this.state.idServico).then(response => {
-      this.setState({ servico: response.data })
-    }).catch(error => {
-      mensagemErro(error);
-    })
-
     if (msgs && msgs.length > 0) {
       msgs.forEach((msg, index) => {
         mensagemErro(msg)
@@ -181,8 +209,15 @@ class MarcarAgendamento extends React.Component {
       return false;
     }
 
-    const { dataHorario, duracaoAprox, observacoes, idServico, servico, idAnimal, idFuncionario } = this.state
-    const agendamento = { dataHorario, duracaoAprox, observacoes, idServico, servico, idAnimal, idFuncionario }
+    await this.servicoService.obterPorId(this.state.idServico).then(response => {
+      this.setState({ servico: response.data })
+    }).catch(error => {
+      mensagemErro(error);
+    })
+
+
+    const { dataHorario, observacoes, idServico, servico, idAnimal, idFuncionario } = this.state
+    const agendamento = { dataHorario, observacoes, idServico, servico, idAnimal, idFuncionario }
 
     await this.service.validar(agendamento).then(response => {
       console.log(response)
@@ -192,7 +227,6 @@ class MarcarAgendamento extends React.Component {
       this.setState({ agendamentoValido: false })
     })
 
-
     if (this.state.agendamentoValido) {
       this.props.adicionarAgendamento(agendamento)
     }
@@ -200,6 +234,46 @@ class MarcarAgendamento extends React.Component {
       return false;
     }
   }
+
+  editarAgendamento = async () => {
+
+    console.log("Entrou")
+
+    const msgs = this.validar()
+
+    if (msgs && msgs.length > 0) {
+      msgs.forEach((msg, index) => {
+        mensagemErro(msg)
+      });
+      return false;
+    }
+
+    await this.servicoService.obterPorId(this.state.idServico).then(response => {
+      this.setState({ servico: response.data })
+    }).catch(error => {
+      mensagemErro(error);
+    })
+
+
+    const { dataHorario, observacoes, idServico, servico, idAnimal, idFuncionario } = this.state
+    const agendamento = { dataHorario, observacoes, idServico, servico, idAnimal, idFuncionario }
+
+    await this.service.validar(agendamento).then(response => {
+      console.log(response)
+      this.setState({ agendamentoValido: true })
+    }).catch(error => {
+      mensagemErro(error.response.data)
+      this.setState({ agendamentoValido: false })
+    })
+
+    if (this.state.agendamentoValido) {
+      this.props.editarAgendamento(agendamento)
+    }
+    else {
+      return false;
+    }
+  }
+
 
 
   selectActionServico = async (servico) => {
@@ -219,69 +293,59 @@ class MarcarAgendamento extends React.Component {
   render() {
 
     return (
-      <div className="row mb-3">
-        <div className="row">
-          <div className="col-md-10 col-xl-6 col-xxl-6">
-            <div className="col-md-12 col-xxl-8">
-              <FormGroup id="inputDataHorario" label="Data e hora do agendamento *">
-                <input type="datetime-local" className="form-control"
-                  value={this.state.dataHorario}
-                  min={this.getTodayDate()}
-                  name="dataHorario"
-                  onChange={this.handleChange}
-                />
-              </FormGroup>
-            </div>
-            <div className="col-md-12 col-xl-12 col-xxl-8">
-              <FormGroup id="inputDuracao" label="Duração Aproximada*">
-                <SelectMenu lista={this.service.obterDuracoes()} className="form-control"
-                  value={this.state.duracaoAprox}
-                  name="duracaoAprox"
-                  onChange={this.handleChange}
-                />
-              </FormGroup>
-            </div>
-          </div>
+      <div className="row mb-3 ">
 
-          <div className="pt-2 col-sm-12 col-md-12  col-lg-12 col-xl-6 col-xxl-6">
-            <FormGroup id="tableServico" fontSize="1.2rem" label="Selecione o serviço*">
-              <ServicoTable selectAction={this.selectActionServico} telaAgendamento servicos={this.state.servicos} />
-            </FormGroup>
-          </div>
+        <div className="row d-flex justify-content-center">
 
-        </div>
-
-
-        <div className="row">
-
-          <div className="col-12">
-            <FormGroup id="inputEspecie" label="Selecione o animal: *">
+          <div className="col-sm-12 col-md-12  col-lg-12 col-xl-6 col-xxl-6">
+            <FormGroup id="inputAnimal" fontSize="1.2rem" label="Selecione o animal: *">
               <SelectMenu className="form-control" lista={this.state.animais}
                 value={this.state.idAnimal}
                 name="idAnimal"
                 onChange={this.handleChange} />
             </FormGroup>
           </div>
-
         </div>
-        <div className="row pt-4" style={{ marginTop: '4rem' }}>
-          <div className="col-12">
-            <FormGroup fontSize="1.2rem" label="Selecione o funcionário*">
-              <div className="input-group">
-                <div className="form-outline col-sm-10 col-md-9 col-lg-9 col-xl-6 col-xxl-4">
-                  <input id="search-input" value={this.state.buscaFuncionario} placeholder="Nome/Telefone" name="buscaFuncionario" onChange={this.handleChange} type="search" id="form1" className="form-control" />
-                </div>
-                <div className="col-sm-2 col-md-3 col-lg-3 col-xl-6">
-
-                  <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscaFuncionario}>
-                    <FontAwesomeIcon icon={faSearch} />
-                  </button>
-                </div>
-              </div>
+        <div className="row d-flex justify-content-center">
+          <div className="col-sm-12 col-md-12  col-lg-12 col-xl-6 col-xxl-6">
+            <FormGroup id="tableServico" fontSize="1.2rem" label="Selecione o serviço*">
+              <SelectMenu className="form-control" lista={this.state.servicos}
+                value={this.state.idServico}
+                name="idServico"
+                onChange={this.handleChange} />
             </FormGroup>
-            <div>
-              <FuncionarioTable selectAction={this.selectActionFuncionario} funcionarios={this.state.funcionarios} telaAgendamento />
+          </div>
+        </div>
+
+        <div className="row d-flex justify-content-center">
+          <div className="col-sm-12 col-md-12  col-lg-12 col-xl-6 col-xxl-6">
+            <FormGroup id="inputDataHorario" fontSize="1.2rem" label="Data e hora do agendamento *">
+              <input type="datetime-local" className="form-control"
+                value={this.state.dataHorario}
+                min={this.getTodayDate()}
+                name="dataHorario"
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+          </div>
+        </div>
+
+        <div className="row" style={{ marginTop: '4rem' }}>
+          <FormGroup fontSize="1.2rem" label="Selecione o funcionário*">
+            <div className="input-group">
+              <div className="form-outline col-sm-10 col-md-9 col-lg-9 col-xl-6 col-xxl-4">
+                <input id="search-input" value={this.state.buscaFuncionario} placeholder="Nome/Telefone" name="buscaFuncionario" onChange={this.handleChange} type="search" id="form1" className="form-control" />
+              </div>
+              <div className="col-sm-2 col-md-3 col-lg-3 col-xl-6">
+
+                <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscaFuncionario}>
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              </div>
             </div>
+          </FormGroup>
+          <div>
+            <FuncionarioTable selecionado={this.state.idFuncionarioSelecionado} selectAction={this.selectActionFuncionario} funcionarios={this.state.funcionarios} telaAgendamento />
           </div>
         </div>
 
@@ -290,16 +354,16 @@ class MarcarAgendamento extends React.Component {
           <div className="d-flex justify-content-end">
             <div className="mt-5">
               <button style={{ minWidth: '17rem' }} onClick={() => {
-                if (this.props.editar) {
-                  return this.editar
-                }
-                else if (this.props.agendar) {
+                if (this.props.agendar) {
                   return this.agendar()
+                }
+                else if (this.props.editar) {
+                  return this.editarAgendamento()
                 }
                 else {
                   return this.adicionarAgendamento()
                 }
-              }}/*onClick={this.props.editar ? this.editar : this.agendar}*/ type="button" className="btn btn-success">Adicionar agendamento</button>
+              }}/*onClick={this.props.editar ? this.editar : this.agendar}*/ type="button" className="btn btn-success">{this.props.editar ? "Atualizar agendamento" : "Adicionar agendamento"}</button>
             </div>
           </div>
         </div>
