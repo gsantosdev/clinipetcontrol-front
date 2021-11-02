@@ -119,7 +119,7 @@ class CadastroProduto extends React.Component {
     else if (!this.state.estoqueMinimo) {
       msgs.push('O campo Quantidade Mínima é obrigatório.')
     }
-    else if (this.state.estoqueMinimo > this.state.estoqueMaximo) {
+    else if (Number(this.state.estoqueMinimo) > Number(this.state.estoqueMaximo)) {
       msgs.push('A quantidade mínima não pode ser maior que a máxima.')
     }
     else if (!this.state.estoqueMaximo) {
@@ -141,7 +141,6 @@ class CadastroProduto extends React.Component {
   componentDidMount() {
     console.log(this.props.state)
     this.setState(this.props.state)
-
   }
 
   render() {
@@ -189,7 +188,7 @@ class CadastroProduto extends React.Component {
           </FormGroup>
         </div>
         <div className="col-12 col-lg-6 col-xl-4 col-xxl-4">
-          <FormGroup id="inputQuantidadeEstoque" label="Quantidade inicial (Estoque): *">
+          <FormGroup id="inputQuantidadeEstoque" label="Quantidade atual (Estoque): *">
             <input type="number" className="form-control"
               value={this.state.quantidadeEstoque}
               name="quantidadeEstoque"

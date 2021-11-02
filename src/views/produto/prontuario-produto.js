@@ -26,8 +26,8 @@ class ProntuarioProduto extends React.Component {
     quantidade: null,
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.service = new ProdutoService();
   }
 
@@ -42,6 +42,31 @@ class ProntuarioProduto extends React.Component {
     if (this.state.quantidade == null) {
       this.setState({ quantidade: 1 })
     }
+
+    if (this.props.editar) {
+      this.setState(this.props.produtoItemAEditar)
+      console.log("this.state.produtoItemAEditar: ", this.props)
+
+      this.buscarItemAEditar(this.props.produtoItemAEditar.idProduto)
+
+    }
+  }
+
+  buscarItemAEditar = (id) => {
+    this.service.obterPorId(id).then(response => {
+      this.setState({ produtos: [response.data] })
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+
+  buscarPeloId = (id) => {
+    this.service.obterPorId(id).then(response => {
+      this.setState({ produtos: [response.data] })
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   maxLengthCheck = (object) => {
@@ -62,19 +87,32 @@ class ProntuarioProduto extends React.Component {
     this.setState({ showConfirmDialogDeletar: false, produtoADeletar: produto })
   }
   cancelarEdicao = async (produto) => {
-    await this.buscar()
+    await this.buscarPeloId(this.state.produtoAEditar.id)
     this.setState({ showConfirmDialogEditar: false, produtoAEditar: produto })
   }
 
 
   buscar = () => {
     this.setState({ produtos: [] })
-    this.service.obterPorNomeOuMarca(this.state.busca)
-      .then(resposta => {
-        this.setState({ produtos: resposta.data })
-      }).catch(error => {
-        messages.mensagemErro(error.response.data)
-      })
+
+    if (this.props.telaVenda) {
+      console.log("XDXD")
+      this.service.obterPorNomeOuMarcaComEstoque(this.state.busca)
+        .then(resposta => {
+          this.setState({ produtos: resposta.data })
+        }).catch(error => {
+          messages.mensagemErro(error.response.data)
+        })
+    }
+    else {
+      this.service.obterPorNomeOuMarca(this.state.busca)
+        .then(resposta => {
+          this.setState({ produtos: resposta.data })
+        }).catch(error => {
+          messages.mensagemErro(error.response.data)
+        })
+    }
+
   }
 
   voltar = () => {
@@ -93,8 +131,6 @@ class ProntuarioProduto extends React.Component {
         messages.mensagemErro(erro.response.data)
       })
   }
-
-
 
   render() {
 
@@ -146,7 +182,7 @@ class ProntuarioProduto extends React.Component {
               : false}
 
             <div>
-              <ProdutoTable quantidade={this.state.quantidade} selecionarProduto={this.props.selecionarProduto} telaVenda={this.props.telaVenda} produtos={this.state.produtos} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+              <ProdutoTable quantidade={this.state.quantidade} selecionarProduto={this.props.editar ? this.props.editarItemProduto : this.props.selecionarProduto} telaVenda={this.props.telaVenda} produtos={this.state.produtos} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
             </div>
           </div>
 
@@ -170,7 +206,7 @@ class ProntuarioProduto extends React.Component {
             footer={footerDialogEditar}
             modal={true}
             onHide={async () => {
-              await this.buscar()
+              await this.buscarPeloId(this.state.produtoAEditar.id)
               this.setState({ showConfirmDialogEditar: false })
 
 

@@ -21,7 +21,8 @@ class ServicoHome extends React.Component {
     margemLucro: null,
     servicos: [],
     servicoAEditar: {},
-    servicoADeletar: {}
+    servicoADeletar: {},
+    duracaoEstimada: ''
   }
 
   constructor() {
@@ -44,6 +45,12 @@ class ServicoHome extends React.Component {
     if (!this.state.nome) {
       msgs.push('O campo Nome é obrigatório.')
     }
+    else if (!this.state.duracaoEstimada) {
+      msgs.push('O campo Duração Estimada é obrigatório.')
+    }
+    else if (this.state.duracaoEstimada === '0') {
+      msgs.push('Insira uma duração maior que 0.')
+    }
     else if (!this.state.valorBase) {
       msgs.push('O campo Valor Base é obrigatório.')
     }
@@ -62,8 +69,8 @@ class ServicoHome extends React.Component {
       return false;
     }
 
-    const { nome, observacoes, valorBase, margemLucro } = this.state;
-    const servico = { nome, observacoes, valorBase, margemLucro };
+    const { nome, observacoes, valorBase, margemLucro, duracaoEstimada } = this.state;
+    const servico = { nome, observacoes, valorBase, margemLucro, duracaoEstimada };
 
     this.service.editar(this.state.id, servico)
       .then(response => {
@@ -124,8 +131,8 @@ class ServicoHome extends React.Component {
     }
 
 
-    const { nome, observacoes, valorBase, margemLucro } = this.state;
-    const servico = { nome, observacoes, valorBase, margemLucro };
+    const { nome, observacoes, valorBase, margemLucro, duracaoEstimada } = this.state;
+    const servico = { nome, observacoes, valorBase, margemLucro, duracaoEstimada };
 
 
     this.service.salvar(servico)
@@ -180,7 +187,7 @@ class ServicoHome extends React.Component {
 
         <Card title={!this.props.editar ? "Cadastro de Serviço" : "Atualizar o serviço"}>
           <div className="row">
-            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
               <FormGroup id="inputNome" label="Nome do serviço: *">
                 <input type="text" className="form-control"
                   value={this.state.nome}
@@ -189,7 +196,18 @@ class ServicoHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+              <FormGroup id="inputDuracaoEstimada" label="Duração estimada (minutos): *">
+                <input type="number" className="form-control"
+                  value={this.state.duracaoEstimada}
+                  name="duracaoEstimada"
+                  onInput={this.maxLengthCheck}
+                  onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
+                  maxLength="7"
+                  onChange={this.handleChange} />
+              </FormGroup>
+            </div>
+            <div className="col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
               <FormGroup id="inputValorBase" label="Valor base (R$): *">
                 <input type="number" className="form-control"
                   value={this.state.valorBase}
@@ -200,7 +218,7 @@ class ServicoHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-4">
+            <div className="col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-3">
               <FormGroup id="inputMargemLucro" label="Margem de Lucro (%): *">
                 <input type="number" className="form-control"
                   value={this.state.margemLucro}
@@ -211,7 +229,7 @@ class ServicoHome extends React.Component {
                   onChange={this.handleChange} />
               </FormGroup>
             </div>
-            <div className="col-10">
+            <div className="col-12">
               <FormGroup id="inputObservacoes" label="Observações: ">
                 <textarea className="form-control"
                   value={this.state.observacoes}
@@ -220,7 +238,7 @@ class ServicoHome extends React.Component {
               </FormGroup>
             </div>
 
-            <div className="d-flex justify-content-center col-2">
+            <div className="d-flex justify-content-end">
               <FormGroup>
                 <div className="pt-2">
                   <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>

@@ -15,6 +15,10 @@ class ProdutoService extends ApiService {
     return this.get(`/?busca=${busca}`)
   }
 
+  obterPorNomeOuMarcaComEstoque(busca) {
+    return this.get(`/?busca=${busca}&comEstoque=true`)
+  }
+
   editar(id, produto) {
     return this.put(`/${id}`, produto)
   }

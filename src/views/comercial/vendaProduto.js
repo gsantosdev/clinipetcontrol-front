@@ -93,7 +93,7 @@ class VendaProduto extends React.Component {
     this.setState({ showTelaBuscaProduto: true })
   }
 
-  abrirConfirmacaoEditar = () => {
+  abrirConfirmacaoEditar = (produto) => {
     this.setState({ showConfirmDialogEditar: true })
   }
 
@@ -116,6 +116,36 @@ class VendaProduto extends React.Component {
 
 
     console.log("itensVenda:", this.state.itensVenda)
+  }
+
+
+  editarItemProduto = (produto, quantidade) => {
+    const itensVenda = this.state.itensVenda;
+
+    const index = itensVenda.indexOf(produto)
+    console.log("Itens Venda Antes: ", itensVenda);
+
+    itensVenda.splice(index, 1)
+
+    itensVenda.push({ idProduto: produto.id, produto: produto, quantidade: quantidade });
+
+    console.log("Itens Venda Atualizado: ", itensVenda);
+
+    this.setState({ itensVenda: itensVenda, showConfirmDialogEditar: false })
+
+    this.obterValorTotalVenda();
+
+
+  }
+
+  deletarItemProduto = (produto) => {
+    const itensVenda = this.state.itensVenda;
+
+    const index = itensVenda.indexOf(produto)
+    itensVenda.splice(index, 1)
+    this.setState({ itensVenda: itensVenda, showConfirmDialogDeletar: false })
+    this.obterValorTotalVenda();
+
   }
 
   efetuarVenda = () => {
@@ -147,7 +177,7 @@ class VendaProduto extends React.Component {
 
     const footerDialogDeletar = (
       <div>
-        <PrimeButton label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
+        <PrimeButton label="Confirmar" icon="pi pi-check" onClick={this.deletarItemProduto} />
         <PrimeButton label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
       </div>
     );
@@ -177,31 +207,32 @@ class VendaProduto extends React.Component {
 
 
 
+          {Object.keys(this.state.itensVenda).length !== 0 ?
 
-          <div className="mt-4 col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-xxl-3">
-            <div >
-              <input type="checkbox" id="cpf" name="inputCpf"
-                onClick={this.showCpfInput} checked={this.state.showCpf} />
-              <label className="ml-2" for="lblCpf">Informar CPF</label>
-            </div>
+            <div className="mt-4 col-sm-12 col-md-6 col-xl-6 col-xxl-6 col-xxl-3">
+              <div >
+                <input type="checkbox" id="cpf" name="inputCpf"
+                  onClick={this.showCpfInput} checked={this.state.showCpf} />
+                <label className="ml-2" for="lblCpf">Informar CPF</label>
+              </div>
 
-            <FormGroup hidden={!this.state.showCpf} id="inputCpf" label="CPF: *">
+              <FormGroup hidden={!this.state.showCpf} id="inputCpf" label="CPF: *">
 
-              <CpfCnpj
-                className="form-control"
-                value={this.state.cpf}
-                onChange={(e, type) => {
-                  this.setState({ cpf: e.target.value, maskCpf: type === "CPF" });
-                }}
-              />
-            </FormGroup>
-
-
-          </div>
+                <CpfCnpj
+                  className="form-control"
+                  value={this.state.cpf}
+                  onChange={(e, type) => {
+                    this.setState({ cpf: e.target.value, maskCpf: type === "CPF" });
+                  }}
+                />
+              </FormGroup>
 
 
+            </div> : false}
 
-          {this.state.totalVenda !== null ?
+
+
+          {Object.keys(this.state.itensVenda).length !== 0 ?
             <div>
               <div className="d-flex justify-content-end mt-5">
                 <h4>Total estimado:  {this.state.totalVenda + " R$"} </h4>
@@ -219,7 +250,7 @@ class VendaProduto extends React.Component {
         }
 
 
-        < Dialog
+        <Dialog
           onChange={e => this.setState({ showTelaBuscaProduto: false })}
           visible={this.state.showTelaBuscaProduto}
           style={{ height: '40vw', width: '50vw' }}
@@ -231,6 +262,20 @@ class VendaProduto extends React.Component {
           <Card title="Selecionar Produto">
             <ProntuarioProduto selecionarProduto={this.adicionarProduto} telaVenda />
           </Card>
+        </Dialog >
+
+        < Dialog
+          onChange={e => this.setState({ showConfirmDialogEditar: false })}
+          visible={this.state.showConfirmDialogEditar}
+          style={{ height: '40vw', width: '50vw' }}
+          modal={true}
+          onHide={async () => {
+            this.setState({ showConfirmDialogEditar: false })
+          }}
+        >
+          <Card title="Editar Produto Selecionado">
+          </Card>
+          <ProntuarioProduto produtoItemAEditar={this.state.produtoItemAEditar} editar editarItemProduto={this.editarItemProduto} telaVenda />
         </Dialog >
 
         <Dialog

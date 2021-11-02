@@ -8,6 +8,8 @@ export default props => {
     const servicos = props.servicos;
     console.log(servicos)
 
+
+
     const servicosPerPage = 5
     const pagesVisited = pageNumber * servicosPerPage
 
@@ -18,13 +20,12 @@ export default props => {
                 <td>{servico.nome}</td>
                 <td>{servico.observacoes}</td>
 
-
                 <td>
-                    {!props.telaAgendamento ? <div>
-                        <button type="button" onClick={e => props.editarAction(servico)} className="btn btn-primary">Editar</button>
-                        <button type="button" onClick={e => props.deleteAction(servico)} className="btn btn-danger">Deletar</button></div>
-                        : <input name="servico" type="radio" onClick={e => props.selectAction(servico)}></input>}
-
+                    {props.telaAgendamento ?
+                        <input name="servico" type="radio" defaultChecked={(Number(props.idServicoSelecionado) === Number(servico.id))} onClick={e => props.selectAction(servico)}></input> : <div>
+                            <button type="button" onClick={e => props.editarAction(servico)} className="btn btn-primary">Editar</button>
+                            <button type="button" onClick={e => props.deleteAction(servico)} className="btn btn-danger">Deletar</button></div>
+                    }
                 </td>
             </tr>
         )

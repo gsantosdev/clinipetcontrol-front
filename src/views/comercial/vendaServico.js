@@ -32,7 +32,9 @@ class VendaServico extends React.Component {
     itensVenda: [],
     showTelaAgendamento: false,
     showConfirmDialogDeletar: false,
-    showConfirmDialogEditar: false
+    showConfirmDialogEditar: false,
+    agendamentoAEditar: null,
+    agendamentoADeletar: null
   }
 
   constructor(props) {
@@ -87,12 +89,12 @@ class VendaServico extends React.Component {
     })
   }
 
-  abrirConfirmacaoEditar = () => {
-    this.setState({ showConfirmDialogEditar: true })
+  abrirConfirmacaoEditar = (agendamento, index) => {
+    this.setState({ showConfirmDialogEditar: true, agendamentoAEditar: agendamento, indexAgendamento: index })
   }
 
-  abrirConfirmacaoDeletar = () => {
-    this.setState({ showConfirmDialogDeletar: true })
+  abrirConfirmacaoDeletar = (agendamento) => {
+    this.setState({ showConfirmDialogDeletar: true, agendamentoADeletar: agendamento })
   }
 
   cancelarDelecao = () => {
@@ -104,12 +106,41 @@ class VendaServico extends React.Component {
     this.setState({ showConfirmDialogEditar: false })
   }
 
-  adicionarAgendamento = (agendamento) => {
+  adicionarItemAgendamento = (agendamento) => {
     this.state.itensVenda.push({ agendamento: agendamento, quantidade: 1 })
     this.setState({ showTelaAgendamento: false, itensVenda: this.state.itensVenda })
     this.obterValorTotalVenda();
 
     console.log("itensVenda:", this.state.itensVenda)
+  }
+
+  editarItemAgendamento = (agendamento) => {
+    const itensVenda = this.state.itensVenda;
+
+    const index = itensVenda.indexOf(agendamento)
+    console.log("Itens Venda Antes: ", itensVenda);
+
+    itensVenda.splice(index, 1)
+
+    itensVenda.push({ agendamento: agendamento, quantidade: 1 });
+
+    console.log("Itens Venda Atualizado: ", itensVenda);
+
+    this.setState({ itensVenda: itensVenda, showConfirmDialogEditar: false })
+
+    this.obterValorTotalVenda();
+
+
+  }
+
+  deletarItemAgendamento = (agendamento) => {
+    const itensVenda = this.state.itensVenda;
+
+    const index = itensVenda.indexOf(agendamento)
+    itensVenda.splice(index, 1)
+    this.setState({ itensVenda: itensVenda, showConfirmDialogDeletar: false })
+    this.obterValorTotalVenda();
+
   }
 
   selecionarCliente = async (cliente) => {
@@ -161,7 +192,7 @@ class VendaServico extends React.Component {
 
     const footerDialogDeletar = (
       <div>
-        <PrimeButton label="Confirmar" icon="pi pi-check" onClick={this.deletar} />
+        <PrimeButton label="Confirmar" icon="pi pi-check" onClick={this.deletarItemAgendamento} />
         <PrimeButton label="Cancelar" icon="pi pi-times" onClick={this.cancelarDelecao} />
       </div>
     );
@@ -219,7 +250,7 @@ class VendaServico extends React.Component {
               </Card>
             </div>
 
-            {this.state.totalVenda !== null ?
+            {Object.keys(this.state.itensVenda).length !== 0 ?
               <div style={{ backgroundColor: '' }}>
                 <div className="d-flex justify-content-end mt-5">
                   <h4>Total estimado:  {this.state.totalVenda + " R$"} </h4>
@@ -247,12 +278,11 @@ class VendaServico extends React.Component {
           }}
         >
           <Card title="Agendamento">
-            <MarcarAgendamento idCliente={this.state.clienteSelecionado.id} adicionarAgendamento={this.adicionarAgendamento} />
+            <MarcarAgendamento idCliente={this.state.clienteSelecionado.id} adicionarAgendamento={this.adicionarItemAgendamento} />
           </Card>
         </Dialog>
 
         <Dialog
-
           onChange={e => this.setState({ showTelaProduto: false })}
           visible={this.state.showTelaProduto}
           style={{ width: '60vw' }}
@@ -280,8 +310,12 @@ class VendaServico extends React.Component {
           footer={footerDialogEditar}
           style={{ width: '90vw' }}
           modal={true}
-          onHide={() => this.cancelarEdicao()}>
-          <Card title="Atualize os dados do agendamento">
+          onHide={() => {
+            this.cancelarEdicao();
+            this.obterValorTotalVenda();
+          }}>
+          <Card title="Atualizar agendamento">
+            <MarcarAgendamento editar idCliente={this.state.clienteSelecionado.id} editarAgendamento={this.editarItemAgendamento} agendamentoAEditar={this.state.agendamentoAEditar} />
           </Card>
         </Dialog>
       </div>

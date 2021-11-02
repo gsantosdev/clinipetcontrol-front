@@ -27,6 +27,24 @@ class ServicoService extends ApiService {
         return this.get(`/${id}/valor`)
     }
 
+    obterNomes() {
+        return this.get('/listarNomes')
+    }
+
+    async getNomesServicos(id) {
+        const x = [{ label: 'Selecione...', value: null }];
+
+        await this.obterNomes(id).then(response => {
+            response.data.forEach(element => {
+                x.push(element)
+            });
+        })
+
+        console.log(x);
+
+        return Promise.resolve(x);
+    }
+
     listar() {
         return this.get(`/listar`)
     }

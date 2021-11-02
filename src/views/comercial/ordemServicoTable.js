@@ -23,6 +23,8 @@ export default props => {
                 {ordem.statusOrdem == "EM_EXECUCAO" ? <td style={{ color: "#bb149f" }}>EM EXECUÇÃO</td> : false}
                 {ordem.statusOrdem == "CONCLUIDO" ? <td style={{ color: "rgb(78 173 47)" }}>{ordem.statusOrdem}</td> : false}
                 {ordem.statusOrdem == "CANCELADO" ? <td style={{ color: "rgb(223 56 63)" }}>{ordem.statusOrdem}</td> : false}
+                {ordem.statusOrdem == "AGUARDANDO_PAGAMENTO" ? <td style={{ color: "#bb149f" }}>AGUARDANDO PAGAMENTO</td> : false}
+
 
                 <td>{ordem.descricao}</td>
                 <td>{ordem.nome}</td>
@@ -38,13 +40,19 @@ export default props => {
                         </> : false}
                     {ordem.statusOrdem === "EM_EXECUCAO" ?
                         <>
+                            <button type="button" onClick={e => props.atualizaStatusAction("AGUARDANDO_PAGAMENTO", ordem.idLancamento)} className="btn btn-success">FINALIZAR EXECUÇÃO</button>
+                            <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
+                        </>
+                        : false}
+                    {ordem.statusOrdem === "AGUARDANDO_PAGAMENTO" ?
+                        <>
                             <button type="button" onClick={e => props.atualizaStatusAction("CONCLUIDO", ordem.idLancamento)} className="btn btn-success">CONCLUIR</button>
                             <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
                         </>
                         : false}
 
                 </td>
-            </tr>
+            </tr >
 
         )
     });
