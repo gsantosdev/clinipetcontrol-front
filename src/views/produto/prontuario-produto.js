@@ -48,7 +48,6 @@ class ProntuarioProduto extends React.Component {
       console.log("this.state.produtoItemAEditar: ", this.props)
 
       this.buscarItemAEditar(this.props.produtoItemAEditar.idProduto)
-
     }
   }
 

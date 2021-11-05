@@ -194,7 +194,7 @@ class MarcarAgendamento extends React.Component {
         this.limpaCampos()
         this.listarServicos()
       }).catch(error => {
-        mensagemErro(error.response.data)
+        mensagemErro(error.response)
       })
   }
 

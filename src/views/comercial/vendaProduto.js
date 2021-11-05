@@ -94,11 +94,11 @@ class VendaProduto extends React.Component {
   }
 
   abrirConfirmacaoEditar = (produto) => {
-    this.setState({ showConfirmDialogEditar: true })
+    this.setState({ showConfirmDialogEditar: true, produtoItemAEditar: produto })
   }
 
   abrirConfirmacaoDeletar = () => {
-    this.setState({ showConfirmDialogDeletar: true })
+    this.setState({ showConfirmDialogDeletar: true})
   }
 
   cancelarDelecao = () => {

@@ -17,6 +17,10 @@ export default class LancamentoService extends ApiService {
         return this.get('/caixa');
     }
 
+    getLancamentosOrdenados(){
+        return this.get('/listarUpdated')
+    }
+
     obterListaMeses() {
         return [
             { label: 'Selecione...', value: '' },

@@ -29,9 +29,9 @@ export default props => {
                 <td>{ordem.descricao}</td>
                 <td>{ordem.nome}</td>
                 <td>{formatCPF(ordem.cpf)}</td>
-                <td>{new Date(ordem.dataCriacao).toLocaleDateString() + " " + new Date(ordem.dataCriacao).toLocaleTimeString()}</td>
+                <td>{new Date(ordem.dataExecucao).toLocaleDateString() + " " + new Date(ordem.dataExecucao).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
 
-
+                {console.log(new Date(ordem.dataCriacao))}
                 <td>
                     {ordem.statusOrdem === "PENDENTE" ?
                         <>
@@ -74,7 +74,7 @@ export default props => {
                             <th scope="col">Descrição</th>
                             <th scope="col">Nome</th>
                             <th scope="col">CPF</th>
-                            <th scope="col">Data e hora</th>
+                            <th scope="col">Data e hora do agendamento</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
