@@ -23,9 +23,6 @@ class ClienteService extends ApiService {
         return this.get(`?busca=${busca}`)
     }
 
-    obterPorNomeCpfTelefone(busca) {
-        return this.get(`?busca=${busca}`)
-    }
 
     obterPorId(id) {
         return this.get(`/${id}`)

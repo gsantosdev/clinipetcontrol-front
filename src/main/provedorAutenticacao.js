@@ -1,4 +1,3 @@
-import { wait } from "@testing-library/dom";
 import React from "react";
 
 import AuthService from "../app/service/authService";

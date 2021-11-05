@@ -3,14 +3,7 @@ import { withRouter } from "react-router";
 
 class NotFound extends React.Component {
 
-  state = {
-  }
-
-  constructor() {
-    super();
-  }
-
-  voltarHome = () => {
+   voltarHome = () => {
     this.props.history.push('/home')
   }
 

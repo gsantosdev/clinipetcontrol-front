@@ -1,4 +1,4 @@
-import { faAddressCard, faArrowLeft, faBoxes, faBoxOpen, faCalendar, faDog, faHandHoldingMedical, faHome, faMoneyBill, faShoppingCart, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faAddressCard, faArrowLeft, faBoxOpen, faCalendar, faDog, faHandHoldingMedical, faHome, faMoneyBill, faShoppingCart, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 import { AuthConsumer } from '../main/provedorAutenticacao'
 import SideBarItem from './sidebarItem'
