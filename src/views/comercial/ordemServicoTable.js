@@ -34,21 +34,21 @@ export default props => {
                 {console.log(new Date(ordem.dataCriacao))}
                 <td>
                     {ordem.statusOrdem === "PENDENTE" ?
-                        <>
+                        <div className="d-flex justify-content-start">
                             <button type="button" onClick={e => props.atualizaStatusAction("EM_EXECUCAO", ordem.idLancamento)} className="btn" style={{ color: "white", backgroundColor: 'blue' }}>EXECUTAR</button>
                             <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
-                        </> : false}
+                        </div> : false}
                     {ordem.statusOrdem === "EM_EXECUCAO" ?
-                        <>
+                        <div className="d-flex justify-content-start">
                             <button type="button" onClick={e => props.atualizaStatusAction("AGUARDANDO_PAGAMENTO", ordem.idLancamento)} className="btn btn-success">FINALIZAR EXECUÇÃO</button>
                             <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
-                        </>
+                        </div>
                         : false}
                     {ordem.statusOrdem === "AGUARDANDO_PAGAMENTO" ?
-                        <>
+                        <div className="d-flex justify-content-start">
                             <button type="button" onClick={e => props.atualizaStatusAction("CONCLUIDO", ordem.idLancamento)} className="btn btn-success">CONCLUIR</button>
                             <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
-                        </>
+                        </div>
                         : false}
 
                 </td>
@@ -72,7 +72,7 @@ export default props => {
                         <tr>
                             <th scope="col">Status</th>
                             <th scope="col">Descrição</th>
-                            <th scope="col">Nome</th>
+                            <th scope="col">Proprietário</th>
                             <th scope="col">CPF</th>
                             <th scope="col">Data e hora do agendamento</th>
                             <th scope="col"></th>

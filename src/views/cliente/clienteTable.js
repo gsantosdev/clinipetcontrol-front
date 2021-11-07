@@ -24,9 +24,12 @@ export default props => {
                 <td>
 
                     {props.telaAnimal ?
-                        <input name="cliente" type="radio" defaultChecked={props.selecionado === cliente.id} onClick={e => props.selectAction(cliente)}></input> : <div>
+                        <input name="cliente" type="radio" defaultChecked={props.selecionado === cliente.id} onClick={e => props.selectAction(cliente)}></input> :
+
+                        <div className="d-flex justify-content-start">
                             <button type="button" onClick={e => props.editarAction(cliente)} className="btn btn-primary">Editar</button>
-                            <button type="button" onClick={e => props.deleteAction(cliente)} className="btn btn-danger">Deletar</button></div>
+                            <button type="button" onClick={e => props.deleteAction(cliente)} className="btn btn-danger">Deletar</button>
+                        </div>
                     }
 
                 </td>

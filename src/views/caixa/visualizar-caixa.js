@@ -2,9 +2,11 @@ import { faEye, faEyeSlash, faTruckLoading } from "@fortawesome/free-solid-svg-i
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { render } from "@testing-library/react";
 import React from "react";
+import Card from "../../components/card";
 import LancamentoService from "../../app/service/lancamentoService";
 import * as messages from "../../components/toastr"
-import LancamentosPaymentTable from "./lancamentos-payment-table";
+import LancamentosAReceberTable from "./lancamentos-receitas-table";
+import LancamentosAPagarTable from "./lancamentos-despesas-table";
 
 class VisualizarCaixa extends React.Component {
 
@@ -82,8 +84,15 @@ class VisualizarCaixa extends React.Component {
 
       <>
         <div className="d-flex justify-content-center"><h1>R$ {this.state.eye === faEyeSlash ? "**" : this.state.valorCaixa} <FontAwesomeIcon className="ml-2" onClick={this.changeEye} icon={this.state.eye} /></h1></div>
-        <div className="mt-5">
-          <LancamentosPaymentTable atualizaStatusAction={this.atualizaStatusAction} lancamentos={this.state.lancamentosOrdenados} />
+        <div className="col-12 mt-5">
+          <Card title="Contas a receber">
+            <LancamentosAReceberTable atualizaStatusAction={this.atualizaStatusAction} lancamentos={this.state.lancamentosOrdenados} />
+          </Card>
+        </div>
+        <div className="col-12 mt-5">
+          <Card title="Contas a pagar">
+            <LancamentosAPagarTable lancamentos={[]} />
+          </Card>
         </div>
       </>
     )

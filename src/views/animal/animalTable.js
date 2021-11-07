@@ -28,7 +28,8 @@ export default props => {
                         <input name="animal" type="radio" onClick={e => props.selectAction(animal)} /> :
                         <div>
                             <button type="button" onClick={e => props.editarAction(animal)} className="btn btn-primary">Editar</button>
-                            <button type="button" onClick={e => props.deleteAction(animal)} className="btn btn-danger">Deletar</button></div>}
+                            <button type="button" onClick={e => props.deleteAction(animal)} className="btn btn-danger">Deletar</button></div>
+                    }
 
 
                 </td>

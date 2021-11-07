@@ -18,15 +18,21 @@ class ProntuarioOrdemServico extends React.Component {
 
   state = {
     buscaCliente: '',
-    ordens: []
+    ordens: [],
   }
 
   buscarOrdens = () => {
     this.vendaService.listarOrdensPorCliente(this.state.buscaCliente)
       .then(response => {
-
         if (response.status == 204) {
-          messages.mensagemAlerta("Nenhum cliente foi encontrado!")
+          if (this.state.ordens.length === 1) {
+            this.setState({ ordens: [] })
+
+          } else {
+            messages.mensagemAlerta("Nenhuma ordem em aberto foi encontrada!")
+            this.setState({ ordens: [] })
+          }
+
         }
         else {
           this.setState({ ordens: response.data })
