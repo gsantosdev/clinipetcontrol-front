@@ -337,6 +337,11 @@ body {
     color: #F88E1B;
 }
 
+.sidebar .selecionado {
+    background-color: rgb(231, 228, 228);
+    color: #F88E1B;
+}
+
 .sidebar .sidebar-header {
     padding: 1rem;
     background: #ffffff;
@@ -410,8 +415,7 @@ div.content {
     color: rgb(0, 136, 199);
 }
 
-
-.paginationBttns{
+.paginationBttns {
     width: 80%;
     height: 20px;
     list-style: none;
@@ -420,37 +424,36 @@ div.content {
     box-sizing: border-box;
 }
 
-.paginationBttns a{
+.paginationBttns a {
     padding: 10px;
     margin: 8px;
     border-radius: 5px;
     border: 2px solid #1F6094;
     color: #000000;
-    cursor:pointer;
+    cursor: pointer;
     text-decoration: none;
 }
 
-.paginationBttns a:hover{
-    color:white;
+.paginationBttns a:hover {
+    color: white;
     background-color: #1F6094;
 }
 
-.paginationActive a{
-    color:white;
+.paginationActive a {
+    color: white;
     background-color: #1F6094;
 }
 
-.paginationLink a:hover{
-    color:white;
+.paginationLink a:hover {
+    color: white;
     background-color: #1F6094;
 }
 
 .fixedContainer {
-    background-color:#ddd;
+    background-color: #ddd;
     position: fixed;
     padding: 2em;
     left: 50%;
     top: 0%;
     transform: translateX(-50%);
 }
-

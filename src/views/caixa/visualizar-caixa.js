@@ -13,7 +13,9 @@ class VisualizarCaixa extends React.Component {
   state = {
     valorCaixa: null,
     eye: faEyeSlash,
-    lancamentosOrdenados: []
+    lancamentosReceitaOrdenados: [],
+    lancamentosDespesaOrdenados: []
+
   }
 
   constructor() {
@@ -25,12 +27,25 @@ class VisualizarCaixa extends React.Component {
     console.log(this.state.eye)
   }
 
-  buscarLancamentosOrdenados = () => {
-    this.lancamentoService.getLancamentosOrdenados().then(response => {
-      this.setState({ lancamentosOrdenados: response.data })
+  buscarLancamentosReceitaOrdenados = () => {
+    this.lancamentoService.getLancamentosReceitaOrdenados().then(response => {
+      this.setState({ lancamentosReceitaOrdenados: response.data })
     }).catch(error => {
       if (error.response.status == 404) {
-        this.setState({ lancamentosOrdenados: [] })
+        this.setState({ lancamentosReceitaOrdenados: [] })
+      }
+      else {
+        messages.mensagemErro(error.response)
+      }
+    })
+  }
+
+  buscarLancamentosDespesaOrdenados = () => {
+    this.lancamentoService.getLancamentosDespesaOrdenados().then(response => {
+      this.setState({ lancamentosDespesaOrdenados: response.data })
+    }).catch(error => {
+      if (error.response.status == 404) {
+        this.setState({ lancamentosDespesaOrdenados: [] })
       }
       else {
         messages.mensagemErro(error.response)
@@ -61,7 +76,8 @@ class VisualizarCaixa extends React.Component {
 
   componentDidMount() {
     this.getValorCaixa();
-    this.buscarLancamentosOrdenados();
+    this.buscarLancamentosReceitaOrdenados();
+    this.buscarLancamentosDespesaOrdenados();
   }
 
   atualizaStatusAction = (status, id) => {
@@ -70,7 +86,8 @@ class VisualizarCaixa extends React.Component {
 
     this.lancamentoService.atualizar(statusBody, id).then(response => {
       messages.mensagemSucesso("Status atualizado com sucesso!")
-      this.buscarLancamentosOrdenados()
+      this.buscarLancamentosReceitaOrdenados()
+      this.buscarLancamentosDespesaOrdenados()
       this.getValorCaixa()
     }).catch(error => {
       messages.mensagemErro(error.response)
@@ -81,17 +98,16 @@ class VisualizarCaixa extends React.Component {
 
   render() {
     return (
-
       <>
-        <div className="d-flex justify-content-center"><h1>R$ {this.state.eye === faEyeSlash ? "**" : this.state.valorCaixa} <FontAwesomeIcon className="ml-2" onClick={this.changeEye} icon={this.state.eye} /></h1></div>
+        <div className="d-flex justify-content-center"><h1>R$ {this.state.eye === faEyeSlash ? "**" : parseFloat(this.state.valorCaixa).toFixed(2)} <FontAwesomeIcon className="ml-2" onClick={this.changeEye} icon={this.state.eye} /></h1></div>
         <div className="col-12 mt-5">
           <Card title="Contas a receber">
-            <LancamentosAReceberTable atualizaStatusAction={this.atualizaStatusAction} lancamentos={this.state.lancamentosOrdenados} />
+            <LancamentosAReceberTable atualizaStatusAction={this.atualizaStatusAction} lancamentos={this.state.lancamentosReceitaOrdenados} />
           </Card>
         </div>
         <div className="col-12 mt-5">
           <Card title="Contas a pagar">
-            <LancamentosAPagarTable lancamentos={[]} />
+            <LancamentosAPagarTable atualizaStatusAction={this.atualizaStatusAction} lancamentos={this.state.lancamentosDespesaOrdenados} />
           </Card>
         </div>
       </>

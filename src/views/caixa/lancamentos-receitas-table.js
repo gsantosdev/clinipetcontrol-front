@@ -20,7 +20,7 @@ export default props => {
     return (
       <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
         <td style={{ color: "#bb149f" }}>{lancamento.statusLancamento == "AGUARDANDO_PAGAMENTO" ? "AGUARDANDO PAGAMENTO" : false}</td>
-        <td>{lancamento.idVenda}</td>
+        <td>{lancamento.idVenda == null ? 'INDEFINIDO' : lancamento.idVenda}</td>
 
         <td>{lancamento.descricao}</td>
         <td>R$ {lancamento.valor}</td>
@@ -29,10 +29,7 @@ export default props => {
         <td>
           {lancamento.statusLancamento === "AGUARDANDO_PAGAMENTO" ?
             <div className="d-flex justify-content-start">
-              <button type="button" onClick={e => {
-                props.confirmacaoChange()
-                props.atualizaStatusAction("CONCLUIDO", lancamento.idLancamento)
-              }} className="btn btn-success">RECEBER</button>
+              <button type="button" onClick={e => props.atualizaStatusAction("CONCLUIDO", lancamento.idLancamento)} className="btn btn-success">RECEBER</button>
               <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", lancamento.idLancamento)} className="btn btn-danger">CANCELAR</button>
             </div>
             : false}

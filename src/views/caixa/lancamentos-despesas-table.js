@@ -18,11 +18,10 @@ export default props => {
   const rows = lancamentos.slice(pagesVisited, pagesVisited + lancamentosPerPage).map((lancamento, index) => {
     return (
       <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
-        <td style={{ color: "#bb149f" }}>{lancamento.statusLancamento}</td>
-        <td>{lancamento.idVenda}</td>
+        <td style={{ color: "#bb149f" }}>{lancamento.statusLancamento == "AGUARDANDO_PAGAMENTO" ? "AGUARDANDO PAGAMENTO" : false}</td>
 
         <td>{lancamento.descricao}</td>
-        <td>{lancamento.valor}</td>
+        <td>R$ {lancamento.valor}</td>
         <td>{new Date(lancamento.updatedAt).toLocaleDateString() + " " + new Date(lancamento.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
 
         <td>
@@ -53,10 +52,9 @@ export default props => {
           <thead>
             <tr>
               <th scope="col">Status</th>
-              <th scope="col">Nº Venda</th>
               <th scope="col">Descrição</th>
               <th scope="col">Valor</th>
-              <th scope="col">Ultima atualização</th>
+              <th scope="col">Criado em</th>
               <th scope="col"></th>
             </tr>
           </thead>

@@ -12,21 +12,11 @@ class AgendamentoHome extends React.Component {
     return (
       <div className="container-fluid">
 
-        <Tabs unmountOnExit defaultActiveKey="agenda" id="uncontrolled-tab">
-          <Tab eventKey="agenda" title="Agenda">
-            <Card title="Agenda">
-              <AgendaCalendar />
-
-            </Card>
-          </Tab>
-          <Tab eventKey="marcar" title="Marcar">
-            <Card title="Marcar Agendamento">
-              <MarcarAgendamento agendar />
-            </Card>
-          </Tab>
+        <Card title="Agenda">
+          <AgendaCalendar />
+        </Card>
 
 
-        </Tabs>
       </div>
     );
   }

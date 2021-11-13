@@ -253,7 +253,7 @@ class VendaServico extends React.Component {
             {Object.keys(this.state.itensVenda).length !== 0 ?
               <div style={{ backgroundColor: '' }}>
                 <div className="d-flex justify-content-end mt-5">
-                  <h4>Total estimado:  {this.state.totalVenda + " R$"} </h4>
+                  <h4>Total estimado:  {parseFloat(this.state.totalVenda).toFixed(2) + " R$"} </h4>
 
                 </div>
               </div> : false}

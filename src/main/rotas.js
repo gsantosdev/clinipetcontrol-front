@@ -13,7 +13,7 @@ import ServicoHome from '../views/servico/servico-home'
 import ComercialHome from '../views/comercial/comercial-home'
 import CaixaHome from '../views/caixa/caixa-home'
 import ProdutoHome from '../views/produto/produto-home'
-
+import Receituario from '../views/receituario/receiturario'
 
 
 
@@ -63,6 +63,7 @@ function Rotas(props) {
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/comercial" component={ComercialHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/caixa" component={CaixaHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/produto" component={ProdutoHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/receituario" component={Receituario} />
 
 
 

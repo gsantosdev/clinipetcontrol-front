@@ -10,6 +10,7 @@ import AnimalTable from './animalTable';
 
 import * as messages from '../../components/toastr'
 import CadastroAnimal from './cadastro-animal';
+import HistoricoTable from './historico-table';
 
 class ProntuarioAnimal extends React.Component {
 
@@ -19,14 +20,30 @@ class ProntuarioAnimal extends React.Component {
     animais: [],
     showConfirmDialogDeletar: false,
     showConfirmDialogEditar: false,
+    showHistorico: false,
     animalADeletar: {},
     animalAEditar: {},
-    message: ''
+    message: '',
+    historico: []
   }
 
   constructor() {
     super();
     this.service = new AnimalService();
+  }
+
+  abrirHistorico = async (animal) => {
+    await this.service.obterHistorico(animal.id).then(response => {
+      this.setState({ historico: response.data })
+
+    }).catch(error =>{
+
+      messages.mensagemErro(error.response.data)
+      this.setState({ historico: [] })
+
+    })
+
+    this.setState({ showHistorico: true })
   }
 
   abrirConfirmacaoEditar = (animal) => {
@@ -39,6 +56,10 @@ class ProntuarioAnimal extends React.Component {
 
   cancelarDelecao = (animal) => {
     this.setState({ showConfirmDialogDeletar: false, animalADeletar: animal })
+  }
+
+  cancelarHistorico = () => {
+    this.setState({ showHistorico: false })
   }
   cancelarEdicao = async (animal) => {
     await this.buscar()
@@ -107,7 +128,7 @@ class ProntuarioAnimal extends React.Component {
               </FormGroup>
             </div>
             <div>
-              <AnimalTable animais={this.state.animais} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+              <AnimalTable animais={this.state.animais} historicoAction={this.abrirHistorico} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
             </div>
           </div>
 
@@ -130,6 +151,18 @@ class ProntuarioAnimal extends React.Component {
             onHide={() => this.cancelarEdicao()}>
             <Card title="Atualize os dados do animal">
               <CadastroAnimal editar={true} state={this.state.animalAEditar} />
+            </Card>
+          </Dialog>
+
+
+          <Dialog
+            onChange={e => this.setState({ showHistorico: false })}
+            visible={this.state.showHistorico}
+            style={{ width: '90vw' }}
+            modal={true}
+            onHide={() => this.cancelarHistorico()}>
+            <Card title="Histórico do animal">
+              <HistoricoTable historico={this.state.historico} />
             </Card>
           </Dialog>
         </div>

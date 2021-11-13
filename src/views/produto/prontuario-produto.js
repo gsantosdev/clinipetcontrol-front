@@ -20,8 +20,16 @@ class ProntuarioProduto extends React.Component {
     produtos: [],
     showConfirmDialogDeletar: false,
     showConfirmDialogEditar: false,
+    showConfirmDialogEntrada: false,
+    showConfirmDialogSaida: false,
     produtoADeletar: {},
     produtoAEditar: {},
+    produtoEntrada: {},
+    produtoSaida: {},
+
+    qtdEntrada: '',
+    qtdSaida: '',
+
     message: '',
     quantidade: null,
   }
@@ -82,12 +90,64 @@ class ProntuarioProduto extends React.Component {
     this.setState({ showConfirmDialogDeletar: true, produtoADeletar: produto })
   }
 
+  abrirConfirmacaoEntrada = (produto) => {
+    this.setState({ showConfirmDialogEntrada: true, produtoEntrada: produto })
+  }
+
+  abrirConfirmacaoSaida = (produto) => {
+    this.setState({ showConfirmDialogSaida: true, produtoSaida: produto })
+  }
+
   cancelarDelecao = (produto) => {
     this.setState({ showConfirmDialogDeletar: false, produtoADeletar: produto })
   }
+
+  cancelarEntrada = (produto) => {
+    this.setState({ showConfirmDialogEntrada: false, produtoEntrada: produto })
+    this.setState({ qtdEntrada: null })
+  }
+
+  cancelarSaida = (produto) => {
+    this.setState({ showConfirmDialogSaida: false, produtoSaida: produto })
+    this.setState({ qtdSaida: null })
+
+  }
+
   cancelarEdicao = async (produto) => {
     await this.buscarPeloId(this.state.produtoAEditar.id)
     this.setState({ showConfirmDialogEditar: false, produtoAEditar: produto })
+  }
+
+  entradaEstoque = (id, quantidade) => {
+
+    if (quantidade == null || quantidade == 0) {
+      messages.mensagemErro("Informe uma quantidade válida");
+      return false;
+    }
+
+    this.service.entradaEstoque(id, quantidade).then(response => {
+      messages.mensagemSucesso("Entrada realizada com sucesso!");
+      this.buscarPeloId(id);
+      this.cancelarEntrada();
+    }).catch(error => {
+      messages.mensagemErro(error.response.data)
+    })
+  }
+
+  baixaEstoque = (id, quantidade) => {
+
+    if (quantidade == null || quantidade == 0) {
+      messages.mensagemErro("Informe uma quantidade válida");
+      return false;
+    }
+
+    this.service.baixaEstoque(id, quantidade).then(response => {
+      messages.mensagemSucesso("Baixa realizada com sucesso!");
+      this.buscarPeloId(id);
+      this.cancelarSaida();
+    }).catch(error => {
+      messages.mensagemErro(error.response.data)
+    })
   }
 
 
@@ -146,6 +206,18 @@ class ProntuarioProduto extends React.Component {
       </div>
     );
 
+    const footerDialogEntrada = (
+      <div>
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEntrada} />
+      </div>
+    );
+
+    const footerDialogSaida = (
+      <div>
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarSaida} />
+      </div>
+    );
+
 
     return (
       <>
@@ -181,7 +253,7 @@ class ProntuarioProduto extends React.Component {
               : false}
 
             <div>
-              <ProdutoTable quantidade={this.state.quantidade} selecionarProduto={this.props.editar ? this.props.editarItemProduto : this.props.selecionarProduto} telaVenda={this.props.telaVenda} produtos={this.state.produtos} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+              <ProdutoTable quantidade={this.state.quantidade} selecionarProduto={this.props.editar ? this.props.editarItemProduto : this.props.selecionarProduto} telaVenda={this.props.telaVenda} produtos={this.state.produtos} baixaEstoqueAction={this.abrirConfirmacaoSaida} entradaEstoqueAction={this.abrirConfirmacaoEntrada} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
             </div>
           </div>
 
@@ -215,9 +287,90 @@ class ProntuarioProduto extends React.Component {
               <CadastroProduto editar={true} state={this.state.produtoAEditar} />
             </Card>
           </Dialog>
+
+          <Dialog
+
+            onChange={e => this.setState({ showConfirmDialogEntrada: false })}
+            visible={this.state.showConfirmDialogEntrada}
+            style={{ width: '60vw' }}
+            footer={footerDialogEntrada}
+            modal={true}
+            onHide={async () => {
+              await this.buscarPeloId(this.state.produtoEntrada.id)
+              this.setState({ showConfirmDialogEntrada: false })
+            }}
+          >
+            <Card title="Entrada de estoque">
+              <div className="row d-flex justify-content-center">
+                <div className="col-6">
+                  <FormGroup label="Digite a quantidade a dar entrada: " >
+                    <input type="number" className="form-control"
+                      value={this.state.qtdEntrada}
+                      name="qtdEntrada"
+                      onInput={this.maxLengthCheck}
+                      onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
+                      maxLength="7"
+                      min="0"
+                      onChange={this.handleChange} />
+
+                  </FormGroup>
+                </div>
+
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <FormGroup>
+                    <div className="pt-2">
+                      <button onClick={e => {
+                        this.entradaEstoque(this.state.produtoEntrada.id, this.state.qtdEntrada)
+                      }} type="button" className="btn btn-success">Salvar</button>
+                    </div>
+                  </FormGroup>
+
+                </div>
+              </div>
+            </Card>
+          </Dialog>
+
+          <Dialog
+
+            onChange={e => this.setState({ showConfirmDialogSaida: false })}
+            visible={this.state.showConfirmDialogSaida}
+            style={{ width: '60vw' }}
+            footer={footerDialogSaida}
+            modal={true}
+            onHide={async () => {
+              await this.buscarPeloId(this.state.produtoSaida.id)
+              this.setState({ showConfirmDialogSaida: false })
+            }}
+          >
+            <Card title="Baixa de estoque">
+              <div className="row d-flex justify-content-center">
+                <div className="col-6">
+                  <FormGroup label="Digite a quantidade a dar baixa: " >
+                    <input type="number" className="form-control"
+                      value={this.state.qtdSaida}
+                      name="qtdSaida"
+                      onInput={this.maxLengthCheck}
+                      onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
+                      maxLength="7"
+                      min="0"
+                      onChange={this.handleChange} />
+
+                  </FormGroup>
+                </div>
+
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <FormGroup>
+                    <div className="pt-2">
+                      <button onClick={e => {
+                        this.baixaEstoque(this.state.produtoSaida.id, this.state.qtdSaida)
+                      }} type="button" className="btn btn-success">Salvar</button>
+                    </div>
+                  </FormGroup>
+                </div>
+              </div>
+            </Card>
+          </Dialog>
         </div>
-
-
 
       </>
     )

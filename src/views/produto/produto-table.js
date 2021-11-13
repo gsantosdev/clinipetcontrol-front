@@ -28,6 +28,10 @@ export default props => {
               <>
                 <button type="button" onClick={e => props.editarAction(produto)} className="btn btn-primary">Editar</button>
                 <button type="button" onClick={e => props.deleteAction(produto)} className="btn btn-danger">Deletar</button>
+                <button type="button" onClick={e => props.entradaEstoqueAction(produto)} className="btn btn-success">Entrada Estoque</button>
+                <button hidden={true} type="button" onClick={e => props.baixaEstoqueAction(produto)} className="btn btn-warning">Baixa Estoque</button>
+
+
               </>
             }
           </div>

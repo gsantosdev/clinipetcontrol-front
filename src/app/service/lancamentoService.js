@@ -17,8 +17,13 @@ export default class LancamentoService extends ApiService {
         return this.get('/caixa');
     }
 
-    getLancamentosOrdenados(){
-        return this.get('/listarUpdated')
+    getLancamentosReceitaOrdenados(){
+        return this.get('/listarReceitas')
+    }
+
+    
+    getLancamentosDespesaOrdenados(){
+        return this.get('/listarDespesas')
     }
 
     obterListaMeses() {

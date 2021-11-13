@@ -74,7 +74,7 @@ class CadastroLancamento extends React.Component {
 
     const { descricao, valor, tipo } = this.state;
 
-    const lancamento = { descricao, valor, tipo, idUsuario: this.context.usuarioAutenticado.id };
+    const lancamento = { descricao, valor, tipo, status: 'AGUARDANDO_PAGAMENTO', idUsuario: this.context.usuarioAutenticado.id };
 
     this.service.salvar(lancamento)
       .then(response => {

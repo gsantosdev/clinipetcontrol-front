@@ -35,6 +35,14 @@ class ProdutoService extends ApiService {
     return this.get(`/${id}/valor`)
   }
 
+  entradaEstoque(id, quantidade) {
+    return this.post(`/${id}/entradaEstoque?quantidade=${quantidade}`)
+  }
+
+  baixaEstoque(id, quantidade) {
+    return this.post(`/${id}/baixaEstoque?quantidade=${quantidade}`)
+  }
+
 }
 
 export default ProdutoService

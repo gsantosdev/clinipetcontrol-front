@@ -14,17 +14,18 @@ class CaixaHome extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <Tabs unmountOnExit defaultActiveKey="cadastrar_lancamento" id="uncontrolled-tab">
-          <Tab eventKey="cadastrar_lancamento" title="Cadastrar lançamento">
-            <Card title="Cadastrar lançamento">
-              <CadastrarLancamento />
-            </Card>
-          </Tab>
+        <Tabs unmountOnExit defaultActiveKey="visualizar_caixa" id="uncontrolled-tab">
           <Tab eventKey="visualizar_caixa" title="Visualizar Caixa">
             <Card title="Visualizar Caixa">
               <VisualizarCaixa />
             </Card>
           </Tab>
+          <Tab eventKey="cadastrar_lancamento" title="Cadastrar lançamento">
+            <Card title="Cadastrar lançamento">
+              <CadastrarLancamento />
+            </Card>
+          </Tab>
+
         </Tabs>
       </div>
     )

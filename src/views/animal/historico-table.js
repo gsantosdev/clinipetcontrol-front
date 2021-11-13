@@ -5,42 +5,28 @@ export default props => {
 
     const [pageNumber, setPageNumber] = useState(0)
 
-    const animais = props.animais;
-    console.log(animais)
+    const historico = props.historico;
+    console.log(historico)
 
-    const animaisPerPage = 5
-    const pagesVisited = pageNumber * animaisPerPage
+    const historicoPerPage = 5
+    const pagesVisited = pageNumber * historicoPerPage
 
-    const rows = animais.slice(pagesVisited, pagesVisited + animaisPerPage).map((animal, index) => {
+    const rows = historico.slice(pagesVisited, pagesVisited + historicoPerPage).map((item, index) => {
         return (
 
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
-                <td>{animal.nome}</td>
-                <td>{animal.raca}</td>
-                <td>{animal.especie}</td>
-                <td>{animal.cor}</td>
-                <td>{animal.porte}</td>
-                <td>{animal.cliente.nome}</td>
-
+                <td>{item.nomeServico}</td>
+                <td>{item.nomeFuncionario}</td>
+                <td>{new Date(item.updatedAt).toLocaleDateString() + " " + new Date(item.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
 
                 <td>
-                    {props.telaAgendamento ?
-                        <input name="animal" type="radio" onClick={e => props.selectAction(animal)} /> :
-                        <div>
-                            <button type="button" onClick={e => props.historicoAction(animal)} className="btn btn-warning">Consultar Histórico</button>
-                            <button type="button" onClick={e => props.editarAction(animal)} className="btn btn-primary">Editar</button>
-                            <button type="button" onClick={e => props.deleteAction(animal)} className="btn btn-danger">Deletar</button>
-                        </div>
-
-                    }
-
 
                 </td>
             </tr>
         )
     });
 
-    const pageCount = Math.ceil(animais.length / animaisPerPage);
+    const pageCount = Math.ceil(historico.length / historicoPerPage);
 
     const changePage = ({ selected }) => {
         setPageNumber(selected)
@@ -55,12 +41,10 @@ export default props => {
                 <table className="table table-hover table-sm-responsive">
                     <thead>
                         <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Raça</th>
-                            <th scope="col">Espécie</th>
-                            <th scope="col">Cor</th>
-                            <th scope="col">Porte</th>
-                            <th scope="col">Proprietário</th>
+                            <th scope="col">Serviço</th>
+                            <th scope="col">Funcionário</th>
+                            <th scope="col">Finalizado em</th>
+
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -72,7 +56,7 @@ export default props => {
             </div>
 
             <div style={{ height: 'max-content', display: 'flex', boxSizing: 'border-box' }}>
-                {animais.length > 0 ? <ReactPaginate
+                {historico.length > 0 ? <ReactPaginate
                     previousLabel={"Anterior"}
                     nextLabel={"Próximo"}
                     pageCount={pageCount}
