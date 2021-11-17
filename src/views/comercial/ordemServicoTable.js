@@ -35,7 +35,7 @@ export default props => {
                 <td>
                     {ordem.statusOrdem === "PENDENTE" ?
                         <div className="d-flex justify-content-start">
-                            <button type="button" onClick={e => props.remarcaAgendamentoAction()} className="btn btn-warning">REMARCAR</button>
+                            <button type="button" onClick={e => props.remarcaAgendamentoAction(ordem.agendamento, ordem.idLancamento)} className="btn btn-warning">REMARCAR</button>
                             <button type="button" onClick={e => props.atualizaStatusAction("EM_EXECUCAO", ordem.idLancamento)} className="btn" style={{ color: "white", backgroundColor: 'blue' }}>EXECUTAR</button>
                             <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
                         </div> : false}

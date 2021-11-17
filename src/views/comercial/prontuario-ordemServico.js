@@ -7,6 +7,10 @@ import VendaService from "../../app/service/vendaService";
 import LancamentoService from "../../app/service/lancamentoService";
 import * as messages from "../../components/toastr"
 import OrdemServicoTable from "./ordemServicoTable";
+import MarcarAgendamento from "../agendamento/marcar";
+import { Dialog } from "primereact/dialog";
+import Card from "../../components/card";
+import { Button } from "primereact/button";
 
 class ProntuarioOrdemServico extends React.Component {
 
@@ -19,6 +23,9 @@ class ProntuarioOrdemServico extends React.Component {
   state = {
     buscaCliente: '',
     ordens: [],
+    showConfirmDialogRemarcar: false,
+    agendamentoAEditar: {},
+    idClienteAgendamento: null
   }
 
   buscarOrdens = () => {
@@ -59,8 +66,27 @@ class ProntuarioOrdemServico extends React.Component {
 
   }
 
+  showConfirmDialogRemarcar = async (agendamento, idLancamento) => {
+    console.log("AG", agendamento, "idLancamento", idLancamento)
+    await this.setState({ idClienteAgendamento: agendamento.idCliente, idLancamento: idLancamento })
+
+    this.setState({ showConfirmDialogRemarcar: true, agendamentoAEditar: agendamento })
+  }
+
+  remarcaAgendamentoAction = (agendamento) => {
+
+
+  }
+
 
   render() {
+
+    const footerDialogEditar = (
+      <div>
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
+      </div>
+    );
+
     return (
       <div className="row">
         <div style={{ backgroundColor: '' }} className="col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">
@@ -79,9 +105,26 @@ class ProntuarioOrdemServico extends React.Component {
         </div>
 
         <div>
-          <OrdemServicoTable atualizaStatusAction={this.atualizaStatusAction} ordens={this.state.ordens} />
+          <OrdemServicoTable remarcaAgendamentoAction={this.showConfirmDialogRemarcar} atualizaStatusAction={this.atualizaStatusAction} ordens={this.state.ordens} />
         </div>
-      </div>
+
+
+        <Dialog
+          onChange={e => this.setState({ showConfirmDialogRemarcar: false })}
+          visible={this.state.showConfirmDialogRemarcar}
+          footer={footerDialogEditar}
+          style={{ width: '90vw' }}
+          modal={true}
+          onHide={() => {
+            this.setState({ showConfirmDialogRemarcar: false })
+
+          }}>
+          <Card title="Remarcar agendamento">
+            <MarcarAgendamento idCliente={this.state.idClienteAgendamento} remarcar agendamentoAEditar={this.state.agendamentoAEditar} idLancamento={this.state.idLancamento} />
+          </Card>
+        </Dialog>
+      </div >
+
     )
 
   }

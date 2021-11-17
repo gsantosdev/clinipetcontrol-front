@@ -19,6 +19,8 @@ import Config from "../../config.json"
 class MarcarAgendamento extends React.Component {
 
   state = {
+    id: null,
+    idLancamento: null,
     agendamentoValido: true,
     dataHorario: '',
     duracaoAprox: null,
@@ -104,8 +106,8 @@ class MarcarAgendamento extends React.Component {
   }
 
 
-  buscarPorIdFuncionario = () => {
-    this.funcionarioService.obterPorId(this.props.agendamentoAEditar.agendamento.idFuncionario)
+  buscarPorIdFuncionario = (id) => {
+    this.funcionarioService.obterPorId(id)
       .then(resposta => {
         this.setState({ funcionarios: [resposta.data] })
       }).catch(error => {
@@ -114,13 +116,16 @@ class MarcarAgendamento extends React.Component {
   }
 
 
+
   async componentDidMount() {
     this.listarServicos();
     await this.listarAnimais(this.props.idCliente);
     await this.listarServicos();
-    if (this.props.agendamentoAEditar) {
+    if (this.props.agendamentoAEditar && this.props.editarItem) {
       await this.setState(this.props.agendamentoAEditar.agendamento)
       console.log(this.props.agendamentoAEditar.agendamento.idFuncionario)
+      console.log(this.state)
+
       console.log(this.props.agendamentoAEditar.agendamento.idServico)
       this.buscarPorIdFuncionario(this.props.agendamentoAEditar.agendamento.idFuncionario);
       this.listarServicos();
@@ -128,6 +133,21 @@ class MarcarAgendamento extends React.Component {
       await this.setState({ idServicoSelecionado: this.props.agendamentoAEditar.agendamento.idServico })
       console.log("idServicoSelecionado:", this.state.idServicoSelecionado)
 
+    }
+    else if (this.props.agendamentoAEditar && this.props.remarcar) {
+      await this.setState(this.props.agendamentoAEditar)
+
+      this.setState({ idLancamento: this.props.idLancamento })
+
+      this.setState({ dataHorario: new Date(this.props.agendamentoAEditar.dataHorario).toISOString().substr(0, 16) })
+      console.log(this.props.agendamentoAEditar.dataHorario)
+      console.log("Remarcar: ", this.props.agendamentoAEditar)
+      console.log(this.state)
+      this.buscarPorIdFuncionario(this.props.agendamentoAEditar.idFuncionario);
+      this.listarServicos();
+      await this.setState({ idFuncionarioSelecionado: this.props.agendamentoAEditar.idFuncionario })
+      await this.setState({ idServicoSelecionado: this.props.agendamentoAEditar.idServico })
+      console.log("idServicoSelecionado:", this.state.idServicoSelecionado)
     }
     //console.log("Agendamento a editar: ", this.props.agendamentoAEditar.agendamento)
   }
@@ -235,7 +255,50 @@ class MarcarAgendamento extends React.Component {
     }
   }
 
-  editarAgendamento = async () => {
+  remarcar = async () => {
+    const msgs = this.validar()
+
+    if (msgs && msgs.length > 0) {
+      msgs.forEach((msg, index) => {
+        mensagemErro(msg)
+      });
+      return false;
+    }
+
+    await this.servicoService.obterPorId(this.state.idServico).then(response => {
+      this.setState({ servico: response.data })
+    }).catch(error => {
+      mensagemErro(error);
+    })
+
+
+    const { dataHorario, observacoes, idServico, servico, idAnimal, idFuncionario, idLancamento } = this.state
+    const agendamento = { dataHorario, observacoes, idServico, servico, idAnimal, idFuncionario, idLancamento }
+
+
+    await this.service.validarRemarcar(agendamento).then(response => {
+      console.log(response)
+      this.setState({ agendamentoValido: true })
+    }).catch(error => {
+      mensagemErro(error.response.data)
+      this.setState({ agendamentoValido: false })
+    })
+
+    if (this.state.agendamentoValido) {
+      this.service.remarcar(this.state.id, agendamento).then(response => {
+        mensagemSucesso(response.data)
+      }).catch(error => {
+        mensagemErro(error.response.data)
+      })
+    }
+    else {
+      return false;
+    }
+
+
+  }
+
+  editarItemAgendamento = async () => {
 
     console.log("Entrou")
 
@@ -267,7 +330,7 @@ class MarcarAgendamento extends React.Component {
     })
 
     if (this.state.agendamentoValido) {
-      this.props.editarAgendamento(agendamento)
+      this.props.editarItemAgendamento(agendamento)
     }
     else {
       return false;
@@ -357,13 +420,19 @@ class MarcarAgendamento extends React.Component {
                 if (this.props.agendar) {
                   return this.agendar()
                 }
-                else if (this.props.editar) {
-                  return this.editarAgendamento()
+                else if (this.props.editarItem) {
+                  return this.editarItemAgendamento()
+                }
+                else if (this.props.remarcar) {
+                  return this.remarcar()
                 }
                 else {
                   return this.adicionarAgendamento()
                 }
-              }}/*onClick={this.props.editar ? this.editar : this.agendar}*/ type="button" className="btn btn-success">{this.props.editar ? "Atualizar agendamento" : "Adicionar agendamento"}</button>
+              }}/*onClick={this.props.editar ? this.editar : this.agendar}*/ type="button" className="btn btn-success">
+                {this.props.editarItem ? "Atualizar agendamento" : (this.props.remarcar ? "Remarcar agendamento" : "Adicionar agendamento")}
+
+              </button>
             </div>
           </div>
         </div>

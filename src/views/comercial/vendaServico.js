@@ -197,12 +197,12 @@ class VendaServico extends React.Component {
       </div>
     );
 
+    
     const footerDialogEditar = (
       <div>
         <PrimeButton style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
       </div>
     );
-
 
     return (
       <div className="row">
@@ -315,7 +315,7 @@ class VendaServico extends React.Component {
             this.obterValorTotalVenda();
           }}>
           <Card title="Atualizar agendamento">
-            <MarcarAgendamento editar idCliente={this.state.clienteSelecionado.id} editarAgendamento={this.editarItemAgendamento} agendamentoAEditar={this.state.agendamentoAEditar} />
+            <MarcarAgendamento editarItem idCliente={this.state.clienteSelecionado.id} editarItemAgendamento={this.editarItemAgendamento} agendamentoAEditar={this.state.agendamentoAEditar} />
           </Card>
         </Dialog>
       </div>
