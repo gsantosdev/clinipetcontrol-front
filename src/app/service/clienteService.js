@@ -23,6 +23,10 @@ class ClienteService extends ApiService {
         return this.get(`?busca=${busca}`)
     }
 
+    listar() {
+        return this.get('/listar')
+    }
+
 
     obterPorId(id) {
         return this.get(`/${id}`)

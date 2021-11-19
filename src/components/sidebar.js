@@ -1,4 +1,4 @@
-import { faAddressCard, faArrowLeft, faBoxOpen, faCalendar, faDog, faHandHoldingMedical, faHome, faMoneyBill, faShoppingCart, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faAddressCard, faArrowLeft, faBoxOpen, faCalendar, faDog, faFile, faHandHoldingMedical, faHome, faMoneyBill, faShoppingCart, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { React, useState } from 'react'
 import { AuthConsumer } from '../main/provedorAutenticacao'
 import { modulosEnum } from '../utils/modulosEnum'
@@ -108,6 +108,14 @@ function SideBar(props) {
           href="#/usuarios"
           label="Usuarios"
           nome={modulosEnum.USUARIOS}
+          selecionar={setSelecionado}
+          selecionado={selecionado} />
+
+        <SideBarItem render={props.isAdmin || props.isSecretaria}
+          icon={faFile}
+          href="#/relatorios"
+          label="Relatórios"
+          nome={modulosEnum.RELATORIOS}
           selecionar={setSelecionado}
           selecionado={selecionado} />
 

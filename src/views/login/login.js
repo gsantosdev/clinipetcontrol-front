@@ -7,8 +7,6 @@ import FormGroup from '../../components/form-group';
 import { mensagemErro } from '../../components/toastr';
 import { AuthContext } from '../../main/provedorAutenticacao';
 
-
-
 class Login extends React.Component {
 
     state = {
@@ -48,45 +46,42 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-6" style={{ position: 'relative', left: '200px' }}>
-                    <div className="bs-docs-section">
+            <>
+                <div className="d-flex align-items-center justify-content-center mb-5" style={{ backgroundColor: 'ed' }}>
+                    <img src="/logo.png" />
+                </div>
+
+                <div className="d-flex align-items-center justify-content-center" style={{ backgroundColor: 'ed' }}>
+                    <div className="col-sm-12 col-lg-8 col-xl-8 col-xxl-6">
                         <Card title="Login">
-                            <div className="col-lg-12">
-                                <div className="bs-component">
-                                    <fieldset>
-                                        <FormGroup label="Nome: *" htmlFor="exampleInputNome1">
-                                            <input type="nome"
-                                                value={this.state.nome}
-                                                onChange={e => this.setState({ nome: e.target.value })}
-                                                className="form-control"
-                                                maxLength="80"
-                                                id="exampleInputNome1" aria-describedby="nomeHelp"
-                                                placeholder="Digite o Nome" />
-                                        </FormGroup>
-                                        <FormGroup label="Senha: *" htmlFor="ExampleInputPassword1">
-                                            <input type="password" className="form-control"
-                                                value={this.state.senha}
-                                                maxLength="80"
-                                                onChange={e => this.setState({ senha: e.target.value })}
-                                                id="exampleInputPassword1" placeholder="Password" />
-                                        </FormGroup>
-                                        <FormGroup>
-                                            <div className="d-flex justify-content-center">
-                                                <button onClick={this.entrar} className="btn btn-success" style={{ width: '10rem', height: '10 rem' }}>Entrar</button>
-                                            </div>
-                                        </FormGroup>
-
-
-                                    </fieldset>
-
-
+                            <FormGroup label="Nome: *" htmlFor="exampleInputNome1">
+                                <input type="nome"
+                                    value={this.state.nome}
+                                    onChange={e => this.setState({ nome: e.target.value })}
+                                    className="form-control"
+                                    maxLength="80"
+                                    id="exampleInputNome1" aria-describedby="nomeHelp"
+                                    placeholder="Digite o Nome" />
+                            </FormGroup>
+                            <FormGroup label="Senha: *" htmlFor="ExampleInputPassword1">
+                                <input type="password" className="form-control"
+                                    value={this.state.senha}
+                                    maxLength="80"
+                                    onChange={e => this.setState({ senha: e.target.value })}
+                                    id="exampleInputPassword1" placeholder="Password" />
+                            </FormGroup>
+                            <FormGroup>
+                                <div className="d-flex justify-content-center">
+                                    <button onClick={this.entrar} className="btn btn-success" style={{ width: '10rem', height: '10 rem' }}>Entrar</button>
                                 </div>
-                            </div>
+                            </FormGroup>
                         </Card>
                     </div>
                 </div>
-            </div>
+            </>
+
+
+
         )
     }
 }

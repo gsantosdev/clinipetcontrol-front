@@ -28,6 +28,11 @@ class ProntuarioOrdemServico extends React.Component {
     idClienteAgendamento: null
   }
 
+  cancelarDesmarcar = () => {
+    this.setState({ showConfirmDialogRemarcar: false })
+    this.buscarOrdens();
+  }
+
   buscarOrdens = () => {
     this.vendaService.listarOrdensPorCliente(this.state.buscaCliente)
       .then(response => {
@@ -73,17 +78,12 @@ class ProntuarioOrdemServico extends React.Component {
     this.setState({ showConfirmDialogRemarcar: true, agendamentoAEditar: agendamento })
   }
 
-  remarcaAgendamentoAction = (agendamento) => {
-
-
-  }
-
 
   render() {
 
     const footerDialogEditar = (
       <div>
-        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
+        <Button style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarDesmarcar} />
       </div>
     );
 
@@ -116,7 +116,7 @@ class ProntuarioOrdemServico extends React.Component {
           style={{ width: '90vw' }}
           modal={true}
           onHide={() => {
-            this.setState({ showConfirmDialogRemarcar: false })
+            this.cancelarDesmarcar()
 
           }}>
           <Card title="Remarcar agendamento">

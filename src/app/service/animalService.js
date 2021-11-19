@@ -18,14 +18,18 @@ class AnimalService extends ApiService {
   deletar(id) {
     return this.delete(`/${id}`)
   }
-  
-  obterHistorico(id){
+
+  obterHistorico(id) {
     return this.get(`/historico/${id}`)
   }
 
   obterPorNome(busca) {
     return this.get(`?busca=${busca}`)
-}
+  }
+
+  listar() {
+    return this.get('/listar')
+  }
 
   obterSexos() {
     return [

@@ -9,6 +9,7 @@ export const modulosEnum = Object.freeze({
   COLABORADORES: "COLABORADORES",
   CAIXA: "CAIXA",
   USUARIOS: "USUARIOS",
+  RELATORIOS: "RELATORIOS",
   SAIR: "SAIR"
 
 });
