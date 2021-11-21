@@ -1,7 +1,7 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts"
 
-function gerarPDF(title, dados, colunas, nomeRelatorio) {
+function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho) {
 
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -20,12 +20,13 @@ function gerarPDF(title, dados, colunas, nomeRelatorio) {
     {
       table: {
         headerRows: 1,
-        widths: ['*', '*', '*', '*'],
+        widths: tamanho,
         body: [
           colunas
           ,
           ...dados
-        ]
+        ],
+        alignment: "center"
       },
       layout: 'lightHorizantalLines'
     }

@@ -23,6 +23,14 @@ class ProdutoService extends ApiService {
     return this.put(`/${id}`, produto)
   }
 
+  listar() {
+    return this.get('/listar')
+  }
+
+  listarQuantidadeVendaProduto() {
+    return this.get('/listarQuantidadeVendaProduto')
+  }
+
   deletar(id) {
     return this.delete(`/${id}`)
   }
