@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatCPF } from '@brazilian-utils/brazilian-utils';
+import { formatCNPJ, formatCPF } from '@brazilian-utils/brazilian-utils';
 
 
 export default props => {
@@ -11,8 +11,8 @@ export default props => {
             <tr>
               <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderRight: 'none' }} scope="row">Nome:</th>
               <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderLeft: 'none' }} scope="row">{props.cliente.nome}</th>
-              <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderRight: 'none' }} scope="row">CPF:</th>
-              <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderLeft: 'none' }} scope="row">{formatCPF(props.cliente.cpf)}</th>
+              <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderRight: 'none' }} scope="row">CPF/CNPJ:</th>
+              <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderLeft: 'none' }} scope="row">{props.cliente.cpf.length === 11 ? formatCPF(props.cliente.cpf) : formatCNPJ(props.cliente.cpf)}</th>
               <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderRight: 'none' }} scope="row">Telefone:</th>
               <th style={{ whiteSpace: 'nowrap', border: '0.1px solid', borderLeft: 'none' }} scope="row">{props.cliente.telefone}</th>
             </tr>

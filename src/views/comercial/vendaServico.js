@@ -1,23 +1,24 @@
 import { faCheck, faPlus, faSearch, faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button as PrimeButton } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import React from "react";
 import { Button as BootstrapButton } from "react-bootstrap";
-import { Button as PrimeButton } from "primereact/button";
-
 import { withRouter } from "react-router";
 import ClienteService from "../../app/service/clienteService";
-import Card from "../../components/card";
-import FormGroup from "../../components/form-group";
-import DadosClienteTable from "./dados-cliente-table";
-import SelectClienteTable from "./selectClienteTable";
-import MarcarAgendamento from "../agendamento/marcar";
-import ItemTable from "./item-table";
 import ServicoService from "../../app/service/servicoService";
 import VendaService from "../../app/service/vendaService";
-
-import * as messages from "../../components/toastr"
+import Card from "../../components/card";
+import FormGroup from "../../components/form-group";
+import * as messages from "../../components/toastr";
 import { AuthContext } from "../../main/provedorAutenticacao";
+import MarcarAgendamento from "../agendamento/marcar";
+import gerarPDF from "../relatorios/impressao";
+import DadosClienteTable from "./dados-cliente-table";
+import ItemTable from "./item-table";
+import SelectClienteTable from "./selectClienteTable";
+
+
 
 
 
@@ -172,6 +173,8 @@ class VendaServico extends React.Component {
     this.vendaService.efetuarVendaServico(venda)
       .then(response => {
         messages.mensagemSucesso(response.data)
+        console.log(response)
+        //this.gerarNotaVenda(response.data.id, venda);
         this.deselecionarCliente()
 
       }).catch(error => {
@@ -197,7 +200,7 @@ class VendaServico extends React.Component {
       </div>
     );
 
-    
+
     const footerDialogEditar = (
       <div>
         <PrimeButton style={{ background: "red", border: 0 }} label="Fechar" onClick={this.cancelarEdicao} />
@@ -213,7 +216,7 @@ class VendaServico extends React.Component {
                 <FormGroup label="Pesquisar Cliente">
                   <div className="input-group">
                     <div style={{ marginLeft: "-1rem" }} className="form-outline col-10 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-8">
-                      <input id="search-input" maxLength="80" placeholder="Nome/CPF" onChange={e => this.setState({ buscaCliente: e.target.value })} type="search" id="form1" className="form-control" />
+                      <input id="search-input" maxLength="80" placeholder="Nome/CPF/CNPJ" onChange={e => this.setState({ buscaCliente: e.target.value })} type="search" id="form1" className="form-control" />
                     </div>
                     <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscar}>
                       <FontAwesomeIcon icon={faSearch} />

@@ -1,6 +1,6 @@
 import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { cpf } from 'cpf-cnpj-validator';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
 import { Button as PrimeButton } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import React from "react";
@@ -16,6 +16,10 @@ import * as messages from "../../components/toastr";
 import { AuthContext } from "../../main/provedorAutenticacao";
 import ProntuarioProduto from "../produto/prontuario-produto";
 import ItemProdutoTable from "./item-produto-table";
+import gerarPDF from "../relatorios/impressao";
+
+
+
 
 
 
@@ -30,7 +34,7 @@ class VendaProduto extends React.Component {
     showTelaBuscaProduto: false,
     showConfirmDialogDeletar: false,
     showConfirmDialogEditar: false,
-    cpf: '',
+    cpfCnpj: '',
     showCpf: false
   }
 
@@ -69,11 +73,14 @@ class VendaProduto extends React.Component {
     const msgs = []
 
     if (this.state.showCpf) {
-      if (!this.state.cpf) {
-        msgs.push('O campo CPF é obrigatório.')
+      if (!this.state.cpfCnpj) {
+        msgs.push('O campo CPF/CNPJ é obrigatório.')
       }
-      else if (!(cpf.isValid(cpf.strip(this.state.cpf)))) {
-        msgs.push('O campo CPF está invalido')
+      else if (cpf.strip(this.state.cpfCnpj).length <= 11 && !(cpf.isValid(cpf.strip(this.state.cpfCnpj)))) {
+        msgs.push('O CPF está inválido')
+      }
+      else if (cnpj.strip(this.state.cpfCnpj).length >= 12 && !(cnpj.isValid(cnpj.strip(this.state.cpfCnpj)))) {
+        msgs.push('O CNPJ está inválido')
       }
     }
 
@@ -81,7 +88,7 @@ class VendaProduto extends React.Component {
   }
 
   limparTela = () => {
-    this.setState({ itensVenda: [], totalVenda: null, showCpf: false, cpf: '' })
+    this.setState({ itensVenda: [], totalVenda: null, showCpf: false, cpfCnpj: '' })
 
   }
 
@@ -98,7 +105,7 @@ class VendaProduto extends React.Component {
   }
 
   abrirConfirmacaoDeletar = () => {
-    this.setState({ showConfirmDialogDeletar: true})
+    this.setState({ showConfirmDialogDeletar: true })
   }
 
   cancelarDelecao = () => {
@@ -148,6 +155,51 @@ class VendaProduto extends React.Component {
 
   }
 
+  gerarNotaVenda = (idVenda, venda, total) => {
+
+    const colunas = [
+      { text: 'Código', style: 'tableHeader', fontSize: 10 },
+      { text: 'Valor unitário', style: 'tableHeader', fontSize: 10 },
+      { text: 'Nome', style: 'tableHeader', fontSize: 10 },
+      { text: 'Quantidade', style: 'tableHeader', fontSize: 10 },
+
+    ]
+
+    const dadosAMostrar = venda.itensVenda.map((dado) => {
+      return [
+        { text: dado.produto.id, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
+        { text: 'R$' + dado.produto.valorItem, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
+        { text: dado.produto.nome, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
+        { text: dado.quantidade, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] }
+
+      ]
+    }
+    )
+
+    const tamanhoTabelaPrincipal = ['*', '*', '*', '*'];
+
+    const colunasAMais = {
+      table: {
+        headerRows: 1,
+        widths: ['*', '*'],
+        body: [
+          [
+            { text: 'Valor total da venda', style: 'tableHeader', fontSize: 12 },
+            { text: 'R$ ' + total, style: 'tableHeader', fontSize: 12 },
+          ]
+
+        ],
+        alignment: "center"
+      }
+    }
+
+    console.log(colunasAMais)
+
+    gerarPDF("Venda de produto / Código da venda :" + idVenda, dadosAMostrar, colunas, "venda_" + idVenda, tamanhoTabelaPrincipal, "", colunasAMais);
+
+    this.setState({ dados: [] })
+  }
+
   efetuarVenda = () => {
 
     const msgs = this.validar()
@@ -160,12 +212,14 @@ class VendaProduto extends React.Component {
     }
 
     const { itensVenda } = this.state
-    const venda = { itensVenda, status: "CONCLUIDA", idUsuario: this.context.usuarioAutenticado.id, cpf: this.state.cpf }
+    const venda = { itensVenda, status: "CONCLUIDA", idUsuario: this.context.usuarioAutenticado.id, cpfCnpj: cpf.strip(this.state.cpfCnpj) }
     console.log(venda);
 
     this.vendaService.efetuarVendaProduto(venda)
       .then(response => {
         messages.mensagemSucesso(response.data)
+        this.gerarNotaVenda(response.data.id, venda, response.data.valorTotal)
+        console.log(response)
         this.limparTela()
       }).catch(error => {
         messages.mensagemErro(error.response.data)
@@ -213,16 +267,16 @@ class VendaProduto extends React.Component {
               <div >
                 <input type="checkbox" id="cpf" name="inputCpf"
                   onClick={this.showCpfInput} checked={this.state.showCpf} />
-                <label className="ml-2" for="lblCpf">Informar CPF</label>
+                <label className="ml-2" for="lblCpf">Informar CPF/CNPJ</label>
               </div>
 
-              <FormGroup hidden={!this.state.showCpf} id="inputCpf" label="CPF: *">
+              <FormGroup hidden={!this.state.showCpf} id="inputCpf" label="CPF/CNPJ: *">
 
                 <CpfCnpj
                   className="form-control"
-                  value={this.state.cpf}
+                  value={this.state.cpfCnpj}
                   onChange={(e, type) => {
-                    this.setState({ cpf: e.target.value, maskCpf: type === "CPF" });
+                    this.setState({ cpfCnpj: e.target.value });
                   }}
                 />
               </FormGroup>

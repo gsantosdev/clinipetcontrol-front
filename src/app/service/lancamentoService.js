@@ -26,6 +26,10 @@ export default class LancamentoService extends ApiService {
         return this.get('/listarDespesas')
     }
 
+    findReceita(busca){
+        return this.get(`/findReceita?busca=${busca}`)
+    }
+
     obterListaMeses() {
         return [
             { label: 'Selecione...', value: '' },

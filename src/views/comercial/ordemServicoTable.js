@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate'
-import { formatCPF } from '@brazilian-utils/brazilian-utils';
+import { formatCNPJ, formatCPF } from '@brazilian-utils/brazilian-utils';
 
 export default props => {
 
@@ -28,7 +28,7 @@ export default props => {
 
                 <td>{ordem.descricao}</td>
                 <td>{ordem.nome}</td>
-                <td>{formatCPF(ordem.cpf)}</td>
+                <td>{ordem.cpf.length === 11 ? formatCPF(ordem.cpf) : formatCNPJ(ordem.cpf)}</td>
                 <td>{new Date(ordem.dataExecucao).toLocaleDateString() + " " + new Date(ordem.dataExecucao).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
 
                 {console.log(new Date(ordem.dataCriacao))}

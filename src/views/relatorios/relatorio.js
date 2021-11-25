@@ -125,7 +125,7 @@ class Relatorios extends React.Component {
     const tamanho = ['*', '*', '*', '*'];
 
 
-    gerarPDF("Todos os produtos cadastrados", dadosAMostrar, colunas, "relatorio_produtos", tamanho);
+    gerarPDF("Todos os produtos cadastrados", dadosAMostrar, colunas, "relatorio_produtos", tamanho, "relatorio_produtos");
 
     this.setState({ dados: [] })
   }
@@ -154,7 +154,7 @@ class Relatorios extends React.Component {
     const tamanho = ['*', '*', '*'];
 
 
-    gerarPDF("Quantidade em estoque de cada produto", dadosAMostrar, colunas, "relatorio_produtos_estoque", tamanho);
+    gerarPDF("Quantidade em estoque de cada produto", dadosAMostrar, colunas, "relatorio_produtos_estoque", tamanho, "relatorio_produtos_estoque");
 
     this.setState({ dados: [] })
   }
@@ -185,7 +185,7 @@ class Relatorios extends React.Component {
 
     const tamanho = ['*', '*', '*', '*'];
 
-    gerarPDF("Quantidade vendida de cada produto", dadosAMostrar, colunas, "relatorio_produtos_venda", tamanho);
+    gerarPDF("Quantidade vendida de cada produto", dadosAMostrar, colunas, "relatorio_produtos_venda", tamanho, "relatorio_produtos_venda");
 
     this.setState({ dados: [] })
   }
@@ -218,7 +218,7 @@ class Relatorios extends React.Component {
     const tamanho = ['*', '*', '*', '*'];
 
 
-    gerarPDF("Todos os colaboradores cadastrados", dadosAMostrar, colunas, "relatorio_colaboradores", tamanho);
+    gerarPDF("Todos os colaboradores cadastrados", dadosAMostrar, colunas, "relatorio_colaboradores", tamanho, "relatorio_colaboradores");
 
     this.setState({ dados: [] })
   }

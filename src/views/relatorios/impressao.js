@@ -1,7 +1,7 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts"
 
-function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho) {
+function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho, nomeArquivo, colunasAMais) {
 
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -16,6 +16,9 @@ function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho) {
     }
   ];
 
+  console.log(colunasAMais)
+  console.log(dados)
+
   const details = [
     {
       table: {
@@ -28,8 +31,12 @@ function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho) {
         ],
         alignment: "center"
       },
+
       layout: 'lightHorizantalLines'
-    }
+    },
+    colunasAMais
+
+
   ];
 
 
@@ -59,6 +66,8 @@ function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho) {
   }
 
   pdfMake.createPdf(docDefinitions).open();
+  //pdfMake.createPdf(docDefinitions).download(nomeArquivo);
+
 }
 
 

@@ -54,7 +54,7 @@ const CpfCnpj = (props) => {
   }
 
   return (
-    <input {...props} maxLength="14" type={type} value={value} onChange={onLocalChange} />
+    <input {...props} type={type} value={value} onChange={onLocalChange} />
   );
 };
 

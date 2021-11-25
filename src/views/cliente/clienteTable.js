@@ -1,4 +1,4 @@
-import { formatCPF } from '@brazilian-utils/brazilian-utils';
+import { formatCNPJ, formatCPF } from '@brazilian-utils/brazilian-utils';
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
 import ReactPaginate from 'react-paginate'
@@ -17,7 +17,7 @@ export default props => {
         return (
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
                 <td>{cliente.nome}</td>
-                <td>{formatCPF(cliente.cpf)}</td>
+                <td>{cliente.cpf.length === 11 ? formatCPF(cliente.cpf) : formatCNPJ(cliente.cpf)}</td>
                 <td>{cliente.email}</td>
                 <td>{cliente.telefone}</td>
 
@@ -52,7 +52,7 @@ export default props => {
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
-                            <th scope="col">CPF</th>
+                            <th scope="col">CPF / CNPJ</th>
                             <th scope="col">Email</th>
                             <th scope="col">Telefone</th>
                             <th scope="col"></th>

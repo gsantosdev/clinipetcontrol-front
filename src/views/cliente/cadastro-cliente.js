@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import CpfCnpj from '../../components/inputs/cpfInput'
 import SelectMenu from '../../components/selectMenu'
 import ClienteService from '../../app/service/clienteService'
-import { cpf } from 'cpf-cnpj-validator';
+import { cpf, cnpj } from 'cpf-cnpj-validator';
 import { mensagemErro, mensagemSucesso } from '../../components/toastr';
 import moment from 'moment'
 import { onlyNumbers } from '@brazilian-utils/brazilian-utils'
@@ -28,7 +28,8 @@ class CadastroCliente extends React.Component {
         bairro: '',
         cep: '',
         cidade: '',
-        uf: ''
+        uf: '',
+        pj: false
     }
 
     handleChange = (event) => {
@@ -79,12 +80,15 @@ class CadastroCliente extends React.Component {
             msgs.push('O campo Nome é obrigatório.')
         }
         else if (!this.state.cpf) {
-            msgs.push('O campo CPF é obrigatório.')
+            msgs.push('O campo CPF/CNPJ é obrigatório.')
         }
-        else if (!(cpf.isValid(cpf.strip(this.state.cpf)))) {
-            msgs.push('O campo CPF está invalido')
+        else if (cpf.strip(this.state.cpf).length <= 11 && !(cpf.isValid(cpf.strip(this.state.cpf)))) {
+            msgs.push('O CPF está inválido')
         }
-        else if (!this.state.dataNascimento) {
+        else if (cnpj.strip(this.state.cpf).length >= 12 && !(cnpj.isValid(cnpj.strip(this.state.cpf)))) {
+            msgs.push('O CNPJ está inválido')
+        }
+        else if (!this.state.pj && !this.state.dataNascimento) {
             msgs.push('O campo Data de Nascimento é obrigatório.')
         }
         else if (!this.state.telefone) {
@@ -113,6 +117,9 @@ class CadastroCliente extends React.Component {
         }
         else if (!this.state.cep) {
             msgs.push('O campo CEP é obrigatório.')
+        }
+        else if (!this.state.cep.match(/^[0-9]{5}-[0-9]{3}$/)) {
+            msgs.push('CEP inválido.')
         }
         else if (!this.state.uf) {
             msgs.push('O campo UF é obrigatório.')
@@ -148,8 +155,11 @@ class CadastroCliente extends React.Component {
             bairro: this.state.bairro,
             cep: this.state.cep,
             cidade: this.state.cidade,
-            uf: this.state.uf
+            uf: this.state.uf,
+            pj: this.state.pj
         }
+        console.log('Cliente a ser cadastrado:', cliente)
+
 
         this.service.salvar(cliente)
             .then(response => {
@@ -185,8 +195,10 @@ class CadastroCliente extends React.Component {
             bairro: this.state.bairro,
             cep: this.state.cep,
             cidade: this.state.cidade,
-            uf: this.state.uf
+            uf: this.state.uf,
+            pj: this.state.pj
         }
+        console.log('Cliente a ser editado:', cliente)
 
         this.service.editar(this.state.id, cliente)
             .then(response => {
@@ -205,7 +217,7 @@ class CadastroCliente extends React.Component {
             <div className="row mb-3">
                 <div className="row">
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-6">
-                        <FormGroup id="inputNome" label="Nome completo: *">
+                        <FormGroup id="inputNome" label="Nome completo / Razão Social: *">
                             <input type="text" maxLength="80" className="form-control"
                                 value={this.state.nome}
                                 name="nome"
@@ -214,13 +226,19 @@ class CadastroCliente extends React.Component {
                     </div>
 
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
-                        <FormGroup id="inputCpf" label="CPF: *">
+                        <FormGroup id="inputCpf" label="CPF/CNPJ: *">
                             <CpfCnpj
                                 /* TODO pattern=""*/
                                 className="form-control"
                                 value={this.state.cpf}
                                 onChange={(e, type) => {
-                                    this.setState({ cpf: e.target.value, maskCpf: type === "CPF" });
+                                    this.setState({ cpf: e.target.value });
+                                    if (e.target.value.length >= 15) {
+                                        this.setState({ pj : true })
+                                    }
+                                    else {
+                                        this.setState({ pj : false })
+                                    }
                                 }}
                             />
                         </FormGroup>
@@ -228,7 +246,8 @@ class CadastroCliente extends React.Component {
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-3">
                         <FormGroup id="inputDataNascimento" label="Data de nascimento: *">
                             <input id="dataNascimento" max={this.getTodayDate()} type="date" className="form-control"
-                                value={moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD")}
+                                value={!this.state.pj ? moment(this.state.dataNascimento, "DD/MM/YYYY").format("YYYY-MM-DD") : "00/00/0000"}
+                                disabled={this.state.pj}
                                 onChange={async e => {
                                     await this.setState({
                                         dataNascimento: moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
@@ -238,7 +257,6 @@ class CadastroCliente extends React.Component {
 
                              /* TODO pattern=""*/ required />
                         </FormGroup>
-
                     </div>
                     <div className="col-sm-12 col-md-6 col-xl-6 col-xxl-4">
                         <FormGroup id="inputTelefone" label="Telefone: *">
@@ -272,6 +290,7 @@ class CadastroCliente extends React.Component {
                                 value={this.state.numero}
                                 onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
                                 name="numero"
+                                min="1"
                                 maxLength="7"
                                 onChange={this.handleChange} />
                         </FormGroup>

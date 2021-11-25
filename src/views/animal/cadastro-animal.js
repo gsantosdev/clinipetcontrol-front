@@ -141,11 +141,14 @@ class CadastroAnimal extends React.Component {
 
   selectAction = async (cliente) => {
     await this.setState({ idCliente: cliente.id })
+    await this.setState({ idClienteSelecionado: cliente.id })
+
     console.log(this.state.idCliente)
 
   }
 
   buscarCliente = () => {
+    this.setState({ clientes: [] })
     this.clienteService.obterPorNomeCpfTelefone(this.state.busca)
       .then(resposta => {
         this.setState({ clientes: resposta.data })
@@ -318,7 +321,7 @@ class CadastroAnimal extends React.Component {
             <FormGroup id="inputCliente" label="Pesquise o cliente: *">
               <div className="input-group mb-4">
                 <div className="form-outline col-sm-9 col-lg-4">
-                  <input maxLength="80" id="search-input" placeholder="Nome/Telefone/CPF" name="busca" onChange={this.handleChange} type="search" className="form-control" />
+                  <input maxLength="80" id="search-input" placeholder="Nome/Telefone/CPF/CNPJ" name="busca" onChange={this.handleChange} type="search" className="form-control" />
                 </div>
                 <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarCliente}>
                   <FontAwesomeIcon icon={faSearch} />

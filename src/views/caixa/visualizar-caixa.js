@@ -1,12 +1,13 @@
-import { faEye, faEyeSlash, faTruckLoading } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { render } from "@testing-library/react";
 import React from "react";
-import Card from "../../components/card";
 import LancamentoService from "../../app/service/lancamentoService";
-import * as messages from "../../components/toastr"
-import LancamentosAReceberTable from "./lancamentos-receitas-table";
+import Card from "../../components/card";
+import FormGroup from '../../components/form-group';
+import * as messages from "../../components/toastr";
 import LancamentosAPagarTable from "./lancamentos-despesas-table";
+import LancamentosAReceberTable from "./lancamentos-receitas-table";
+
 
 class VisualizarCaixa extends React.Component {
 
@@ -14,7 +15,8 @@ class VisualizarCaixa extends React.Component {
     valorCaixa: null,
     eye: faEyeSlash,
     lancamentosReceitaOrdenados: [],
-    lancamentosDespesaOrdenados: []
+    lancamentosDespesaOrdenados: [],
+    buscaReceita: ''
 
   }
 
@@ -22,12 +24,20 @@ class VisualizarCaixa extends React.Component {
     super();
     this.lancamentoService = new LancamentoService();
   }
+
   componentDidMount() {
     this.setState({ eye: faEyeSlash })
     console.log(this.state.eye)
   }
 
-  buscarLancamentosReceitaOrdenados = () => {
+  handleChange = (event) => {
+    const value = event.target.value;
+    const name = event.target.name;
+
+    this.setState({ [name]: value })
+  }
+
+  buscarTodosLancamentosReceitaOrdenados = () => {
     this.lancamentoService.getLancamentosReceitaOrdenados().then(response => {
       this.setState({ lancamentosReceitaOrdenados: response.data })
     }).catch(error => {
@@ -37,6 +47,14 @@ class VisualizarCaixa extends React.Component {
       else {
         messages.mensagemErro(error.response)
       }
+    })
+  }
+
+  buscarLancamentosReceita = () => {
+    this.lancamentoService.findReceita(this.state.buscaReceita).then(response => {
+      this.setState({ lancamentosReceitaOrdenados: response.data })
+    }).catch(error => {
+
     })
   }
 
@@ -76,7 +94,7 @@ class VisualizarCaixa extends React.Component {
 
   componentDidMount() {
     this.getValorCaixa();
-    this.buscarLancamentosReceitaOrdenados();
+    this.buscarTodosLancamentosReceitaOrdenados();
     this.buscarLancamentosDespesaOrdenados();
   }
 
@@ -86,7 +104,7 @@ class VisualizarCaixa extends React.Component {
 
     this.lancamentoService.atualizar(statusBody, id).then(response => {
       messages.mensagemSucesso("Status atualizado com sucesso!")
-      this.buscarLancamentosReceitaOrdenados()
+      this.buscarTodosLancamentosReceitaOrdenados()
       this.buscarLancamentosDespesaOrdenados()
       this.getValorCaixa()
     }).catch(error => {
@@ -102,6 +120,16 @@ class VisualizarCaixa extends React.Component {
         <div className="d-flex justify-content-center"><h1>R$ {this.state.eye === faEyeSlash ? "**" : parseFloat(this.state.valorCaixa).toFixed(2)} <FontAwesomeIcon className="ml-2" onClick={this.changeEye} icon={this.state.eye} /></h1></div>
         <div className="col-12 mt-5">
           <Card title="Contas a receber">
+            <FormGroup id="inputCliente" label="Pesquise a receita: *">
+              <div className="input-group mb-4">
+                <div className="form-outline col-sm-9 col-lg-4">
+                  <input maxLength="80" id="search-input" placeholder="Nº Venda/CPF/CNPJ" name="buscaReceita" onChange={this.handleChange} type="search" className="form-control" />
+                </div>
+                <button id="search-button" type="button" className="btn btn-primary" onClick={this.buscarLancamentosReceita}>
+                  <FontAwesomeIcon icon={faSearch} />
+                </button>
+              </div>
+            </FormGroup>
             <LancamentosAReceberTable atualizaStatusAction={this.atualizaStatusAction} lancamentos={this.state.lancamentosReceitaOrdenados} />
           </Card>
         </div>

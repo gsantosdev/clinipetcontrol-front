@@ -16,12 +16,6 @@ function UserBar(props) {
           <FontAwesomeIcon icon={faUser} />
         </li>
       </ul>
-      <ul>
-        <li style={{ listStyle: "none" }}>
-          <h1 className="navbar-brand ">Tipo:  {props.usuarioAutenticado.tipo}</h1>
-          <FontAwesomeIcon icon={faUser} />
-        </li>
-      </ul>
     </nav>
   )
   } else return false
