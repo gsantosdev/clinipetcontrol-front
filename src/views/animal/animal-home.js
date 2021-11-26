@@ -6,6 +6,7 @@ import Card from '../../components/card'
 import CadastroAnimal from './cadastro-animal'
 import EspeciesHome from './especie/especies-home'
 import ProntuarioAnimal from './prontuario-animal'
+import RelatorioAnimal from './relatorio-animal'
 
 
 class AnimalHome extends React.Component {
@@ -26,6 +27,12 @@ class AnimalHome extends React.Component {
           </Tab>
           <Tab eventKey="especies" title="Espécies">
             <EspeciesHome />
+          </Tab>
+          <Tab eventKey="relatorios" title="Relatórios">
+            <Card title="Relatórios de animal">
+
+              <RelatorioAnimal />
+            </Card>
           </Tab>
         </Tabs>
 

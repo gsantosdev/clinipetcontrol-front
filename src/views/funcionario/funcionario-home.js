@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import CadastroFuncionario from './cadastro-funcionario'
 import ProntuarioFuncionario from './prontuario-funcionario'
+import RelatorioColaborador from './relatorio-colaborador'
 
 
 
@@ -22,6 +23,11 @@ class FuncionarioHome extends React.Component {
           <Tab eventKey="consultar" title="Consultar/Editar/Deletar">
             <Card title="Consultar/Editar/Deletar">
               <ProntuarioFuncionario />
+            </Card>
+          </Tab>
+          <Tab eventKey="relatorios" title="Relatórios">
+            <Card title="Relatórios de colaborador">
+              <RelatorioColaborador />
             </Card>
           </Tab>
 

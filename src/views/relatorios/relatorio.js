@@ -67,38 +67,6 @@ class Relatorios extends React.Component {
   }
 
 
-  relatorioTodosClientes = async () => {
-    await this.clienteService.listar()
-      .then(response => {
-        this.setState({ dados: response.data })
-      })
-      .catch(error => console.log("deupau"))
-
-
-    const colunas = [
-      { text: 'Código', style: 'tableHeader', fontSize: 10 },
-      { text: 'Nome', style: 'tableHeader', fontSize: 10 },
-      { text: 'E-mail', style: 'tableHeader', fontSize: 10 },
-      { text: 'Telefone', style: 'tableHeader', fontSize: 10 }
-    ]
-
-    const dadosAMostrar = this.state.dados.map((dado) => {
-      return [
-        { text: dado.id, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.nome, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.email, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.telefone, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-
-      ]
-    })
-
-    const tamanho = ['*', '*', '*', '*'];
-
-    gerarPDF("Todos os clientes cadastrados", dadosAMostrar, colunas, "relatorio_clientes", tamanho);
-
-    this.setState({ dados: [] })
-  }
-
   relatorioTodosProdutos = async () => {
     await this.produtoService.listar()
       .then(response => {
@@ -130,119 +98,15 @@ class Relatorios extends React.Component {
     this.setState({ dados: [] })
   }
 
-  relatorioTodosProdutosEstoque = async () => {
-    await this.produtoService.listar()
-      .then(response => {
-        this.setState({ dados: response.data })
-      })
-      .catch(error => messages.mensagemErro(error.response.data))
+ 
 
-    const colunas = [
-      { text: 'Código', style: 'tableHeader', fontSize: 8 },
-      { text: 'Nome', style: 'tableHeader', fontSize: 8 },
-      { text: 'Quantidade em estoque', style: 'tableHeader', fontSize: 8 },
-    ]
-
-    const dadosAMostrar = this.state.dados.map((dado) => {
-      return [
-        { text: dado.id, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
-        { text: dado.nome, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
-        { text: dado.quantidadeEstoque, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
-      ]
-    })
-
-    const tamanho = ['*', '*', '*'];
-
-
-    gerarPDF("Quantidade em estoque de cada produto", dadosAMostrar, colunas, "relatorio_produtos_estoque", tamanho, "relatorio_produtos_estoque");
-
-    this.setState({ dados: [] })
-  }
-
-  relatorioTodosProdutosQuantidadeVenda = async () => {
-    await this.produtoService.listarQuantidadeVendaProduto()
-      .then(response => {
-        this.setState({ dados: response.data })
-        console.log(this.state.dados)
-      })
-      .catch(error => messages.mensagemErro(error.response.data))
-
-    const colunas = [
-      { text: 'Código', style: 'tableHeader', fontSize: 8 },
-      { text: 'Nome', style: 'tableHeader', fontSize: 8 },
-      { text: 'Quantidade vendida', style: 'tableHeader', fontSize: 8 },
-      { text: 'Valor total vendido', style: 'tableHeader', fontSize: 8 },
-    ]
-
-    const dadosAMostrar = this.state.dados.map((dado) => {
-      return [
-        { text: dado.produto.id, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
-        { text: dado.produto.nome, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
-        { text: dado.quantidade, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
-        { text: 'R$ ' + dado.valorTotal, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
-      ]
-    })
-
-    const tamanho = ['*', '*', '*', '*'];
-
-    gerarPDF("Quantidade vendida de cada produto", dadosAMostrar, colunas, "relatorio_produtos_venda", tamanho, "relatorio_produtos_venda");
-
-    this.setState({ dados: [] })
-  }
-
-  relatorioTodosColaboradores = async () => {
-    await this.colaboradorService.listar()
-      .then(response => {
-        this.setState({ dados: response.data })
-      })
-      .catch(error => console.log("deupau"))
-
-
-    const colunas = [
-      { text: 'Código', style: 'tableHeader', fontSize: 10 },
-      { text: 'Nome', style: 'tableHeader', fontSize: 10 },
-      { text: 'E-mail', style: 'tableHeader', fontSize: 10 },
-      { text: 'Telefone', style: 'tableHeader', fontSize: 10 }
-    ]
-
-    const dadosAMostrar = this.state.dados.map((dado) => {
-      return [
-        { text: dado.id, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.nome, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.email, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.telefone, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-
-      ]
-    })
-
-    const tamanho = ['*', '*', '*', '*'];
-
-
-    gerarPDF("Todos os colaboradores cadastrados", dadosAMostrar, colunas, "relatorio_colaboradores", tamanho, "relatorio_colaboradores");
-
-    this.setState({ dados: [] })
-  }
-
+ 
 
   render() {
     return (
       <Card title="Relatórios">
-
         <div className="row">
-          <div className="col-6 col-sm-12 col-lg-12 col-xl-6 col-xxl-6 mb-3">
-            <Card subtitulo title="Clientes">
-              <Button className="col-12 btn btn-info" onClick={e => this.relatorioTodosClientes()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
-                Listar todos os clientes
-              </Button>
-            </Card>
-          </div>
-          <div className="col-6 col-sm-12 col-lg-12 col-xl-6 col-xxl-6 mb-3">
-            <Card subtitulo title="Animais">
-              <Button className="col-12 btn btn-info " onClick={e => this.relatorioTodosAnimais()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
-                Listar todos os animais
-              </Button>
-            </Card>
-          </div>
+       
           <div className="col-6 col-sm-12 col-lg-12 col-xl-6 col-xxl-6 mb-3">
             <Card subtitulo title="Colaboradores">
               <Button className="col-12 btn btn-info " onClick={e => this.relatorioTodosColaboradores()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />

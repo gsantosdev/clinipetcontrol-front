@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
 import CadastroProduto from './cadastro-produto'
 import ProntuarioProduto from './prontuario-produto'
+import RelatorioProduto from './relatorio-produto'
 
 
 
@@ -21,7 +22,12 @@ class ProdutoHome extends React.Component {
           </Tab>
           <Tab eventKey="consultar" title="Consultar/Editar/Deletar">
             <Card title="Consultar/Editar/Deletar">
-              <ProntuarioProduto/>
+              <ProntuarioProduto />
+            </Card>
+          </Tab>
+          <Tab eventKey="relatorios" title="Relatórios">
+            <Card title="Relatórios de produto">
+              <RelatorioProduto />
             </Card>
           </Tab>
 
