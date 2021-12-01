@@ -9,13 +9,14 @@ import SideBar from '../components/sidebar';
 import  UserBar  from '../components/userbar';
 import '../custom.css';
 import Rotas from './rotas';
-import ProvedorAutenticacao from './provedorAutenticacao';
+import ProvedorAutenticacao, { AuthContext } from './provedorAutenticacao';
 
 
 
 class App extends React.Component {
-
+ 
   render() {
+
     return (
       <ProvedorAutenticacao>
         <SideBar />

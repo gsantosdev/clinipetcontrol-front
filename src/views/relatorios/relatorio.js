@@ -98,10 +98,6 @@ class Relatorios extends React.Component {
     this.setState({ dados: [] })
   }
 
- 
-
- 
-
   render() {
     return (
       <Card title="Relatórios">

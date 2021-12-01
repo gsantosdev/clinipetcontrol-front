@@ -16,7 +16,27 @@ class ProvedorAutenticacao extends React.Component {
     isAutenticado: false,
     isAdmin: false,
     isSecretaria: false,
-    isVeterinario: false
+    isVeterinario: false,
+    isCaixaOpen: false
+
+  }
+
+  abrirCaixa = () => {
+    AuthService.abrirCaixa()
+    this.setState({ isCaixaOpen: true })
+  }
+
+  fecharCaixa = () => {
+    AuthService.fecharCaixa()
+    this.setState({ isCaixaOpen: false })
+  }
+
+  obterStatusCaixa = () => {
+    AuthService.obterStatusCaixa().status === 'open' ?
+      this.setState({ isCaixaOpen: true }) :
+      this.setState({ isCaixaOpen: false })
+
+
   }
 
   iniciarSessao = (usuario) => {
@@ -37,30 +57,33 @@ class ProvedorAutenticacao extends React.Component {
     console.log("isAdmin:", this.state.isAdmin)
     console.log("isSecretaria:", this.state.isSecretaria)
     console.log("isVeterinario:", this.state.isVeterinario)
+    this.obterStatusCaixa()
+
 
 
     this.setState({ isAutenticado: true, usuarioAutenticado: usuario })
-
   }
+
 
 
   encerrarSessao = () => {
     AuthService.removerUsuarioAutenticado();
     this.setState({ isAutenticado: false, usuarioAutenticado: null, isSecretaria: false, isAdmin: false, isVeterinario: false })
-
   }
 
   render() {
-
-
     const contexto = {
       usuarioAutenticado: this.state.usuarioAutenticado,
       isAutenticado: this.state.isAutenticado,
       isAdmin: this.state.isAdmin,
       isSecretaria: this.state.isSecretaria,
       isVeterinario: this.state.isVeterinario,
+      isCaixaOpen: this.state.isCaixaOpen,
       iniciarSessao: this.iniciarSessao,
-      encerrarSessao: this.encerrarSessao
+      encerrarSessao: this.encerrarSessao,
+      abrirCaixa: this.abrirCaixa,
+      fecharCaixa: this.fecharCaixa,
+      obterStatusCaixa: this.obterStatusCaixa
 
     }
     return (
