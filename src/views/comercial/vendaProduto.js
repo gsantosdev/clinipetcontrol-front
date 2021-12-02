@@ -16,7 +16,7 @@ import * as messages from "../../components/toastr";
 import { AuthContext } from "../../main/provedorAutenticacao";
 import ProntuarioProduto from "../produto/prontuario-produto";
 import ItemProdutoTable from "./item-produto-table";
-import gerarPDF from "../relatorios/impressao";
+import {gerarPDF} from '../relatorios/impressao';
 
 
 
@@ -56,12 +56,13 @@ class VendaProduto extends React.Component {
     this.setState({ totalVenda: 0 })//Seta pra 0 pra passar por toda a lista novamente
 
     this.state.itensVenda.forEach(item => {
+      console.log(item.quantidade)
 
       this.produtoService.obterValorVenda(item.idProduto).then(response => {
         console.log("Valor Produto: ", response.data)
 
-        this.setState({ totalVenda: this.state.totalVenda + response.data });
-        console.log("Valor Total: ", this.state.totalVenda)
+        this.setState({ totalVenda: this.state.totalVenda + (response.data * item.quantidade) });
+        console.log("Valor Total: ", this.state.totalVenda * item.quantidade)
 
       });
 
@@ -289,7 +290,7 @@ class VendaProduto extends React.Component {
           {Object.keys(this.state.itensVenda).length !== 0 ?
             <div>
               <div className="d-flex justify-content-end mt-5">
-                <h4>Total estimado:  {parseFloat(this.state.totalVenda).toFixed(2) + " R$"} </h4>
+                <h4>Total estimado:  {" R$" + parseFloat(this.state.totalVenda).toFixed(2)} </h4>
 
               </div>
             </div> : false}

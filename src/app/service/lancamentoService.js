@@ -21,8 +21,8 @@ export default class LancamentoService extends ApiService {
         return this.get('/listarReceitas')
     }
 
-    findByIdsIn(ids) {
-        return this.post('/findByIdIn', ids)
+    relatorioFechamento(ids) {
+        return this.post('/relatorioFechamento', ids)
     }
 
 

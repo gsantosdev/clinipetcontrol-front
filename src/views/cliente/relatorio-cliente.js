@@ -3,7 +3,7 @@ import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import gerarPDF from '../relatorios/impressao';
+import {gerarPDF} from '../relatorios/impressao';
 import ClienteService from '../../app/service/clienteService';
 import { Button } from 'react-bootstrap';
 import Card from "../../components/card";

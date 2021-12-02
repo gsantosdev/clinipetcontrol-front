@@ -10,7 +10,7 @@ import ProdutoService from '../../app/service/produtoService';
 import ClienteService from '../../app/service/clienteService';
 import FuncionarioService from '../../app/service/funcionarioService';
 import Card from "../../components/card";
-import gerarPDF from "./impressao";
+import {gerarPDF} from '../relatorios/impressao';
 import * as messages from "../../components/toastr"
 
 

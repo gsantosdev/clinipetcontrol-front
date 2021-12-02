@@ -10,6 +10,9 @@ import { AuthContext } from "../../main/provedorAutenticacao";
 import LancamentosAPagarTable from "./lancamentos-despesas-table";
 import LancamentosAReceberTable from "./lancamentos-receitas-table";
 import LocalStorageService from "../../app/service/localstorageService"
+import {gerarPDFCaixa} from '../relatorios/impressao';
+import moment from "moment";
+
 
 
 class VisualizarCaixa extends React.Component {
@@ -96,17 +99,19 @@ class VisualizarCaixa extends React.Component {
   }
 
 
+
   relatorioFechamentoDeCaixa = () => {
 
     const idsLancamento = JSON.parse(localStorage.getItem('_lancamento_ids') || '[]');
+    const inicioCaixa = LocalStorageService.obterItem('_inicio_caixa');
+    const lancamentos = { idsLancamento: idsLancamento, dataInicio: inicioCaixa }
 
-    const list = { idsLancamento: idsLancamento }
+    console.log(lancamentos)
 
-    console.log(list)
-
-    this.lancamentoService.findByIdsIn(list).then(response => {
+    this.lancamentoService.relatorioFechamento(lancamentos).then(response => {
 
       console.log(response)
+      gerarPDFCaixa(response.data);
 
 
     }).catch(error => {
@@ -165,6 +170,8 @@ class VisualizarCaixa extends React.Component {
 
               this.relatorioFechamentoDeCaixa()
               this.context.fecharCaixa()
+              localStorage.removeItem('_inicio_caixa');
+
 
             }}> Fechar Caixa</button>
 
@@ -192,7 +199,12 @@ class VisualizarCaixa extends React.Component {
             </Card>
           </div>
         </> : <div className="d-flex justify-content-center">
-          <button className="btn btn-success" onClick={this.context.abrirCaixa}>Abrir Caixa</button></div>}
+          <button className="btn btn-success" onClick={e => {
+           this.context.abrirCaixa()
+           LocalStorageService.adicionarItem('_inicio_caixa', moment().local());
+
+            
+          }}>Abrir Caixa</button></div>}
 
       </>
     )
