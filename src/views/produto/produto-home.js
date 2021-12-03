@@ -3,6 +3,7 @@ import Tab from 'react-bootstrap/Tab'
 import Tabs from 'react-bootstrap/Tabs'
 import { withRouter } from 'react-router-dom'
 import Card from '../../components/card'
+import { AuthContext } from '../../main/provedorAutenticacao'
 import CadastroProduto from './cadastro-produto'
 import ProntuarioProduto from './prontuario-produto'
 import RelatorioProduto from './relatorio-produto'
@@ -25,11 +26,13 @@ class ProdutoHome extends React.Component {
               <ProntuarioProduto />
             </Card>
           </Tab>
-          <Tab eventKey="relatorios" title="Relatórios">
+           <Tab eventKey="relatorios" title="Relatórios">
             <Card title="Relatórios de produto">
               <RelatorioProduto />
             </Card>
           </Tab>
+            
+
 
         </Tabs>
 
@@ -40,5 +43,6 @@ class ProdutoHome extends React.Component {
 
 }
 
+ProdutoHome.contextType = AuthContext
 
 export default withRouter(ProdutoHome)

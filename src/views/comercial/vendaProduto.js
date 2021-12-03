@@ -16,7 +16,7 @@ import * as messages from "../../components/toastr";
 import { AuthContext } from "../../main/provedorAutenticacao";
 import ProntuarioProduto from "../produto/prontuario-produto";
 import ItemProdutoTable from "./item-produto-table";
-import {gerarPDF} from '../relatorios/impressao';
+import { gerarPDF } from '../relatorios/impressao';
 
 
 
@@ -181,14 +181,17 @@ class VendaProduto extends React.Component {
 
     const colunasAMais = {
       table: {
-        headerRows: 1,
-        widths: ['*', '*'],
+
+        widths: ['*', '*', '*', '*'],
         body: [
           [
-            { text: 'Valor total da venda', style: 'tableHeader', fontSize: 12 },
-            { text: 'R$ ' + total, style: 'tableHeader', fontSize: 12 },
-          ]
+            { text: '------------', margin: [0, 5, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''
 
+          ],
+          [
+            { text: 'Valor total da venda', style: 'tableHeader', fontSize: 12, colSpan: 2 }, '',
+            { text: 'R$ ' + total, style: 'tableHeader', fontSize: 12, colSpan: 2 }, ''
+          ],
         ],
         alignment: "center"
       }

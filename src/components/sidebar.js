@@ -111,14 +111,6 @@ function SideBar(props) {
           selecionar={setSelecionado}
           selecionado={selecionado} />
 
-        <SideBarItem render={props.isAdmin || props.isSecretaria}
-          icon={faFile}
-          href="#/relatorios"
-          label="Relatórios"
-          nome={modulosEnum.RELATORIOS}
-          selecionar={setSelecionado}
-          selecionado={selecionado} />
-
         <SideBarItem render={true}
           encerrarSessao={props.encerrarSessao}
           icon={faArrowLeft}

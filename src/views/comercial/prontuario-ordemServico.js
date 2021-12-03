@@ -48,6 +48,8 @@ class ProntuarioOrdemServico extends React.Component {
         }
         else {
           this.setState({ ordens: response.data })
+          console.log('ordens: ', this.state.ordens)
+
 
         }
       }).catch(error => {

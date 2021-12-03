@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import VendaServico from "./vendaServico";
 import ProntuarioOrdemServico from "./prontuario-ordemServico";
 import VendaProduto from "./vendaProduto";
+import { AuthContext } from "../../main/provedorAutenticacao";
 
 
 
@@ -29,11 +30,12 @@ class ComercialHome extends React.Component {
               <ProntuarioOrdemServico />
             </Card>
           </Tab>
-          <Tab eventKey="venda_produto" title="Venda de produtos">
+          <Tab disabled={!this.context.isCaixaOpen} eventKey="venda_produto" title="Venda de produtos">
             <Card title="Efetuar venda">
               <VendaProduto />
             </Card>
           </Tab>
+
         </Tabs>
       </div>
     )
@@ -41,6 +43,8 @@ class ComercialHome extends React.Component {
 
 
 }
+
+ComercialHome.contextType = AuthContext
 
 
 

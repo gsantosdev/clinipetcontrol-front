@@ -4,6 +4,7 @@ import { withRouter } from "react-router";
 import Card from '../../components/card';
 import VisualizarCaixa from "./visualizar-caixa";
 import CadastrarLancamento from "./cadastrar-lancamento";
+import { AuthContext } from "../../main/provedorAutenticacao";
 
 class CaixaHome extends React.Component {
 
@@ -20,17 +21,21 @@ class CaixaHome extends React.Component {
               <VisualizarCaixa />
             </Card>
           </Tab>
-          <Tab eventKey="cadastrar_lancamento" title="Cadastrar lançamento">
+          <Tab disabled={!this.context.isCaixaOpen} eventKey="cadastrar_lancamento" title="Cadastrar lançamento">
             <Card title="Cadastrar lançamento">
               <CadastrarLancamento />
             </Card>
-          </Tab>
+          </Tab> 
+
+
 
         </Tabs>
       </div>
     )
   }
 }
+
+CaixaHome.contextType = AuthContext
 
 
 

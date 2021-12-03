@@ -25,6 +25,12 @@ class CadastroLancamento extends React.Component {
     tipo: ''
   }
 
+  maxLengthCheck = (object) => {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(0, object.target.maxLength)
+    }
+  }
+
 
   handleChange = (event) => {
     const value = event.target.value;
@@ -80,34 +86,10 @@ class CadastroLancamento extends React.Component {
       .then(response => {
         mensagemSucesso(response)
         this.limpaCampos()
-        //this.props.history.push('/login')
       }).catch(error => {
         mensagemErro(error.response.data)
       })
   }
-
-  // editar = () => {
-
-  //   const msgs = this.validar()
-
-  //   if (msgs && msgs.length > 0) {
-  //     msgs.forEach((msg, index) => {
-  //       mensagemErro(msg)
-  //     });
-  //     return false;
-  //   }
-
-  //   const { descricao, valor, tipo, status } = this.state;
-  //   const lancamento = { descricao, valor, tipo, status };
-
-  //   this.service.editar(this.state.id, funcionario)
-  //     .then(response => {
-  //       mensagemSucesso(response)
-  //       //this.props.history.push('/login')
-  //     }).catch(error => {
-  //       mensagemErro(error.response.data)
-  //     })
-  // }
 
   componentDidMount() {
     console.log(this.props.state)
@@ -117,50 +99,59 @@ class CadastroLancamento extends React.Component {
 
   render() {
     return (
-      <div className="row mb-3">
-        <div className="row">
-          <div className="col-xl-6 col-xxl-3">
-            <FormGroup id="inputValor" label="Valor: *">
-              <input type="number" className="form-control"
-                value={this.state.valor}
-                min="1"
-                name="valor"
-                onInput={this.maxLengthCheck}
-                onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
-                maxLength="7"
-                onChange={this.handleChange} />
-            </FormGroup>
-          </div>
-          <div className="col-md-12 col-lg-12 col-xl-6 col-xxl-3">
-            <FormGroup id="inputTipo" label="Tipo: *">
-              <SelectMenu className="form-control" lista={this.service.obterListaTipos()}
-                value={this.state.tipo}
-                name="tipo"
-                onChange={this.handleChange} />
-            </FormGroup>
-          </div>
+      <>
+        {
+          this.context.isCaixaOpen ?
+            <div className="row mb-3">
+              <div className="row">
+                <div className="col-xl-6 col-xxl-3">
+                  <FormGroup id="inputValor" label="Valor: *">
+                    <input type="number" className="form-control"
+                      value={this.state.valor}
+                      min="1"
+                      name="valor"
+                      onInput={this.maxLengthCheck}
+                      onKeyDown={(evt) => (evt.key === 'e' || evt.key === '+' || evt.key === '-') && evt.preventDefault()}
+                      maxLength="7"
+                      onChange={this.handleChange} />
+                  </FormGroup>
+                </div>
+                <div className="col-md-12 col-lg-12 col-xl-6 col-xxl-3">
+                  <FormGroup id="inputTipo" label="Tipo: *">
+                    <SelectMenu className="form-control" lista={this.service.obterListaTipos()}
+                      value={this.state.tipo}
+                      name="tipo"
+                      onChange={this.handleChange} />
+                  </FormGroup>
+                </div>
 
-          <div className="col-lg-12 col-xl-6 col-xxl-5">
-            <FormGroup id="inputDescricao" label="Descrição: *">
-              <input type="text" className="form-control"
-                value={this.state.descricao}
-                maxLength="150"
-                name="descricao"
-                onChange={this.handleChange} />
-            </FormGroup>
-          </div>
-          <div className="d-flex justify-content-end">
-            <FormGroup>
-              <div className="pt-2">
-                <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
+                <div className="col-lg-12 col-xl-6 col-xxl-5">
+                  <FormGroup id="inputDescricao" label="Descrição: *">
+                    <input type="text" className="form-control"
+                      value={this.state.descricao}
+                      maxLength="150"
+                      name="descricao"
+                      onChange={this.handleChange} />
+                  </FormGroup>
+                </div>
+                <div className="d-flex justify-content-end">
+                  <FormGroup>
+                    <div className="pt-2">
+                      <button onClick={this.props.editar ? this.editar : this.cadastrar} type="button" className="btn btn-success">Salvar</button>
+                    </div>
+                  </FormGroup>
+
+                </div>
+
               </div>
-            </FormGroup>
 
-          </div>
+            </div> :
+            <div className="d-flex justify-content-center">
+              <h3>CAIXA FECHADO! Necessário realizar abertura de caixa para cadastrar lançamentos</h3>
+            </div>
+        }
+      </>
 
-        </div>
-
-      </div>
     )
   }
 }

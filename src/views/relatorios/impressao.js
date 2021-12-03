@@ -31,8 +31,6 @@ export function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho, nomeArqu
         ],
         alignment: "center"
       },
-
-      layout: 'lightHorizantalLines'
     },
     colunasAMais
 
@@ -71,7 +69,7 @@ export function gerarPDF(title, dados, colunas, nomeRelatorio, tamanho, nomeArqu
 }
 
 
-export function gerarPDFCaixa(fechamento) {
+export function gerarPDFCaixa(saldoInicial, fechamento) {
 
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -86,8 +84,6 @@ export function gerarPDFCaixa(fechamento) {
     }
   ];
 
-
-
   const details = [
 
     {
@@ -95,18 +91,28 @@ export function gerarPDFCaixa(fechamento) {
       table: {
         widths: ['*', '*', '*', '*'],
         body: [
+          [{ text: 'FLUXO DE CAIXA', bold: true, alignment: 'center', margin: [0, 10, 0, 8], colSpan: 4 }, '', '', ''],
+
           [{ text: '(+) ENTRADA', style: 'tableHeader', colSpan: 2, alignment: 'center', }, 'Column 2', { text: '(-) SAÍDA', style: 'tableHeader', colSpan: 2, alignment: 'center' }, 'Column 4'],
           ['PRODUTOS', 'R$ ' + fechamento.produtos, 'SANGRIAS', 'R$ ' + fechamento.sangrias],
           ['SERVIÇOS', 'R$ ' + fechamento.servicos, 'DESPESAS', 'R$ ' + fechamento.despesas],
           ['DEPÓSITOS', 'R$ ' + fechamento.depositos, '', ''],
           ['OUTRAS RECEITAS', 'R$ ' + fechamento.outrasReceitas, '', ''],
-          [{ text: '', margin: [0, 10, 0, 8] }, '', '', ''],
           ['SUBTOTAL', 'R$ ' + fechamento.subtotalEntrada, 'SUBTOTAL', 'R$ ' + fechamento.subtotalSaida],
-          [{ text: '', margin: [0, 10, 0, 8] }, '', '', ''],
-          ['TOTAL EM VENDAS', 'R$ ' + fechamento.totalVendas, '', ''],
-          [{ text: '', margin: [0, 30, 0, 8] }, '', '', ''],
-          [{ text: 'HÓRARIO DE ABERTURA', colSpan: 2 }, '', new Date(fechamento.inicio).toLocaleDateString() + " " + new Date(fechamento.inicio).toLocaleTimeString(), ''],
-          [{ text: 'HÓRARIO DE FECHAMENTO', colSpan: 2 }, '', new Date(fechamento.fim).toLocaleDateString() + " " + new Date(fechamento.fim).toLocaleTimeString(), '']
+          [{ text: '------------', margin: [0, 10, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''],
+          [{ text: '------------', margin: [0, 10, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''],
+          [{ text: 'TOTAIS', bold: true, alignment: 'center', margin: [0, 10, 0, 8], colSpan: 4 }, '', '', ''],
+
+          [{ text: 'ENTRADA - SAIDA', style: 'tableHeader', colSpan: 2, alignment: 'center', }, '', { text: Number(fechamento.subtotalEntrada - fechamento.subtotalSaida).toFixed(2).toString(), style: 'tableHeader', colSpan: 2, alignment: 'center', }, ''],
+          [{ text: 'VENDAS', style: 'tableHeader', colSpan: 2, alignment: 'center', }, '', { text: Number(fechamento.totalVendas).toFixed(2).toString(), style: 'tableHeader', colSpan: 2, alignment: 'center', }, ''],
+
+          [{ text: '------------', margin: [0, 10, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''],
+          [{ text: '------------', margin: [0, 10, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''],
+
+          [{ text: 'ABERTURA E FECHAMENTO', bold: true, alignment: 'center', margin: [0, 10, 0, 8], colSpan: 4 }, '', '', ''],
+
+          [{ text: 'HÓRARIO DE ABERTURA' }, new Date(fechamento.inicio).toLocaleDateString() + " " + new Date(fechamento.inicio).toLocaleTimeString(), 'Caixa inicial', 'R$' + Number(saldoInicial).toFixed(2).toString()],
+          [{ text: 'HÓRARIO DE FECHAMENTO' }, new Date(fechamento.fim).toLocaleDateString() + " " + new Date(fechamento.fim).toLocaleTimeString(), 'Caixa final', 'R$' + Number((saldoInicial + fechamento.subtotalEntrada) - fechamento.subtotalSaida).toFixed(2).toString()]
 
         ],
 

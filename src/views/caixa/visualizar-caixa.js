@@ -10,8 +10,11 @@ import { AuthContext } from "../../main/provedorAutenticacao";
 import LancamentosAPagarTable from "./lancamentos-despesas-table";
 import LancamentosAReceberTable from "./lancamentos-receitas-table";
 import LocalStorageService from "../../app/service/localstorageService"
-import {gerarPDFCaixa} from '../relatorios/impressao';
+import { gerarPDFCaixa } from '../relatorios/impressao';
 import moment from "moment";
+import { Dialog } from "primereact/dialog";
+import Deposito from "./deposito";
+import Sangria from "./sangria";
 
 
 
@@ -22,7 +25,9 @@ class VisualizarCaixa extends React.Component {
     eye: faEyeSlash,
     lancamentosReceitaOrdenados: [],
     lancamentosDespesaOrdenados: [],
-    buscaReceita: ''
+    buscaReceita: '',
+    showDeposito: false,
+    showSangria: false
 
   }
 
@@ -52,6 +57,10 @@ class VisualizarCaixa extends React.Component {
   }
 
   buscarLancamentosReceita = () => {
+    if (this.state.buscaReceita == '') {
+      this.buscarTodosLancamentosReceitaOrdenados()
+      return;
+    }
     this.lancamentoService.findReceita(this.state.buscaReceita).then(response => {
       this.setState({ lancamentosReceitaOrdenados: response.data })
     }).catch(error => {
@@ -88,7 +97,7 @@ class VisualizarCaixa extends React.Component {
 
   }
 
-  getValorCaixa() {
+  getValorCaixa = () => {
     this.lancamentoService.getSaldoCaixa()
       .then(response => {
         this.setState({ valorCaixa: response.data })
@@ -98,29 +107,27 @@ class VisualizarCaixa extends React.Component {
       })
   }
 
-
-
   relatorioFechamentoDeCaixa = () => {
 
     const idsLancamento = JSON.parse(localStorage.getItem('_lancamento_ids') || '[]');
     const inicioCaixa = LocalStorageService.obterItem('_inicio_caixa');
     const lancamentos = { idsLancamento: idsLancamento, dataInicio: inicioCaixa }
 
+    const saldoInicialCaixa = JSON.parse(localStorage.getItem('_saldo_inicio_caixa') || 0);
+
+
     console.log(lancamentos)
 
     this.lancamentoService.relatorioFechamento(lancamentos).then(response => {
 
       console.log(response)
-      gerarPDFCaixa(response.data);
+      gerarPDFCaixa(saldoInicialCaixa, response.data);
 
 
     }).catch(error => {
       console.log(error)
 
     })
-
-
-
 
   }
 
@@ -158,19 +165,37 @@ class VisualizarCaixa extends React.Component {
 
   }
 
+  openDeposito = () => {
+    this.setState({ showDeposito: true })
+  }
+
+
+  openSangria = () => {
+    this.setState({ showSangria: true })
+  }
+
+  closeDeposito = () => {
+    this.setState({ showDeposito: false })
+  }
+  closeSangria = () => {
+    this.setState({ showSangria: false })
+  }
+
 
   render() {
     return (
       <>
         {this.context.isCaixaOpen ? <>
           <div className="d-flex justify-content-end mb-3 mt-3">
-            <button className="btn btn-info" onClick={e => e}> Realizar depósito</button>
-            <button className="btn btn-warning" onClick={e => e}> Realizar sangria</button>
+            <button className="btn btn-info" onClick={this.openDeposito}> Realizar depósito</button>
+            <button className="btn btn-warning" onClick={this.openSangria}> Realizar sangria</button>
             <button className="btn btn-danger" onClick={() => {
 
               this.relatorioFechamentoDeCaixa()
               this.context.fecharCaixa()
               localStorage.removeItem('_inicio_caixa');
+              localStorage.removeItem('_saldo_inicio_caixa');
+
 
 
             }}> Fechar Caixa</button>
@@ -198,13 +223,45 @@ class VisualizarCaixa extends React.Component {
               <LancamentosAPagarTable atualizaStatusAction={this.atualizaStatusAction} lancamentos={this.state.lancamentosDespesaOrdenados} />
             </Card>
           </div>
-        </> : <div className="d-flex justify-content-center">
-          <button className="btn btn-success" onClick={e => {
-           this.context.abrirCaixa()
-           LocalStorageService.adicionarItem('_inicio_caixa', moment().local());
+        </> :
+          <>
+            <div className="d-flex justify-content-center mb-3">
+              <div className="d-flex justify-content-center"><h1>R$ {this.state.eye === faEyeSlash ? "**" : parseFloat(this.state.valorCaixa).toFixed(2)} <FontAwesomeIcon className="ml-2" onClick={this.changeEye} icon={this.state.eye} /></h1></div>
+            </div>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-success" onClick={e => {
+                this.context.abrirCaixa()
+                LocalStorageService.adicionarItem('_inicio_caixa', moment().local());
+                LocalStorageService.adicionarItem('_saldo_inicio_caixa', this.state.valorCaixa);
 
-            
-          }}>Abrir Caixa</button></div>}
+
+
+
+              }}>Abrir Caixa</button></div>
+          </>}
+
+        <Dialog
+          visible={this.state.showDeposito}
+          style={{ width: '50vw' }}
+          modal={true}
+          onHide={() => {
+            this.setState({ showDeposito: false })
+            this.getValorCaixa();
+          }
+          }>
+          <Deposito closeDeposito={this.closeDeposito} getValorCaixa={this.getValorCaixa} />
+        </Dialog>
+
+        <Dialog
+          visible={this.state.showSangria}
+          style={{ width: '50vw' }}
+          modal={true}
+          onHide={() => {
+            this.setState({ showSangria: false })
+            this.getValorCaixa();
+          }}>
+          <Sangria closeSangria={this.closeSangria} getValorCaixa={this.getValorCaixa} />
+        </Dialog>
 
       </>
     )
