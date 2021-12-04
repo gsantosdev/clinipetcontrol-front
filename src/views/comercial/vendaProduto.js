@@ -169,7 +169,7 @@ class VendaProduto extends React.Component {
     const dadosAMostrar = venda.itensVenda.map((dado) => {
       return [
         { text: dado.produto.id, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: 'R$' + dado.produto.valorItem, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
+        { text: 'R$' + Number(dado.produto.valorItem).toFixed(2).toString(), style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
         { text: dado.produto.nome, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
         { text: dado.quantidade, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] }
 
@@ -190,7 +190,7 @@ class VendaProduto extends React.Component {
           ],
           [
             { text: 'Valor total da venda', style: 'tableHeader', fontSize: 12, colSpan: 2 }, '',
-            { text: 'R$ ' + total, style: 'tableHeader', fontSize: 12, colSpan: 2 }, ''
+            { text: 'R$ ' + Number(total).toFixed(2).toString(), style: 'tableHeader', fontSize: 12, colSpan: 2 }, ''
           ],
         ],
         alignment: "center"

@@ -21,7 +21,7 @@ function SideBar(props) {
 
   if (props.isUsuarioAutenticado) {
     return (
-      <div className="sidebar">
+      <div className="sidebar nao-imprimir">
         <div className="sidebar-header d-flex justify-content-center">
           <figure>
             <img width="100%" src="/logo.png"></img>

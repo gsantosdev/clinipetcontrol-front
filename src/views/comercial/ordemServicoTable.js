@@ -41,7 +41,7 @@ export default props => {
                         </div> : false}
                     {ordem.statusOrdem === "EM_EXECUCAO" ?
                         <div className="d-flex justify-content-start">
-                            <button type="button" onClick={e => props.atualizaStatusAction("AGUARDANDO_PAGAMENTO", ordem.idLancamento)} className="btn btn-success">FINALIZAR EXECUÇÃO</button>
+                            <button type="button" onClick={e => props.atualizaStatusAction("AGUARDANDO_PAGAMENTO", ordem.idLancamento, ordem.idAgendamento)} className="btn btn-success">FINALIZAR EXECUÇÃO</button>
                             <button type="button" onClick={e => props.atualizaStatusAction("CANCELADO", ordem.idLancamento)} className="btn btn-danger">CANCELAR</button>
                         </div>
                         : false}
@@ -74,7 +74,7 @@ export default props => {
                             <th scope="col">Status</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Proprietário</th>
-                            <th scope="col">CPF</th>
+                            <th scope="col">CPF / CNPJ</th>
                             <th scope="col">Data e hora do agendamento</th>
                             <th scope="col"></th>
                         </tr>

@@ -12,6 +12,9 @@ export default class LancamentoService extends ApiService {
     atualizar(status, id) {
         return this.put(`/${id}/atualiza-status`, status)
     }
+    atualizarEDesmarcar(status, id) {
+        return this.put(`/${id}/atualiza-status-desmarca`, status)
+    }
 
     getSaldoCaixa() {
         return this.get('/caixa');

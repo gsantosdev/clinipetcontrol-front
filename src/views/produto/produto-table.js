@@ -19,7 +19,7 @@ export default props => {
         <td>{produto.marca}</td>
 
         <td>{produto.quantidadeEstoque}</td>
-        <td>R$ {produto.valorItem}</td>
+        <td>R$ {Number(produto.valorItem).toFixed(2).toString()}</td>
 
 
         <td>

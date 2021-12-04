@@ -55,7 +55,7 @@ export default props => {
           <thead>
             <tr>
               <th scope="col">Status</th>
-              <th scope="col">Nº Venda / Ordem de serviço</th>
+              <th scope="col">Nº Venda</th>
               <th scope="col">CPF / CNPJ do Cliente</th>
               <th scope="col">Descrição</th>
               <th scope="col">Valor</th>

@@ -457,3 +457,8 @@ div.content {
     top: 0%;
     transform: translateX(-50%);
 }
+@media print {
+    .nao-imprimir{
+      display: none !important;
+    }
+  }

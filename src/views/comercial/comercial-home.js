@@ -30,7 +30,7 @@ class ComercialHome extends React.Component {
               <ProntuarioOrdemServico />
             </Card>
           </Tab>
-          <Tab disabled={!this.context.isCaixaOpen} eventKey="venda_produto" title="Venda de produtos">
+          <Tab eventKey="venda_produto" title="Venda de produtos">
             <Card title="Efetuar venda">
               <VendaProduto />
             </Card>

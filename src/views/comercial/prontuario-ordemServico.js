@@ -60,16 +60,27 @@ class ProntuarioOrdemServico extends React.Component {
       })
   }
 
-  atualizaStatusAction = (status, id) => {
+  atualizaStatusAction = (status, id, idAgendamento) => {
 
-    const statusBody = { status: status }
+    const body = { status: status, idAgendamento: idAgendamento }
 
-    this.lancamentoService.atualizar(statusBody, id).then(response => {
-      messages.mensagemSucesso("Status atualizado com sucesso!")
-      this.buscarOrdens();
-    }).catch(error => {
-      messages.mensagemErro(error.response.data)
-    })
+    if (idAgendamento != null) {
+      this.lancamentoService.atualizarEDesmarcar(body, id).then(response => {
+        messages.mensagemSucesso("Status atualizado com sucesso!")
+        this.buscarOrdens();
+      }).catch(error => {
+        messages.mensagemErro(error.response.data)
+      })
+    }
+    else {
+      this.lancamentoService.atualizar(body, id).then(response => {
+        messages.mensagemSucesso("Status atualizado com sucesso!")
+        this.buscarOrdens();
+      }).catch(error => {
+        messages.mensagemErro(error.response.data)
+      })
+    }
+
 
   }
 

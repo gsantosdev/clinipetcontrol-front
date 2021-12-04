@@ -13,7 +13,7 @@ export default props => {
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
                 <td>{item.produto.nome}</td>
                 <td>{item.produto.marca}</td>
-                <td>R$ {item.produto.valorItem}</td>
+                <td>R$ {Number(item.produto.valorItem).toFixed(2).toString()}</td>
 
                 {item.quantidade == '' ? <td>1</td> : <td>{item.quantidade}</td>}
 

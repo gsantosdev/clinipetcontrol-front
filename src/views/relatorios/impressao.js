@@ -103,16 +103,16 @@ export function gerarPDFCaixa(saldoInicial, fechamento) {
           [{ text: '------------', margin: [0, 10, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''],
           [{ text: 'TOTAIS', bold: true, alignment: 'center', margin: [0, 10, 0, 8], colSpan: 4 }, '', '', ''],
 
-          [{ text: 'ENTRADA - SAIDA', style: 'tableHeader', colSpan: 2, alignment: 'center', }, '', { text: Number(fechamento.subtotalEntrada - fechamento.subtotalSaida).toFixed(2).toString(), style: 'tableHeader', colSpan: 2, alignment: 'center', }, ''],
-          [{ text: 'VENDAS', style: 'tableHeader', colSpan: 2, alignment: 'center', }, '', { text: Number(fechamento.totalVendas).toFixed(2).toString(), style: 'tableHeader', colSpan: 2, alignment: 'center', }, ''],
+          [{ text: 'ENTRADA - SAIDA', style: 'tableHeader', colSpan: 2, alignment: 'center', }, '', { text: 'R$ ' + Number(fechamento.subtotalEntrada - fechamento.subtotalSaida).toFixed(2).toString(), style: 'tableHeader', colSpan: 2, alignment: 'center', }, ''],
+          [{ text: 'VENDAS', style: 'tableHeader', colSpan: 2, alignment: 'center', }, '', { text: 'R$ ' + Number(fechamento.totalVendas).toFixed(2).toString(), style: 'tableHeader', colSpan: 2, alignment: 'center', }, ''],
 
           [{ text: '------------', margin: [0, 10, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''],
           [{ text: '------------', margin: [0, 10, 0, 8], colSpan: 4, alignment: 'center' }, '', '', ''],
 
           [{ text: 'ABERTURA E FECHAMENTO', bold: true, alignment: 'center', margin: [0, 10, 0, 8], colSpan: 4 }, '', '', ''],
 
-          [{ text: 'HÓRARIO DE ABERTURA' }, new Date(fechamento.inicio).toLocaleDateString() + " " + new Date(fechamento.inicio).toLocaleTimeString(), 'Caixa inicial', 'R$' + Number(saldoInicial).toFixed(2).toString()],
-          [{ text: 'HÓRARIO DE FECHAMENTO' }, new Date(fechamento.fim).toLocaleDateString() + " " + new Date(fechamento.fim).toLocaleTimeString(), 'Caixa final', 'R$' + Number((saldoInicial + fechamento.subtotalEntrada) - fechamento.subtotalSaida).toFixed(2).toString()]
+          [{ text: 'HÓRARIO DE ABERTURA' }, new Date(fechamento.inicio).toLocaleDateString() + " " + new Date(fechamento.inicio).toLocaleTimeString(), 'Caixa inicial', 'R$ ' + Number(saldoInicial).toFixed(2).toString()],
+          [{ text: 'HÓRARIO DE FECHAMENTO' }, new Date(fechamento.fim).toLocaleDateString() + " " + new Date(fechamento.fim).toLocaleTimeString(), 'Caixa final', 'R$ ' + Number((saldoInicial + fechamento.subtotalEntrada) - fechamento.subtotalSaida).toFixed(2).toString()]
 
         ],
 

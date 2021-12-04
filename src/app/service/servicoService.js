@@ -31,6 +31,10 @@ class ServicoService extends ApiService {
         return this.get('/listarNomes')
     }
 
+    obterContagem() {
+        return this.get('/contagemServicos')
+    }
+
     async getNomesServicos(id) {
         const x = [{ label: 'Selecione...', value: null }];
 

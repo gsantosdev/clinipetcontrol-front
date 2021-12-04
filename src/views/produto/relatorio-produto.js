@@ -3,7 +3,7 @@ import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import {gerarPDF} from '../relatorios/impressao';
+import { gerarPDF } from '../relatorios/impressao';
 import ClienteService from '../../app/service/clienteService';
 import { Button } from 'react-bootstrap';
 import Card from "../../components/card";
@@ -27,7 +27,8 @@ class RelatorioProduto extends React.Component {
   state = {
     dataInicial: '',
     dataFinal: '',
-    filtro: true
+
+    dados: []
   }
   relatorioTodosProdutosEstoque = async () => {
     await this.produtoService.listar()
@@ -102,7 +103,6 @@ class RelatorioProduto extends React.Component {
       { text: 'Marca', style: 'tableHeader', fontSize: 8 },
       { text: 'Valor unitário da venda', style: 'tableHeader', fontSize: 8 }
     ]
-
     const dadosAMostrar = this.state.dados.map((dado) => {
       return [
         { text: dado.id, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
@@ -111,9 +111,10 @@ class RelatorioProduto extends React.Component {
         { text: 'R$ ' + dado.valorItem, style: 'tableHeader', fontSize: 8, margin: [0, 2, 0, 2] },
       ]
     })
+    
 
     const tamanho = ['*', '*', '*', '*'];
-
+    
 
     gerarPDF("Todos os produtos cadastrados", dadosAMostrar, colunas, "relatorio_produtos", tamanho, "relatorio_produtos");
 
@@ -124,28 +125,18 @@ class RelatorioProduto extends React.Component {
     return (
 
       <div className="row justify-content-center">
-       
-        <div>
-          <Card subtitulo title="Relatórios">
-            <div className="col-6 col-sm-12 col-lg-12 col-xl-6 col-xxl-6 mb-3">
-              <Card subtitulo title="Produtos">
-                <Button className="col-12 btn btn-info mb-2" onClick={e => this.relatorioTodosProdutos()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
-                  Listar todos os produtos
-                </Button>
-                <Button className="col-12 btn btn-info mb-2" onClick={e => this.relatorioTodosProdutosEstoque()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
-                  Listar quantidade em estoque dos produtos
-                </Button>
-                <Button className="col-12 btn btn-info mb-3" onClick={e => this.relatorioTodosProdutosQuantidadeVenda()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
-                  Listar quantidade vendida por produto
-                </Button>
-              </Card>
-            </div>
 
-          </Card>
-
-
+        <div className="col-6 col-sm-12 col-lg-12 col-xl-6 col-xxl-6 mb-3">
+          <Button className="col-12 btn btn-info mb-2" onClick={e => this.relatorioTodosProdutos()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
+            Listar todos os produtos
+          </Button>
         </div>
+        <div className="col-6 col-sm-12 col-lg-12 col-xl-6 col-xxl-6 mb-3">
 
+          <Button className="col-12 btn btn-info mb-2" onClick={e => this.relatorioTodosProdutosEstoque()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
+            Listar quantidade em estoque dos produtos
+          </Button>
+        </div>
       </div>
 
     )

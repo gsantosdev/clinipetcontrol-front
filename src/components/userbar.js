@@ -9,7 +9,7 @@ function UserBar(props) {
 
   if (props.isUsuarioAutenticado) {
     return (
-      <nav className="navbar justify-content-end">
+      <nav className="navbar justify-content-end nao-imprimir">
         <ul>
           <li style={{ listStyle: "none" }}>
             <h1 className="navbar-brand"> Status do caixa: </h1>
