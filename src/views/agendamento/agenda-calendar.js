@@ -33,6 +33,7 @@ class AgendaCalendar extends React.Component {
         Object.keys(resposta.data).forEach(index => {
           this.state.events.push({
             id: resposta.data[index].id,
+            ativo: resposta.data[index].ativo,
             title: resposta.data[index].title,
             nomeFuncionario: resposta.data[index].nomeFuncionario,
             nomeAnimal: resposta.data[index].nomeAnimal,
@@ -69,6 +70,11 @@ class AgendaCalendar extends React.Component {
         <div style={{ height: '500pt' }} className="row mb-3">
 
           <Calendar
+            eventPropGetter={(event) => {
+              const backgroundColor = event.ativo ? '#00a0d4' : 'gray';
+              const opacity = event.ativo ? 'none' : '65%';
+              return { style: { backgroundColor, opacity } }
+            }}
             min={new Date(2021, 1, 0, configData.HORARIO_FUNCIONAMENTO_MIN, 0, 0)} max={new Date(2020, 1, 0, configData.HORARIO_FUNCIONAMENTO_MAX, 0, 0)}
             localizer={localizer}
             views={['month', 'day', 'week', 'agenda']}
@@ -137,6 +143,8 @@ class AgendaCalendar extends React.Component {
                         <th scope="col">Animal</th>
                         <th scope="col">Proprietário</th>
                         <th scope="col">Contato do Proprietário</th>
+                        <th scope="col">Status</th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -146,6 +154,8 @@ class AgendaCalendar extends React.Component {
                         <td> {this.state.eventOnScreen.nomeAnimal}</td>
                         <td> {this.state.eventOnScreen.nomeProprietario}</td>
                         <td> {this.state.eventOnScreen.telefoneProprietario}</td>
+                        <td> {this.state.eventOnScreen.ativo ? "A REALIZAR" : "CONCLUÍDO / ENCERRADO"}</td>
+
 
                       </tr>
                     </tbody>

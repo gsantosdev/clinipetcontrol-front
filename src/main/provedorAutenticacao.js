@@ -2,6 +2,7 @@ import React from "react";
 
 import AuthService from "../app/service/authService";
 import { tiposUsuariosEnum } from "../utils/tipoUsuarioEnum";
+import UsuarioService from "../app/service/usuarioService"
 
 export const AuthContext = React.createContext('default')
 export const AuthConsumer = AuthContext.Consumer;
@@ -10,6 +11,11 @@ const AuthProvider = AuthContext.Provider;
 
 
 class ProvedorAutenticacao extends React.Component {
+
+  constructor() {
+    super();
+    this.service = new UsuarioService();
+  }
 
   state = {
     usuarioAutenticado: null,

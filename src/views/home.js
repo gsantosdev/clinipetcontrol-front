@@ -1,10 +1,11 @@
 import React from "react";
 import UsuarioService from "../app/service/usuarioService";
-import { Pie } from "react-chartjs-2";
+import { Doughnut, Pie } from "react-chartjs-2";
 import { Chart, ArcElement, Title, Legend, defaults } from 'chart.js'
 import ServicoService from "../app/service/servicoService";
 import Card from "../components/card";
 import ProdutoService from "../app/service/produtoService";
+import ClienteService from "../app/service/clienteService";
 
 
 class Home extends React.Component {
@@ -12,7 +13,8 @@ class Home extends React.Component {
     state = {
         numeroClientes: 0,
         contagemServicos: [],
-        contagemProdutos: []
+        contagemProdutos: [],
+        pfPj: []
     }
 
     constructor() {
@@ -20,12 +22,22 @@ class Home extends React.Component {
         this.usuarioService = new UsuarioService();
         this.servicoService = new ServicoService();
         this.produtoService = new ProdutoService();
+        this.clienteService = new ClienteService();
+
     }
 
 
     obterContagemServicos = () => {
         this.servicoService.obterContagem().then(response => {
             this.setState({ contagemServicos: response.data })
+        }).catch(error => {
+            console.log(error.response)
+        })
+    }
+
+    obterPfPj = () => {
+        this.clienteService.relatorioPfPj().then(response => {
+            this.setState({ pfPj: response.data })
         }).catch(error => {
             console.log(error.response)
         })
@@ -45,6 +57,7 @@ class Home extends React.Component {
     componentDidMount() {
         this.obterContagemServicos()
         this.obterContagemProdutos()
+        this.obterPfPj()
     }
 
     render() {
@@ -53,6 +66,11 @@ class Home extends React.Component {
         console.log(dadosServicos)
         const dadosProdutos = this.state.contagemProdutos
 
+        const dadosPfPj = this.state.pfPj
+        console.log(dadosPfPj)
+
+
+
 
         const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
 
@@ -60,6 +78,20 @@ class Home extends React.Component {
 
 
         const dataServicos = {
+            labels: [
+
+            ],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [],
+                backgroundColor: [
+
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const dataPfPj = {
             labels: [
 
             ],
@@ -101,6 +133,12 @@ class Home extends React.Component {
             dataProdutos.datasets[0].backgroundColor.push(randomRGB())
 
         });
+        dadosPfPj.forEach(dado => {
+            dataPfPj.labels.push(dado.label)
+            dataPfPj.datasets[0].data.push(dado.value)
+            dataPfPj.datasets[0].backgroundColor.push(randomRGB())
+
+        });
 
         return (
             <div>
@@ -110,12 +148,12 @@ class Home extends React.Component {
                 <div className="card">
 
                     <div className="row d-flex justify-content-center card-body">
-                    <div className="d-flex justify-content-center nao-imprimir mb-5">
+                        <div className="d-flex justify-content-center nao-imprimir mb-5">
 
-                        {this.state.contagemProdutos.length === 0 && this.state.contagemServicos.length === 0 ?
-                            <h1 className="display-6" style={{ color: '#346388' }}>Não há dados suficientes para gerar os gráficos!</h1>
-                            : false
-                        }
+                            {this.state.contagemProdutos.length === 0 && this.state.contagemServicos.length && this.state.pfPj.length === 0 ?
+                                <h1 className="display-6" style={{ color: '#346388' }}>Não há dados suficientes para gerar os gráficos!</h1>
+                                : false
+                            }
                         </div>
 
                         <div className="col-sm-12 col-lg-12 col-md-12 col-xxl-6 col-xl-6 col-12" >
@@ -126,7 +164,7 @@ class Home extends React.Component {
                                     options={{
                                         responsive: true,
                                         legend: { display: true, position: "right" },
-                                        title: { display: true, position: 'top', text: 'Quantidade realizada por serviço', fontSize: '20' },
+                                        title: { display: true, position: 'top', padding: 40, text: 'Quantidade realizada por serviço', fontSize: '20' },
                                         datalabels: {
                                             display: true,
                                             color: "white",
@@ -147,7 +185,7 @@ class Home extends React.Component {
                                 options={{
                                     responsive: true,
                                     legend: { display: true, position: "right" },
-                                    title: { display: true, position: 'top', text: 'Quantidade vendida por produto', fontSize: '20' },
+                                    title: { display: true, position: 'top', padding: 40, text: 'Quantidade vendida por produto', fontSize: '20' },
                                     datalabels: {
                                         display: true,
                                         color: "white",
@@ -160,6 +198,26 @@ class Home extends React.Component {
 
                         </div>
 
+                        <div className="col-sm-12 col-lg-12 col-md-12 col-xxl-6 col-xl-6 col-12">
+
+                            {this.state.pfPj.length > 0 ? <Doughnut
+                                data={dataPfPj}
+                                options={{
+                                    responsive: true,
+                                    legend: { display: true, position: "top" },
+                                    title: { display: true, position: 'top', padding: 40, text: 'Quantidade de clientes PF x PJ', fontSize: '20' },
+                                    datalabels: {
+                                        display: true,
+                                        color: "white",
+                                    },
+                                    tooltips: {
+                                        backgroundColor: "#5a6e7f",
+                                    },
+                                }}
+                            /> : false}
+
+                        </div>
+                    
 
                     </div>
 

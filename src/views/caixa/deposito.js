@@ -4,6 +4,8 @@ import Card from '../../components/card'
 import LancamentoService from '../../app/service/lancamentoService'
 import { mensagemErro, mensagemAlerta, mensagemSucesso } from '../../components/toastr'
 import { AuthContext } from '../../main/provedorAutenticacao'
+import * as messages from "../../components/toastr";
+
 
 class Deposito extends React.Component {
 
@@ -31,9 +33,6 @@ class Deposito extends React.Component {
     }
     else if (this.state.valor === "0") {
       msgs.push('Insira um valor maior que 0.')
-    }
-    else if (!this.state.descricao) {
-      msgs.push('O campo Descrição é obrigatório.')
     }
     return msgs
   }
@@ -81,9 +80,16 @@ class Deposito extends React.Component {
         lancamentosIds.push(response.data.idLancamento)
         console.log("lancamentosIds: ", lancamentosIds);
         localStorage.setItem("_lancamento_ids", JSON.stringify(lancamentosIds));
-        
+
       }).catch(error => {
-        mensagemErro(error.response)
+        if (error.response.data != null) {
+          messages.mensagemErro(error.response.data)
+
+        }
+        else {
+          messages.mensagemErro(error.response)
+        }
+        console.log(error)
 
       })
 

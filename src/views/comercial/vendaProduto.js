@@ -155,7 +155,7 @@ class VendaProduto extends React.Component {
     this.obterValorTotalVenda();
 
   }
-
+  
   gerarNotaVenda = (idVenda, venda, total) => {
 
     const colunas = [
@@ -189,8 +189,12 @@ class VendaProduto extends React.Component {
 
           ],
           [
-            { text: 'Valor total da venda', style: 'tableHeader', fontSize: 12, colSpan: 2 }, '',
-            { text: 'R$ ' + Number(total).toFixed(2).toString(), style: 'tableHeader', fontSize: 12, colSpan: 2 }, ''
+            { text: 'Valor total da venda', style: 'tableHeader', fontSize: 14, colSpan: 2, alignment: 'center' }, '',
+            { text: 'R$ ' + Number(total).toFixed(2).toString(), style: 'tableHeader', fontSize: 14, colSpan: 2, alignment: 'center' }, ''
+          ],
+          [
+            { text: 'Código da venda', style: 'tableHeader', fontSize: 14, colSpan: 2, alignment: 'center' }, '',
+            { text: idVenda, style: 'tableHeader', fontSize: 14, colSpan: 2, alignment: 'center' }, ''
           ],
         ],
         alignment: "center"
@@ -199,7 +203,7 @@ class VendaProduto extends React.Component {
 
     console.log(colunasAMais)
 
-    gerarPDF("Venda de produto / Código da venda :" + idVenda, dadosAMostrar, colunas, "venda_" + idVenda, tamanhoTabelaPrincipal, "", colunasAMais);
+    gerarPDF("Venda de produto", dadosAMostrar, colunas, "venda_" + idVenda, tamanhoTabelaPrincipal, "", colunasAMais);
 
     this.setState({ dados: [] })
   }

@@ -27,13 +27,16 @@ class ClienteService extends ApiService {
         return this.get('/listar')
     }
 
-
     obterPorId(id) {
         return this.get(`/${id}`)
     }
 
     obterAnimais(id) {
         return this.get(`/${id}/animais`)
+    }
+
+    relatorioPfPj() {
+        return this.get('/relatorioHome')
     }
 
     async getAnimais(id) {

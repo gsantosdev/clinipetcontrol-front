@@ -156,10 +156,15 @@ class VisualizarCaixa extends React.Component {
         console.log("lancamentosIds: ", lancamentosIds);
         localStorage.setItem("_lancamento_ids", JSON.stringify(lancamentosIds));
 
-        //LocalStorageService.adicionarItem("lancamentos_ids", lancamentosIds);
       }
     }).catch(error => {
-      messages.mensagemErro(error.response)
+      if (error.response.data != null) {
+        messages.mensagemErro(error.response.data)
+
+      }
+      else {
+        messages.mensagemErro(error.response)
+      }
       console.log(error)
     })
 
