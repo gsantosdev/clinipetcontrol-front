@@ -18,8 +18,8 @@ export default props => {
                 {item.quantidade == '' ? <td>1</td> : <td>{item.quantidade}</td>}
 
                 <div>
-                    <button type="button" onClick={e => props.editarAction(item)} className="btn btn-primary">Alterar</button>
-                    <button type="button" onClick={e => props.deleteAction(item)} className="btn btn-danger">Remover</button>
+                    <button type="button" onClick={e => props.editarAction(item, index)} className="btn btn-primary">Alterar</button>
+                    <button type="button" onClick={e => props.deleteAction(index)} className="btn btn-danger">Remover</button>
                 </div>
 
             </tr>

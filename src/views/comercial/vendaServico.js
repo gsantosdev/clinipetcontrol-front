@@ -5,6 +5,7 @@ import { Dialog } from "primereact/dialog";
 import React from "react";
 import { Button as BootstrapButton } from "react-bootstrap";
 import { withRouter } from "react-router";
+import AnimalService from "../../app/service/animalService";
 import ClienteService from "../../app/service/clienteService";
 import ServicoService from "../../app/service/servicoService";
 import VendaService from "../../app/service/vendaService";
@@ -35,7 +36,8 @@ class VendaServico extends React.Component {
     showConfirmDialogDeletar: false,
     showConfirmDialogEditar: false,
     agendamentoAEditar: null,
-    agendamentoADeletar: null
+    agendamentoADeletar: null,
+    nomeAnimal:''
   }
 
   constructor(props) {
@@ -43,6 +45,7 @@ class VendaServico extends React.Component {
     this.clienteService = new ClienteService();
     this.servicoService = new ServicoService();
     this.vendaService = new VendaService();
+    this.animalService = new AnimalService();
 
   }
 
@@ -91,6 +94,7 @@ class VendaServico extends React.Component {
   }
 
   abrirConfirmacaoEditar = (agendamento, index) => {
+    console.log("Agendamento e index:", agendamento, index)
     this.setState({ showConfirmDialogEditar: true, agendamentoAEditar: agendamento, indexAgendamento: index })
   }
 
@@ -107,37 +111,57 @@ class VendaServico extends React.Component {
     this.setState({ showConfirmDialogEditar: false })
   }
 
-  adicionarItemAgendamento = (agendamento) => {
-    this.state.itensVenda.push({ agendamento: agendamento, quantidade: 1 })
+  buscarAnimal = async (agendamento) => {
+    await this.animalService.obterPorId(agendamento.idAnimal).then(response => {
+      console.log(response.data)
+      this.setState({ nomeAnimal: response.data.nome })
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  adicionarItemAgendamento = async (agendamento) => {
+
+
+    await this.buscarAnimal(agendamento);
+
+    console.log(this.state.nomeAnimal);
+    this.state.itensVenda.push({ agendamento: agendamento, quantidade: 1, animal: this.state.nomeAnimal })
     this.setState({ showTelaAgendamento: false, itensVenda: this.state.itensVenda })
     this.obterValorTotalVenda();
+
+    this.setState({nomeAnimal: ''})
 
     console.log("itensVenda:", this.state.itensVenda)
   }
 
-  editarItemAgendamento = (agendamento) => {
+  editarItemAgendamento = async (agendamento, index) => {
     const itensVenda = this.state.itensVenda;
 
-    const index = itensVenda.indexOf(agendamento)
     console.log("Itens Venda Antes: ", itensVenda);
 
-    itensVenda.splice(index, 1)
+    console.log('Index do agendamento: ', index);
+    await this.buscarAnimal(agendamento);
 
-    itensVenda.push({ agendamento: agendamento, quantidade: 1 });
+
+    itensVenda.splice(index, 1, { agendamento: agendamento, quantidade: 1, animal: this.state.nomeAnimal })
 
     console.log("Itens Venda Atualizado: ", itensVenda);
 
     this.setState({ itensVenda: itensVenda, showConfirmDialogEditar: false })
+    this.setState({nomeAnimal: ''})
 
     this.obterValorTotalVenda();
+    
 
 
   }
 
-  deletarItemAgendamento = (agendamento) => {
+  deletarItemAgendamento = (index) => {
     const itensVenda = this.state.itensVenda;
 
-    const index = itensVenda.indexOf(agendamento)
+    console.log('Index do agendamento: ', index);
+
     itensVenda.splice(index, 1)
     this.setState({ itensVenda: itensVenda, showConfirmDialogDeletar: false })
     this.obterValorTotalVenda();
@@ -318,7 +342,7 @@ class VendaServico extends React.Component {
             this.obterValorTotalVenda();
           }}>
           <Card title="Atualizar agendamento">
-            <MarcarAgendamento editarItem idCliente={this.state.clienteSelecionado.id} editarItemAgendamento={this.editarItemAgendamento} agendamentoAEditar={this.state.agendamentoAEditar} />
+            <MarcarAgendamento editarItem idCliente={this.state.clienteSelecionado.id} editarItemAgendamento={this.editarItemAgendamento} indexAgendamento={this.state.indexAgendamento} agendamentoAEditar={this.state.agendamentoAEditar} />
           </Card>
         </Dialog>
       </div>

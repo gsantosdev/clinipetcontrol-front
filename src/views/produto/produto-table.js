@@ -24,7 +24,7 @@ export default props => {
 
         <td>
           <div>
-            {props.telaVenda ? <button type="button" onClick={e => props.selecionarProduto(produto, props.quantidade)} className="btn btn-primary"> Selecionar </button> :
+            {props.telaVenda ? <button type="button" onClick={e => props.selecionarProduto(produto, props.quantidade, props.indexProduto)} className="btn btn-primary"> Selecionar </button> :
               <>
                 <button type="button" onClick={e => props.editarAction(produto)} className="btn btn-primary">Editar</button>
                 <button type="button" onClick={e => props.deleteAction(produto)} className="btn btn-danger">Deletar</button>

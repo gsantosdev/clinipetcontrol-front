@@ -101,8 +101,10 @@ class VendaProduto extends React.Component {
     this.setState({ showTelaBuscaProduto: true })
   }
 
-  abrirConfirmacaoEditar = (produto) => {
-    this.setState({ showConfirmDialogEditar: true, produtoItemAEditar: produto })
+  abrirConfirmacaoEditar = (produto, index) => {
+    console.log("produto e index:", produto, index)
+
+    this.setState({ showConfirmDialogEditar: true, produtoItemAEditar: produto, indexProduto: index })
   }
 
   abrirConfirmacaoDeletar = () => {
@@ -127,15 +129,14 @@ class VendaProduto extends React.Component {
   }
 
 
-  editarItemProduto = (produto, quantidade) => {
+  editarItemProduto = (produto, quantidade, index) => {
     const itensVenda = this.state.itensVenda;
 
-    const index = itensVenda.indexOf(produto)
+    //const index = itensVenda.indexOf(produto)
     console.log("Itens Venda Antes: ", itensVenda);
+    console.log("Index do produto:", index);
 
-    itensVenda.splice(index, 1)
-
-    itensVenda.push({ idProduto: produto.id, produto: produto, quantidade: quantidade });
+    itensVenda.splice(index, 1, { idProduto: produto.id, produto: produto, quantidade: quantidade })
 
     console.log("Itens Venda Atualizado: ", itensVenda);
 
@@ -146,10 +147,9 @@ class VendaProduto extends React.Component {
 
   }
 
-  deletarItemProduto = (produto) => {
+  deletarItemProduto = (index) => {
     const itensVenda = this.state.itensVenda;
-
-    const index = itensVenda.indexOf(produto)
+    //const index = itensVenda.indexOf(produto)
     itensVenda.splice(index, 1)
     this.setState({ itensVenda: itensVenda, showConfirmDialogDeletar: false })
     this.obterValorTotalVenda();
@@ -337,7 +337,7 @@ class VendaProduto extends React.Component {
         >
           <Card title="Editar Produto Selecionado">
           </Card>
-          <ProntuarioProduto produtoItemAEditar={this.state.produtoItemAEditar} editar editarItemProduto={this.editarItemProduto} telaVenda />
+          <ProntuarioProduto produtoItemAEditar={this.state.produtoItemAEditar} editar editarItemProduto={this.editarItemProduto} indexProduto={this.state.indexProduto} telaVenda />
         </Dialog >
 
         <Dialog

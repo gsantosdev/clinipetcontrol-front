@@ -253,7 +253,7 @@ class ProntuarioProduto extends React.Component {
               : false}
 
             <div>
-              <ProdutoTable quantidade={this.state.quantidade} selecionarProduto={this.props.editar ? this.props.editarItemProduto : this.props.selecionarProduto} telaVenda={this.props.telaVenda} produtos={this.state.produtos} baixaEstoqueAction={this.abrirConfirmacaoSaida} entradaEstoqueAction={this.abrirConfirmacaoEntrada} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
+              <ProdutoTable quantidade={this.state.quantidade} selecionarProduto={this.props.editar ? this.props.editarItemProduto : this.props.selecionarProduto} indexProduto={this.props.indexProduto} telaVenda={this.props.telaVenda} produtos={this.state.produtos} baixaEstoqueAction={this.abrirConfirmacaoSaida} entradaEstoqueAction={this.abrirConfirmacaoEntrada} editarAction={this.abrirConfirmacaoEditar} deleteAction={this.abrirConfirmacaoDeletar} />
             </div>
           </div>
 

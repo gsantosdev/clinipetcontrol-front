@@ -21,12 +21,12 @@ class AgendaCalendar extends React.Component {
 
   constructor() {
     super();
-    this.service = new AgendamentoService();
+    this.agendamentoService = new AgendamentoService();
   }
 
 
   listarAgendamentos = async () => {
-    await this.service.listar()
+    await this.agendamentoService.listar()
       .then(resposta => {
         this.setState({ agendamentos: resposta.data })
         console.log(this.state.agendamentos)

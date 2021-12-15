@@ -62,12 +62,14 @@ function Rotas(props) {
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/comercial" component={ComercialHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/caixa" component={CaixaHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/produto" component={ProdutoHome} />
-
-
-
-                <Route path="/404" component={NotFound} />
-
                 <Redirect exact from="/" to="home" />
+
+                <Route path='*' exact={true} component={NotFound} />
+
+
+                <Route component={NotFound} />
+                
+
             </Switch>
         </HashRouter>
     )

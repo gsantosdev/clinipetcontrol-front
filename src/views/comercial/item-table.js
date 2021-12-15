@@ -17,12 +17,7 @@ export default props => {
         var dataInicio = new Date(item.agendamento.dataHorario);
         var dataFim = new Date(item.agendamento.dataHorario);
 
-
         dataFim.setMinutes(dataInicio.getMinutes() + Number(item.agendamento.duracaoAprox))
-
-
-
-
 
         return add0(dataInicio.getHours().toString()) + ":" + add0(dataInicio.getMinutes().toString())
             + " - " + add0(dataFim.getHours().toString()) + ":" + add0(dataFim.getMinutes())
@@ -35,12 +30,15 @@ export default props => {
         return (
             <tr style={{ backgroundColor: index % 2 ? "rgb(250,250,250)" : "rgb(241,241,241" }} key={index}>
                 <td>{item.agendamento.servico.nome}</td>
+                <td>{item.animal}</td>
                 <td>R$ {item.agendamento.servico.valorItem}</td>
+
+
 
                 <td>
                     <div>
                         <button type="button" onClick={e => props.editarAction(item, index)} className="btn btn-primary">Editar</button>
-                        <button type="button" onClick={e => props.deleteAction(item)} className="btn btn-danger">Remover</button>
+                        <button type="button" onClick={e => props.deleteAction(index)} className="btn btn-danger">Remover</button>
                     </div>
                 </td>
 
@@ -57,6 +55,7 @@ export default props => {
                     <thead>
                         <tr>
                             <th scope="col">Serviço</th>
+                            <th scope="col">Animal</th>
                             <th scope="col">Valor estimado</th>
                             <th scope="col"></th>
 

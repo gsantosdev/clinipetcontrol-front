@@ -330,7 +330,7 @@ class MarcarAgendamento extends React.Component {
     })
 
     if (this.state.agendamentoValido) {
-      this.props.editarItemAgendamento(agendamento)
+      this.props.editarItemAgendamento(agendamento, this.props.indexAgendamento)
     }
     else {
       return false;

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCashRegister, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCashRegister, faClock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AuthConsumer } from '../main/provedorAutenticacao';
 
 
@@ -10,6 +10,13 @@ function UserBar(props) {
   if (props.isUsuarioAutenticado) {
     return (
       <nav className="navbar justify-content-end nao-imprimir">
+        <ul>
+          <li style={{ listStyle: "none" }}>
+            <h1 className="navbar-brand ">Horário de funcionamento: 08:00 - 20:00</h1>
+
+            <FontAwesomeIcon icon={faClock} />
+          </li>
+        </ul>
         <ul>
           <li style={{ listStyle: "none" }}>
             <h1 className="navbar-brand"> Status do caixa: </h1>

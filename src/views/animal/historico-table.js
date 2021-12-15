@@ -42,7 +42,7 @@ export default props => {
                     <thead>
                         <tr>
                             <th scope="col">Serviço</th>
-                            <th scope="col">Funcionário</th>
+                            <th scope="col">Colaborador</th>
                             <th scope="col">Finalizado em</th>
 
                             <th scope="col"></th>

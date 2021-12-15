@@ -11,7 +11,8 @@ class NotFound extends React.Component {
     return (
       <div className="jumbotron">
         <div className="d-flex justify-content-center">
-          <h1 className="display-3"><b>404</b></h1>
+          <h1 className="display-3"><b>404 - Recurso não encontrado!</b></h1>
+
         </div>
 
         <hr className="my-4" />

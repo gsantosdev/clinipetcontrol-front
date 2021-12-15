@@ -163,7 +163,7 @@ class Home extends React.Component {
                                     data={dataServicos}
                                     options={{
                                         responsive: true,
-                                        legend: { display: true, position: "right" },
+                                        legend: { display: true, position: "top" },
                                         title: { display: true, position: 'top', padding: 40, text: 'Quantidade realizada por serviço', fontSize: '20' },
                                         datalabels: {
                                             display: true,
@@ -184,7 +184,7 @@ class Home extends React.Component {
                                 data={dataProdutos}
                                 options={{
                                     responsive: true,
-                                    legend: { display: true, position: "right" },
+                                    legend: { display: true, position: "bottom" },
                                     title: { display: true, position: 'top', padding: 40, text: 'Quantidade vendida por produto', fontSize: '20' },
                                     datalabels: {
                                         display: true,
@@ -204,7 +204,7 @@ class Home extends React.Component {
                                 data={dataPfPj}
                                 options={{
                                     responsive: true,
-                                    legend: { display: true, position: "top" },
+                                    legend: { display: true, position: "bottom" },
                                     title: { display: true, position: 'top', padding: 40, text: 'Quantidade de clientes PF x PJ', fontSize: '20' },
                                     datalabels: {
                                         display: true,
@@ -217,7 +217,8 @@ class Home extends React.Component {
                             /> : false}
 
                         </div>
-                    
+                        
+
 
                     </div>
 

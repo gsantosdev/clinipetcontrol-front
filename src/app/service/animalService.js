@@ -15,6 +15,10 @@ class AnimalService extends ApiService {
     return this.put(`/${id}`, animal)
   }
 
+  obterPorId(id){
+    return this.get(`/${id}`)
+  }
+
   deletar(id) {
     return this.delete(`/${id}`)
   }
