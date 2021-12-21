@@ -25,7 +25,9 @@ class RelatorioAnimal extends React.Component {
   state = {
     dataInicial: '',
     dataFinal: '',
-    filtro: true
+    filtro: true,
+    dados:[]
+
   }
 
   relatorioTodosAnimais = async () => {

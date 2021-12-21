@@ -39,6 +39,10 @@ class ClienteService extends ApiService {
         return this.get('/relatorioHome')
     }
 
+    relatorioQuantidadeAnimais() {
+        return this.get('/relatorioQuantidadeAnimal')
+    }
+
     async getAnimais(id) {
         const x = [{ label: 'Selecione...', value: null }];
 

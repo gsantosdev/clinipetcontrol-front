@@ -150,7 +150,7 @@ class Home extends React.Component {
                     <div className="row d-flex justify-content-center card-body">
                         <div className="d-flex justify-content-center nao-imprimir mb-5">
 
-                            {this.state.contagemProdutos.length === 0 && this.state.contagemServicos.length && this.state.pfPj.length === 0 ?
+                            {this.state.contagemProdutos.length === 0 && this.state.contagemServicos.length === 0 && this.state.pfPj.length === 0 ?
                                 <h1 className="display-6" style={{ color: '#346388' }}>Não há dados suficientes para gerar os gráficos!</h1>
                                 : false
                             }

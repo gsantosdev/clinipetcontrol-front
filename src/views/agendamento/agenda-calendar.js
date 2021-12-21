@@ -1,18 +1,23 @@
 import moment from 'moment';
 import 'moment/locale/pt-br';
+import { Dialog } from 'primereact/dialog';
 import React from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { withRouter } from 'react-router-dom';
 import AgendamentoService from '../../app/service/agendamentoService';
-import { Dialog } from 'primereact/dialog';
-import configData from "../../config.json"
+import ConfigService from '../../app/service/configService';
+import configData from "../../config.json";
 
 
 
 class AgendaCalendar extends React.Component {
 
   state = {
+    horarioFim: null,
+    minutosFim: null,
+    horarioInicio: null,
+    minutosInicio: null,
     agendamentos: [],
     events: [],
     showEventDialog: false,
@@ -22,6 +27,22 @@ class AgendaCalendar extends React.Component {
   constructor() {
     super();
     this.agendamentoService = new AgendamentoService();
+    this.configService = new ConfigService();
+
+  }
+
+  getHorario = async () => {
+    await this.configService.getConfig().then(response => {
+      this.setState({ horarioInicio: response.data.horarioInicio.split(':')[0], minutosInicio: response.data.horarioInicio.split(':')[1], horarioFim: response.data.horarioFim.split(':')[0], minutosFim: response.data.horarioFim.split(':')[1] })
+
+
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  update = () => {
+    this.forceUpdate();
   }
 
 
@@ -57,13 +78,17 @@ class AgendaCalendar extends React.Component {
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
+    await this.getHorario();
+
     this.listarAgendamentos();
+    console.log(this.state.horarioFim)
 
   }
 
   render() {
     const localizer = momentLocalizer(moment);
+
     return (
       <>
 
@@ -75,7 +100,7 @@ class AgendaCalendar extends React.Component {
               const opacity = event.ativo ? 'none' : '65%';
               return { style: { backgroundColor, opacity } }
             }}
-            min={new Date(2021, 1, 0, configData.HORARIO_FUNCIONAMENTO_MIN, 0, 0)} max={new Date(2020, 1, 0, configData.HORARIO_FUNCIONAMENTO_MAX, 0, 0)}
+            min={new Date(2021, 1, 0, this.state.horarioInicio, this.state.minutosInicio, 0)} max={new Date(2020, 1, 0, this.state.horarioFim, this.state.minutosFim, 0)}
             localizer={localizer}
             views={['month', 'day', 'week', 'agenda']}
             startAcessor="start"

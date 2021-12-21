@@ -74,13 +74,6 @@ class MarcarAgendamento extends React.Component {
 
     const dataInicio = new Date(this.state.dataHorario);
 
-    if (dataInicio.getHours() < Config.HORARIO_FUNCIONAMENTO_MIN) {
-      msgs.push('Agendamento fora do horário.')
-    }
-    if (dataInicio.getHours() > Config.HORARIO_FUNCIONAMENTO_MAX) {
-      msgs.push('Agendamento fora do horário.')
-    }
-
     if (!this.state.dataHorario) {
       msgs.push('O campo de data e hora é obrigatório.')
     }
@@ -149,7 +142,7 @@ class MarcarAgendamento extends React.Component {
       await this.setState({ idServicoSelecionado: this.props.agendamentoAEditar.idServico })
       console.log("idServicoSelecionado:", this.state.idServicoSelecionado)
     }
-    //console.log("Agendamento a editar: ", this.props.agendamentoAEditar.agendamento)
+    
   }
 
 

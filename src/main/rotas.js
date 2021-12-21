@@ -53,11 +53,11 @@ function Rotas(props) {
 
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria || props.isVeterinario} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/home" component={Home} />
                 <Route path="/login" component={Login} />
-                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cliente" component={ClienteHome} />
-                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/animal" component={AnimalHome} />
-                <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/colaboradores" component={FuncionarioHome} />
-                <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/servico" component={ServicoHome} />
-                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/agendamento" component={AgendamentoHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria || props.isVeterinario} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/cliente" component={ClienteHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria || props.isVeterinario} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/animal" component={AnimalHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria } isUsuarioAutenticado={props.isUsuarioAutenticado} path="/colaboradores" component={FuncionarioHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria } isUsuarioAutenticado={props.isUsuarioAutenticado} path="/servico" component={ServicoHome} />
+                <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria || props.isVeterinario} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/agendamento" component={AgendamentoHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/usuarios" component={UsuarioHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/comercial" component={ComercialHome} />
                 <RotaAutenticada isAutorizado={props.isAdmin || props.isSecretaria} isUsuarioAutenticado={props.isUsuarioAutenticado} path="/caixa" component={CaixaHome} />

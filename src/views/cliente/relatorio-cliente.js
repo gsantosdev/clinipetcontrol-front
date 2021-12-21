@@ -13,7 +13,6 @@ import { gerarPDF } from '../relatorios/impressao';
 
 class RelatorioCliente extends React.Component {
 
-
   constructor() {
     super();
     this.clienteService = new ClienteService();
@@ -22,7 +21,8 @@ class RelatorioCliente extends React.Component {
   state = {
     dataInicial: '',
     dataFinal: '',
-    filtro: true
+    filtro: true,
+    dados:[]
   }
 
   relatorioTodosClientes = async () => {
@@ -59,7 +59,7 @@ class RelatorioCliente extends React.Component {
 
 
   relatorioTodosClientesAnimais = async () => {
-    await this.clienteService.listar()
+    await this.clienteService.relatorioQuantidadeAnimais()
       .then(response => {
         this.setState({ dados: response.data })
       })
@@ -67,25 +67,22 @@ class RelatorioCliente extends React.Component {
 
 
     const colunas = [
-      { text: 'Código', style: 'tableHeader', fontSize: 10 },
       { text: 'Nome', style: 'tableHeader', fontSize: 10 },
-      { text: 'E-mail', style: 'tableHeader', fontSize: 10 },
-      { text: 'Telefone', style: 'tableHeader', fontSize: 10 }
+      { text: 'Quantidade', style: 'tableHeader', fontSize: 10 }
+      
     ]
 
     const dadosAMostrar = this.state.dados.map((dado) => {
       return [
-        { text: dado.id, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.nome, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.email, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
-        { text: dado.telefone, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
+        { text: dado.label, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] },
+        { text: dado.value, style: 'tableHeader', fontSize: 9, margin: [0, 2, 0, 2] }
 
       ]
     })
 
-    const tamanho = ['*', '*', '*', '*'];
+    const tamanho = ['*', '*'];
 
-    gerarPDF("Todos os clientes cadastrados", dadosAMostrar, colunas, "relatorio_clientes", tamanho);
+    gerarPDF("Quantidade de animais cadastrados por cliente", dadosAMostrar, colunas, "relatorio_clientes_animais", tamanho);
 
     this.setState({ dados: [] })
   }
@@ -103,7 +100,7 @@ class RelatorioCliente extends React.Component {
               </Button>
             </div>
             <div className="col-6">
-              <Button className="col-12 btn btn-info" onClick={e => this.relatorioTodosClientes()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
+              <Button className="col-12 btn btn-info" onClick={e => this.relatorioTodosClientesAnimais()}><FontAwesomeIcon className="mr-3" icon={faFilePdf} />
                 Listar quantidades de animais por cliente
               </Button>
             </div>

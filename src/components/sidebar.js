@@ -37,7 +37,7 @@ function SideBar(props) {
           selecionar={setSelecionado}
           selecionado={selecionado} />
 
-        <SideBarItem render={props.isAdmin || props.isSecretaria}
+        <SideBarItem render={props.isAdmin || props.isSecretaria || props.isVeterinario}
 
           icon={faUsers}
           href="#/cliente"
@@ -46,7 +46,7 @@ function SideBar(props) {
           selecionar={setSelecionado}
           selecionado={selecionado} />
 
-        <SideBarItem render={props.isAdmin || props.isSecretaria}
+        <SideBarItem render={props.isAdmin || props.isSecretaria || props.isVeterinario}
           icon={faDog}
           href="#/animal"
           label="Animais"
@@ -63,7 +63,7 @@ function SideBar(props) {
           selecionado={selecionado}
         />
 
-        <SideBarItem render={props.isAdmin || props.isSecretaria}
+        <SideBarItem render={props.isAdmin || props.isSecretaria || props.isVeterinario}
           icon={faCalendar}
           href="#/agendamento"
           label="Agenda"
@@ -71,7 +71,7 @@ function SideBar(props) {
           selecionar={setSelecionado}
           selecionado={selecionado} />
 
-        <SideBarItem render={props.isAdmin}
+        <SideBarItem render={props.isAdmin  || props.isSecretaria}
           icon={faHandHoldingMedical}
           href="#/servico"
           label="Serviços"
@@ -87,7 +87,7 @@ function SideBar(props) {
           selecionar={setSelecionado}
           selecionado={selecionado} />
 
-        <SideBarItem render={props.isAdmin}
+        <SideBarItem render={props.isAdmin  || props.isSecretaria}
           icon={faAddressCard}
           href="#/colaboradores"
           label="Colaboradores"
