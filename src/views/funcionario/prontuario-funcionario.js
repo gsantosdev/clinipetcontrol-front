@@ -73,8 +73,12 @@ class ProntuarioFuncionario extends React.Component {
         funcionarios.splice(index, 1);
         this.setState({ funcionarios: funcionarios, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("funcionario deletado com sucesso!")
-      }).catch(erro => {
-        messages.mensagemErro(erro.response.data)
+      }).catch(error => {
+        if (error.response != null) {
+          messages.mensagemErro(error.response.data)
+        } else {
+          messages.mensagemErro("Erro de conexão com o servidor!")
+        }
       })
   }
 

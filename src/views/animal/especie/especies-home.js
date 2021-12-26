@@ -173,6 +173,8 @@ class EspeciesHome extends React.Component {
                 <input type="text" className="form-control"
                   value={this.state.nome}
                   name="nome"
+                  maxLength="80"
+
                   onChange={this.handleChange} />
               </FormGroup>
             </div>

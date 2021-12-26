@@ -65,9 +65,12 @@ class AlterarHorario extends React.Component {
 
 
     }).catch(error => {
-      if (error.response.data) {
+      if (error.response != null) {
         mensagemErro(error.response.data)
         return false;
+      }
+      else {
+        mensagemErro("Erro de conexão com o servidor!")
       }
     })
   }

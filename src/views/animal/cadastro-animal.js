@@ -184,7 +184,11 @@ class CadastroAnimal extends React.Component {
         mensagemSucesso(response)
         this.limpaCampos()
       }).catch(error => {
-        mensagemErro(error.response.data)
+        if (error.response != null) {
+          mensagemErro(error.response.data)
+        } else {
+          mensagemErro("Erro de conexão com o servidor!")
+        }
       })
 
   }
@@ -212,7 +216,11 @@ class CadastroAnimal extends React.Component {
         mensagemSucesso(response)
         //this.props.history.push('/login')
       }).catch(error => {
-        mensagemErro(error.response.data)
+        if (error.response != null) {
+          mensagemErro(error.response.data)
+        } else {
+          mensagemErro("Erro de conexão com o servidor!")
+        }
       })
   }
 

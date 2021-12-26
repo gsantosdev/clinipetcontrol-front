@@ -68,7 +68,7 @@ class ProntuarioUsuario extends React.Component {
         const index = usuarios.indexOf(this.state.usuarioADeletar)
         usuarios.splice(index, 1);
         this.setState({ usuarios: usuarios, showConfirmDialogDeletar: false });
-        messages.mensagemSucesso("Cliente deletado com sucesso!")
+        messages.mensagemSucesso("Usuário deletado com sucesso!")
       }).catch(erro => {
         messages.mensagemErro(erro.response.data)
       })

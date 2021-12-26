@@ -123,6 +123,7 @@ class AgendaCalendar extends React.Component {
               event: "Agendamento",
               time: "Duração",
               agenda: "Periodo Mensal",
+              noEventsInRange:'Não existem agendamentos no período selecionado',
               showMore: function showMore(total) {
                 return '+' + total + ' agendamentos';
               }

@@ -167,7 +167,12 @@ class CadastroCliente extends React.Component {
                 this.limpaCampos()
                 //this.props.history.push('/login')
             }).catch(error => {
-                mensagemErro(error.response.data)
+                if (error.response != null) {
+
+                    mensagemErro(error.response.data)
+                } else {
+                    mensagemErro("Erro de conexão com o servidor!")
+                }
             })
     }
 
@@ -234,10 +239,10 @@ class CadastroCliente extends React.Component {
                                 onChange={(e, type) => {
                                     this.setState({ cpf: e.target.value });
                                     if (e.target.value.length >= 15) {
-                                        this.setState({ pj : true })
+                                        this.setState({ pj: true })
                                     }
                                     else {
-                                        this.setState({ pj : false })
+                                        this.setState({ pj: false })
                                     }
                                 }}
                             />

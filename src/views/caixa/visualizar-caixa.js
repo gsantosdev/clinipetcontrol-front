@@ -47,7 +47,7 @@ class VisualizarCaixa extends React.Component {
     this.lancamentoService.getLancamentosReceitaOrdenados().then(response => {
       this.setState({ lancamentosReceitaOrdenados: response.data })
     }).catch(error => {
-      if (error.response.status == 404) {
+      if (error.response != null && error.response.status == 404) {
         this.setState({ lancamentosReceitaOrdenados: [] })
       }
       else {
@@ -64,7 +64,7 @@ class VisualizarCaixa extends React.Component {
     this.lancamentoService.findReceita(this.state.buscaReceita).then(response => {
       this.setState({ lancamentosReceitaOrdenados: response.data })
     }).catch(error => {
-      if (error.response.status == 404) {
+      if (error.response != null && error.response.status == 404) {
         this.setState({ lancamentosReceitaOrdenados: [] })
       }
       else {
@@ -77,7 +77,7 @@ class VisualizarCaixa extends React.Component {
     this.lancamentoService.getLancamentosDespesaOrdenados().then(response => {
       this.setState({ lancamentosDespesaOrdenados: response.data })
     }).catch(error => {
-      if (error.response.status == 404) {
+      if (error.response != null && error.response.status == 404) {
         this.setState({ lancamentosDespesaOrdenados: [] })
       }
       else {

@@ -56,7 +56,11 @@ class ProntuarioCliente extends React.Component {
       .then(resposta => {
         this.setState({ clientes: resposta.data })
       }).catch(error => {
-        console.log(error)
+        if (error.response != null) {
+          messages.mensagemErro(error.response.data)
+        } else {
+          messages.mensagemErro("Erro de conexão com o servidor!")
+        }
       })
   }
 
@@ -72,8 +76,12 @@ class ProntuarioCliente extends React.Component {
         clientes.splice(index, 1);
         this.setState({ clientes: clientes, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("Cliente deletado com sucesso!")
-      }).catch(erro => {
-        messages.mensagemErro(erro.response.data)
+      }).catch(error => {
+        if (error.response != null) {
+          messages.mensagemErro(error.response.data)
+        } else {
+          messages.mensagemErro("Erro de conexão com o servidor!")
+        }
       })
   }
 

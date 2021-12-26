@@ -100,7 +100,11 @@ class CadastroFuncionario extends React.Component {
         this.limpaCampos()
         //this.props.history.push('/login')
       }).catch(error => {
-        mensagemErro(error.response.data)
+        if (error.response != null) {
+          mensagemErro(error.response.data)
+        } else {
+          mensagemErro("Erro de conexão com o servidor!")
+        }
       })
   }
 
@@ -130,7 +134,11 @@ class CadastroFuncionario extends React.Component {
         mensagemSucesso(response)
         //this.props.history.push('/login')
       }).catch(error => {
-        mensagemErro(error.response.data)
+        if (error.response != null) {
+          mensagemErro(error.response.data)
+        } else {
+          mensagemErro("Erro de conexão com o servidor!")
+        }
       })
   }
 

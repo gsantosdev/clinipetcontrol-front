@@ -157,18 +157,32 @@ class ProntuarioProduto extends React.Component {
     if (this.props.telaVenda) {
       console.log("XDXD")
       this.service.obterPorNomeOuMarcaComEstoque(this.state.busca)
-        .then(resposta => {
-          this.setState({ produtos: resposta.data })
+        .then(response => {
+          this.setState({ produtos: response.data })
         }).catch(error => {
-          messages.mensagemErro(error.response.data)
+          if (error.response != null) {
+            messages.mensagemErro(error.response.data)
+
+          } else {
+            messages.mensagemErro("Erro de conexão com o servidor")
+
+          }
+
         })
     }
     else {
       this.service.obterPorNomeOuMarca(this.state.busca)
-        .then(resposta => {
-          this.setState({ produtos: resposta.data })
+        .then(response => {
+          this.setState({ produtos: response.data })
         }).catch(error => {
-          messages.mensagemErro(error.response.data)
+          if (error.response != null) {
+            messages.mensagemErro(error.response.data)
+
+          } else {
+            messages.mensagemErro("Erro de conexão com o servidor")
+
+          }
+
         })
     }
 

@@ -54,9 +54,14 @@ class ProntuarioOrdemServico extends React.Component {
         }
       }).catch(error => {
         console.log(error.response)
-        if (error.response.status == 400) {
-          messages.mensagemErro(error.response.data)
+        if (error.response != null) {
+          if (error.response.status == 400) {
+            messages.mensagemErro(error.response.data)
+          }
+        } else {
+          messages.mensagemErro("Erro de conexão com o servidor!")
         }
+
       })
   }
 

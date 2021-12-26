@@ -82,12 +82,11 @@ class Deposito extends React.Component {
         localStorage.setItem("_lancamento_ids", JSON.stringify(lancamentosIds));
 
       }).catch(error => {
-        if (error.response.data != null) {
+        if (error.response != null) {
           messages.mensagemErro(error.response.data)
-
         }
         else {
-          messages.mensagemErro(error.response)
+          messages.mensagemErro("Erro ao conectar ao servidor!")
         }
         console.log(error)
 

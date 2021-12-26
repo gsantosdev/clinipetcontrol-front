@@ -36,9 +36,13 @@ class ProntuarioAnimal extends React.Component {
     await this.service.obterHistorico(animal.id).then(response => {
       this.setState({ historico: response.data })
 
-    }).catch(error =>{
+    }).catch(error => {
 
-      messages.mensagemErro(error.response.data)
+      if (error.response != null) {
+        messages.mensagemAlerta(error.response.data)
+      } else {
+        messages.mensagemAlerta("Erro de conexão com o servidor!")
+      }
       this.setState({ historico: [] })
 
     })
@@ -88,8 +92,12 @@ class ProntuarioAnimal extends React.Component {
         animais.splice(index, 1);//Remover 1 animal a partir da posição X 
         this.setState({ animais: animais, showConfirmDialogDeletar: false });
         messages.mensagemSucesso("Animal deletado com sucesso!")
-      }).catch(erro => {
-        messages.mensagemErro(erro.response.data)
+      }).catch(error => {
+        if (error.response != null) {
+          messages.mensagemErro(error.response.data)
+        } else {
+          messages.mensagemAlerta("Erro de conexão com o servidor!")
+        }
       })
   }
 
