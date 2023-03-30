@@ -10,7 +10,7 @@ This repository contains the front-end code of ClinipetControl, a web applicatio
 # The application has the following features:
 
 - Dashboard with appointment calendar and statistics
-- Pet management (add, edit, and remove pets)
+- Pet and Client management (add, edit, and remove)
 - Appointments management (add, edit, and remove appointments)
 - Users management (add, edit, and remove users)
 - Login and registration pages
